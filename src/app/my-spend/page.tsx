@@ -7,7 +7,9 @@ const MySpend = () => {
   <div className="text-white p-8">
     <div className="font-semibold">11월</div>
     <div className="text-2xl font-semibold">300,000원</div>
-    <Link href="/my-spend/categories"><TopSpendingCategory/></Link>
+    <Link href="/my-spend/categories">
+      <TopSpendingCategory name="식비" iconSrc="/icons/food.png"/>
+    </Link>
     <DailySpending />
     <DailySpending />
     <DailySpending />
