@@ -1,4 +1,4 @@
-const EachSpend = () => {
+const EachSpending = () => {
   return (
     <div className="mb-5">
       <div className="font-bold text-lg">-3,600원</div>
@@ -7,4 +7,4 @@ const EachSpend = () => {
   );
 };
 
-export default EachSpend;
+export default EachSpending;

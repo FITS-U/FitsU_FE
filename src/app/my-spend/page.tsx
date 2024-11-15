@@ -1,4 +1,4 @@
-import DailySpending from "./components/DailySpending";
+import DailySpending from "@/components/DailySpending";
 import TopSpendingCategory from "./components/TopSpendingCategory";
 import Link from "next/link";
 
