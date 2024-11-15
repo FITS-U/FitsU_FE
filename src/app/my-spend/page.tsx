@@ -10,9 +10,9 @@ const MySpend = () => {
     <Link href="/my-spend/categories">
       <TopSpendingCategory name="식비" iconSrc="/icons/food.png"/>
     </Link>
-    <DailySpending />
-    <DailySpending />
-    <DailySpending />
+    <DailySpending date="15" dayName="금요일" />
+    <DailySpending date="14" dayName="목요일" />
+    <DailySpending date="10" dayName="일요일" />
   </div>);
 }
 
