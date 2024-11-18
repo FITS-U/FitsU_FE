@@ -1,17 +1,14 @@
+"use client"
+import { useParams } from "next/navigation";
 import LinkAccountPage from "./components/LinkAccountPage"
 
-interface Props {
-  accountId: number;
-  accountNum: string
-  accName: string;
-  userId: string;
-  bankId: number;
-}
 
-const AccountPage :React.FC<Props> = ({ accountId, accountNum, accName, userId, bankId }) => {
+const AccountPage :React.FC = () => {
+  const { accountId, userId, accountNum, accName, bankId } = useParams<{accountId:string; userId:string; accountNum:string; accName: string; bankId:string;}>();
+
   return(
     <div>
-      <LinkAccountPage accountId={accountId} accountNum={accountNum} accName={accName} userId={userId} bankId={bankId}/>
+      <LinkAccountPage accountId={Number(accountId)} accountNum={accountNum} accName={accName} userId={userId} bankId={Number(bankId)}/>
     </div>
   )
 }

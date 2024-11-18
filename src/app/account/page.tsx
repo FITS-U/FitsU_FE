@@ -2,14 +2,14 @@
 import SetUpAccountPage from "@/app/account/components/SetUpAccountPage"
 
 interface Props {
-  bankId: number;
+  bankId: string;
   bankName: string;
 }
 
 const AccountPage : React.FC<Props> = ({ bankId, bankName })=> {
   return (
     <div>
-        <SetUpAccountPage bankId={bankId} bankName={bankName}/>
+        <SetUpAccountPage bankId={Number(bankId)} bankName={bankName}/>
     </div>
   )
 }

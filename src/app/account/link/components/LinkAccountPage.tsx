@@ -1,7 +1,7 @@
 "use client"
 import { getAccountList } from "@/api/AccountApi";
 import React, { useEffect, useState } from "react";
-
+import Link from "next/link";
 interface AccountData {
   accountId: number;
   accountNum: string
@@ -35,8 +35,13 @@ const LinkAccountPage: React.FC<AccountData>= ({ userId, accountId}) =>{
             </div>
           ))
         ) : (
-          <p className="text-white">계좌 정보가 없습니다.</p>
+          <p className="text-white text-center">계좌 정보가 없습니다.</p>
         )}
+      </div>
+      <div className="m-4">
+      <Link href= "/">
+      <button className="text-white font-bold bg-[#1C1B18] min-w-[360px] min-h-[76px] rounded-lg">다음</button>
+      </Link>
       </div>
     </div>
   );
