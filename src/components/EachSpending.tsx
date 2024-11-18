@@ -6,7 +6,7 @@ interface EachSpendingProps {
 
 const EachSpending = ({price, receipent, payMethodName}: EachSpendingProps) => {
   return (
-    <div className="mb-5">
+    <div className="mb-8">
       <div className="font-bold text-lg">{price}원</div>
       <div className="text-xs">{receipent} | {payMethodName}</div>
     </div>

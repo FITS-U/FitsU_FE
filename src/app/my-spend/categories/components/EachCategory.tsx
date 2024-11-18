@@ -1,20 +1,20 @@
-import Image from "next/image";
+import CategoryLogo from "@/components/CategoryLogo";
 
 interface EachCategoryProps {
   name: string;
-  percentage: string;
-  amount: string;
+  percent: string;
+  totalAmount: string;
   iconSrc: string;
 }
 
-const EachCategory = ({ name, percentage, amount, iconSrc }: EachCategoryProps) => {
+const EachCategory = ({ name, percent, totalAmount, iconSrc }: EachCategoryProps) => {
   return (
     <div className="mt-7 flex items-center justify-between text-sm">
       <div className="flex items-center justify-between">
-        <Image width={45} height={45} src={iconSrc} alt={`${name} 카테고리 로고`}/>
+        <CategoryLogo w={45} h={45} iconSrc={iconSrc} name={name} />
         <span className="ml-4">
           <div>{name}</div>
-          <div>{percentage}% | {amount}원</div>
+          <div>{percent}% | {totalAmount}원</div>
         </span>
       </div>
       <span className="text-lg">&gt;</span>
