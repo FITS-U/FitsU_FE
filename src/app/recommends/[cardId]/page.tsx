@@ -81,7 +81,7 @@ const CardDetailPage = () => {
           </div>
           <div className="mt-8">
             <span className="font-semibold">전월실적</span>
-            <span className="ml-[9.3vw]">{cardDetail.prevSales}</span>
+            <span className="ml-[9.5vw]">{cardDetail.prevSales}</span>
           </div>
         </div>
       </div>
