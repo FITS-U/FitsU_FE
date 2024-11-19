@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <AccountLinkPage accountId={Number(accountId)} userId={userId}/>
+      <AccountLinkPage accountId={2} userId="9b1deb4d-3f7d-4bad-9bdd-2b0d7b3dcb6d"/>
     </div>
   )
 } 

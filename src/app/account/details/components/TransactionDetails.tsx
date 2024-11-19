@@ -1,22 +1,56 @@
-const TransactionDetails = () => {
+import TransactionList from "./TransactionList";
+import { useState, useEffect } from "react";
+import { getTransactionByAccountId } from "@/api/TransactionApi";
+import { UUID } from "crypto";
+interface AccountData {
+  accountId: number;
+  accName : string;
+  bankId : number;
+  accountNum: string;
+  balance: number;
+}
+
+interface TransactionData {
+  transactionId: number;
+  price: number;
+  recipient: string;
+  createdAt: Date;
+  transactionType: string;
+}
+interface Props {
+  accounts: AccountData[];
+  userId: UUID;
+  accountId: number;
+}
+
+const TransactionDetails: React.FC<Props> = ({ accounts, accountId,userId }) => {
+
+
+  const [transactions, setTransactions] = useState<TransactionData[]>([]);
+
+  useEffect(() => {
+    const loadTransactions = async() => {
+      const transactionData = await getTransactionByAccountId(userId, accountId);
+      setTransactions(transactionData);
+    };
+    loadTransactions();
+  }, []);
+
   return (
     <div className="text-white m-9">
-      <h1 className="text-center mb-[60px]">주거래 하나 통장</h1>
-      <div className="mb-8">
-        <p>하나은행 382471093847198</p>
-        <p className="text-[30px]">1,276,380원</p>
-      </div>
-      <hr/>
-      <div className="mt-4">
-        <p className="text-xs">11월 10일</p>
-        <div className="flex justify-between items-center">
-        <p className="font-bold text-[18px]">지에스25</p>
-        <p>-3400원</p>
+      {accounts.map((account) => (
+        <div key={account.accountId}>
+          <h1 className="text-center mb-[60px]">{account.accName}</h1>
+          <div className="mb-8">
+            <p>하나은행 {account.accountNum}</p>
+            <p className="text-[30px]">{account.balance}</p>
+          </div>
+          <hr/>
         </div>
-        <p className="text-gray-400 text-sm">17:50</p>
-      </div>
+      ))}
+      <TransactionList transactions={transactions}/>
     </div>
-  )
-}
+  );
+};
 
 export default TransactionDetails;

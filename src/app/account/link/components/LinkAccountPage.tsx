@@ -1,12 +1,13 @@
 "use client"
-import { getAccountList } from "@/api/AccountApi";
+import { getAccountInfo } from "@/api/AccountApi";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { UUID } from "crypto";
 interface AccountData {
   accountId: number;
   accountNum: string
   accName: string;
-  userId: string;
+  userId: UUID;
   bankId: number;
 }
 
@@ -16,11 +17,12 @@ const LinkAccountPage: React.FC<AccountData>= ({ userId, accountId}) =>{
 
   useEffect(() => {
     const loadAccounts = async() => {
-      const accountData = await getAccountList(userId, accountId);
+      const accountData = await getAccountInfo(userId, accountId);
+      console.log(accountData);
       setAccounts(accountData);
     };
     loadAccounts();
-  }, [userId, accountId]);
+  }, []);
 
   return (
     <div>
@@ -31,7 +33,7 @@ const LinkAccountPage: React.FC<AccountData>= ({ userId, accountId}) =>{
       {accounts.length > 0 ? (
           accounts.map((account) => (
             <div key={account.accountId}>
-              <p>{account.accName} ({account.accountNum})</p>
+              <p>{account.accName} {account.accountNum}</p>
             </div>
           ))
         ) : (

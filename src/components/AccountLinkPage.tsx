@@ -3,33 +3,50 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import MyAccountPage from "./MyAccountPage";
-import { getLinkedStatus } from "@/api/AccountApi";
+import { getAccountInfo, getLinkedStatus } from "@/api/AccountApi";
+import { UUID } from "crypto";
 
-interface Data {
+
+interface AccountData {
   accountId: number;
-  userId: string;
+  userId: UUID;
+  balance: number;
+  accName: string;
 }
 
-const AccountLinkPage: React.FC<Data> = ({ accountId, userId }) => {
+interface Data {
+  userId: UUID;
+}
+
+const AccountLinkPage: React.FC<Data> = ({ userId }) => {
   const [isLinked, setIsLinked] = useState(false);
+  const [accounts, setAccounts] = useState<AccountData[]>([]);
+  const [accountId, setAccountId] = useState<number | null>(null);
 
   useEffect(() => {
     const loadStatus = async() => {
-      const Data = await getLinkedStatus(accountId, userId);
-      setIsLinked(Data.linked);
-    };
+      if (accountId !== null) {
+        const data = await getLinkedStatus(accountId, userId);
+        setIsLinked(data.linked);
+
+      if(data.linked) {
+        const accountData = await getAccountInfo(userId ,data.accountId);
+        setAccounts(accountData);
+    }
+  }
+      };
     loadStatus();
   }, []);
 
   return (
   <div>
-    { isLinked ?(
+    {!isLinked ?(
     <div className="m-4">
       <Link href="/account">
         <button className="text-white font-bold bg-[#1C1B18] min-w-[360px] min-h-[76px] rounded-lg">내 계좌 연결하기
         </button>
       </Link>
-    </div>) :(<MyAccountPage/>)}
+    </div>) :(<MyAccountPage accounts={accounts}/>)}
   </div>
   )
 }
