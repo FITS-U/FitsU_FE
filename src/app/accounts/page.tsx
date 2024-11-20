@@ -69,7 +69,7 @@ const AccountPage: React.FC = () => {
 
   return (
     <div className="p-8 pb-20 text-white relative h-screen overflow-hidden">
-      <Link href="/accounts">
+      <Link href="/home">
         <FaChevronLeft className="h-5" />
       </Link>
       <div className="font-bold text-xl mt-6">어떤 자산을 연결할까요?</div>
