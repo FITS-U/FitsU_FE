@@ -12,7 +12,7 @@ const LinkPage: React.FC = () => {
 
   return (
     <div className="p-8 text-white pb-20 relative h-screen overflow-hidden">
-      <Link href="/accounts">
+      <Link href="/banks">
         <FaChevronLeft className="h-5" />
       </Link>
       <div className="mt-12 font-bold text-xl">아래 계좌를 연결할게요</div>
@@ -31,7 +31,7 @@ const LinkPage: React.FC = () => {
             <p className="text-center">계좌 정보가 없습니다.</p>
           )}
         </div>
-        <Link href="/" className="absolute block bottom-4 w-full -left-0">
+        <Link href="/accounts" className="absolute block bottom-4 w-full -left-0">
           <div className="px-6"> 
             <button className="p-4 w-full x-2 text-black font-bold bg-main-color rounded-lg">
               다음

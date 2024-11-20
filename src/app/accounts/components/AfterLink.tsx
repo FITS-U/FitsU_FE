@@ -32,7 +32,9 @@ const AfterLinkPage = () => {
           </div>
         ))}
         <hr className="mb-4"/>
-        <p className="text-center text-sm">다른 계좌 연결하기</p>
+        <Link href="/banks">
+          <div className="text-center text-sm cursor-pointer">다른 계좌 연결하기</div>
+        </Link>
       </div>
       <div className="bg-box-color rounded-2xl p-4 flex items-center justify-between">
         <span>
