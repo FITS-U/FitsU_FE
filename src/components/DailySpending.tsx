@@ -1,7 +1,7 @@
 import EachSpending from "./EachSpending";
 
 interface DailySpendingProps {
-  date: string;
+  date: number;
   dayName: string;
 }
 
