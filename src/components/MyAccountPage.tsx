@@ -1,10 +1,9 @@
-import { UUID } from "crypto";
 import Link from "next/link";
 
 
 interface AccountData {
   accountId: number;
-  userId: UUID;
+  userId: string;
   balance: number;
   accName: string;
 }
