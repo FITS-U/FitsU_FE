@@ -54,7 +54,7 @@ const AccountPage: React.FC = () => {
 
   return (
     <div className="m-8 text-white">
-      <Link href="/">
+      <Link href="/accounts">
         <FaChevronLeft className="h-5" />
       </Link>
       <div className="font-bold text-xl mt-6">어떤 자산을 연결할까요?</div>
@@ -67,7 +67,7 @@ const AccountPage: React.FC = () => {
           >
             선택 해제
           </span>
-          :
+        :
           <span
             onClick={selectAll}
             className="text-sm font-light cursor-pointer tracking-tighter"
@@ -85,20 +85,24 @@ const AccountPage: React.FC = () => {
           >
             <span className="text-lg">{bank.bankName}</span>
             <span>
-              {isChecked[bank.bankId] ? <FaCheckCircle className="w-7 h-7 text-main-color" /> : <FaRegCheckCircle className="w-7 h-7" />}
+              {isChecked[bank.bankId] ? 
+                <FaCheckCircle className="w-7 h-7 text-main-color" />
+              : 
+                <FaRegCheckCircle className="w-7 h-7" />
+              }
             </span>
           </div>
         ))}
       </div>
       {selectedBankIds.length ? (
         <Link href="/accounts/link">
-          <button className="w-full h-[60px] font-bold text-black bg-main-color rounded-2xl">
+          <button className="w-full h-14 font-bold text-black bg-main-color rounded-2xl">
             {selectedBankIds.length}개 연결하기
           </button>
         </Link>
       ) : (
         <button
-          className="w-full h-[60px] font-bold bg-gray-500 rounded-2xl"
+          className="w-full h-14 font-bold bg-gray-500 rounded-2xl"
           disabled
         >
           은행을 선택해주세요
