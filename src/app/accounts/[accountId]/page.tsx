@@ -3,12 +3,15 @@
 import { FaChevronLeft } from "react-icons/fa";
 import { AccountInfo } from "./components/AccountInfo";
 import { Transactions } from "./components/Transactions";
+import Link from "next/link";
 
 const AccountTransactions = () => {
   return (
     <div className="p-8 text-white">
       <div className="flex items-center justify-between">
-        <FaChevronLeft />
+        <Link href={`/accounts`}>
+          <FaChevronLeft className="h-5"/>
+        </Link>
         <span className="tracking-tighter">주거래 하나 통장</span>
         <div></div>
       </div>
