@@ -1,18 +1,24 @@
+import { Account } from "@/app/types/account";
 import Link from "next/link";
 
-const AfterLinkPage = () => {
-  // 임의의 계좌 데이터
-  const accounts = [
-    { accountId: 1, userId: "user1", balance: 500000, accName: "주거래 하나 통장" },
-    { accountId: 2, userId: "user2", balance: 1200000, accName: "쏠편한 입출금 통장" },
-    { accountId: 3, userId: "user3", balance: 450000, accName: "우리 SUPER 주거래 통장" },
-  ];
+interface AfterLinkPageProps {
+  accounts: Account[];  // props로 받을 타입 지정
+}
 
-  const totalPrice = 213000;
+const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
+  // 임의의 계좌 데이터
+  // const accounts = [
+  //   { accountId: 1, userId: "user1", balance: 500000, accName: "주거래 하나 통장" },
+  //   { accountId: 2, userId: "user2", balance: 1200000, accName: "쏠편한 입출금 통장" },
+  //   { accountId: 3, userId: "user3", balance: 450000, accName: "우리 SUPER 주거래 통장" },
+  // ];
+
+  const totalPrice = "213000";
 
   // 천 단위 구분 함수
-  const formatBalance = (balance: number): string => {
-    return new Intl.NumberFormat('ko-KR').format(balance);
+  const formatBalance = (balance: string): string => {
+    const balanceNumber = parseFloat(balance); // balance를 number로 변환
+    return new Intl.NumberFormat('ko-KR').format(balanceNumber);
   };
 
   return (
@@ -25,7 +31,7 @@ const AfterLinkPage = () => {
                 <div className="text-xl font-bold">{formatBalance(account.balance)}원</div>
                 <div className="text-sm">{account.accName}</div>
               </span>
-              <Link href="/accounts/details">
+              <Link href={`/accounts/`}>
                 <button className="bg-[#333230] rounded-lg w-14 h-8 text-sm">내역</button>
               </Link>
             </div>
