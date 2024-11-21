@@ -1,14 +1,46 @@
 "use client";
 
+import { getUnlinkedAccounts } from "@/api/AccountApi";
+import { Account } from "@/app/types/account";
+import { useBankStore } from "@/store/useBankStore";
+import { UUID } from "crypto";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 
 const LinkPage: React.FC = () => {
   // 임의의 계좌 데이터
-  const accounts = [
-    { accountId: 1, accountNum: "1234567891111", accName: "나라사랑우대통장", userId: "user1", bankId: 1, bankName: "국민은행" },
-    { accountId: 2, accountNum: "9876543212222", accName: "쏠편한입출금통장", userId: "user2", bankId: 2, bankName: "신한은행" },
-  ];
+  // const accounts = [
+  //   { accountId: 1, accountNum: "1234567891111", accName: "나라사랑우대통장", userId: "user1", bankId: 1, bankName: "국민은행" },
+  //   { accountId: 2, accountNum: "9876543212222", accName: "쏠편한입출금통장", userId: "user2", bankId: 2, bankName: "신한은행" },
+  // ];
+
+  const { selectedBankIds } = useBankStore();
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const userId: UUID = "62c92f85-a7d0-11ef-b6a4-c43d1a367887";
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      try {
+        const data = await getUnlinkedAccounts(userId, selectedBankIds);
+        setAccounts(data);
+      } catch (error) {
+        console.error("Failed to fetch accounts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAccounts();
+  }, [userId, selectedBankIds]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-white">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 text-white pb-20 relative h-screen overflow-hidden">
@@ -33,7 +65,10 @@ const LinkPage: React.FC = () => {
         </div>
         <Link href="/accounts" className="absolute block bottom-4 w-full -left-0">
           <div className="px-6"> 
-            <button className="p-4 w-full x-2 text-black font-bold bg-main-color rounded-lg">
+            <button
+              // onClick={}
+              className="p-4 w-full x-2 text-black font-bold bg-main-color rounded-lg"
+            >
               다음
             </button>
           </div>

@@ -7,3 +7,8 @@ export interface Account {
   bankName: string;
   isLinked: boolean;
 }
+
+export interface Bank {
+  bankId: number;
+  bankName: string;
+}

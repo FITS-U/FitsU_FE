@@ -4,17 +4,15 @@ import { getBankList } from "@/api/AccountApi";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaCheckCircle, FaRegCheckCircle, FaChevronLeft } from "react-icons/fa";
-
-interface Bank {
-  bankId: number;
-  bankName: string;
-}
+import { Bank } from "../types/account";
+import { useBankStore } from "@/store/useBankStore";
 
 const AccountPage: React.FC = () => {
   const [banks, setBanks] = useState<Bank[]>([]);
-  const [isChecked, setIsChecked] = useState<{ [key: number]: boolean }>({});
-  const [selectedBankIds, setSelectedBankIds] = useState<number[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  // zustand - bankStore
+  const { selectedBankIds, toggleBankId, selectAllBanks, deselectAllBanks } = useBankStore();
 
   // 은행 리스트 api 연동
   useEffect(() => {
@@ -40,37 +38,6 @@ const AccountPage: React.FC = () => {
     );
   }
 
-  const handleClick = (bankId: number) => {
-    setSelectedBankIds((prevState) =>
-      prevState.includes(bankId)
-        ? prevState.filter((id) => id !== bankId)
-        : [...prevState, bankId]
-    );
-
-    setIsChecked((prevState) => ({
-      ...prevState,
-      [bankId]: !prevState[bankId],
-    }));
-  };
-
-  // 선택 해제
-  const deselectAll = () => {
-    setSelectedBankIds([]);
-    setIsChecked({});
-  };
-
-  // 모든 은행 선택
-  const selectAll = () => {
-    const allBankIds = banks.map((bank) => bank.bankId);
-    const allChecked = banks.reduce((acc, bank) => {
-      acc[bank.bankId] = true;
-      return acc;
-    }, {} as { [key: number]: boolean });
-
-    setSelectedBankIds(allBankIds);
-    setIsChecked(allChecked);
-  };
-
   return (
     <div className="p-8 pb-20 text-white relative h-screen overflow-hidden">
       <Link href="/accounts">
@@ -81,14 +48,14 @@ const AccountPage: React.FC = () => {
         <span className="text-xl font-semibold">은행</span>
         {selectedBankIds.length ? 
           <span
-            onClick={deselectAll}
+            onClick={deselectAllBanks}
             className="text-sm font-light cursor-pointer tracking-tighter"
           >
             선택 해제
           </span>
         :
           <span
-            onClick={selectAll}
+            onClick={() => selectAllBanks(banks.map(bank => bank.bankId))}
             className="text-sm font-light cursor-pointer tracking-tighter"
           >
             모두 선택
@@ -101,11 +68,11 @@ const AccountPage: React.FC = () => {
             <div
               key={bank.bankId}
               className="mt-8 flex items-center justify-between cursor-pointer"
-              onClick={() => handleClick(bank.bankId)}
+              onClick={() => toggleBankId(bank.bankId)}
             >
               <span className="text-lg">{bank.bankName}</span>
               <span>
-                {isChecked[bank.bankId] ? 
+                {selectedBankIds.includes(bank.bankId) ? 
                   <FaCheckCircle className="w-7 h-7 text-main-color" />
                 : 
                   <FaRegCheckCircle className="w-7 h-7" />
@@ -116,7 +83,10 @@ const AccountPage: React.FC = () => {
         </div>
       </div>
       {selectedBankIds.length ? (
-        <Link href="/banks/selected" className="absolute block bottom-4 w-full -left-0">
+        <Link 
+          href="/banks/selected"
+          className="absolute block bottom-4 w-full -left-0"
+        >
           <div className="px-6">
             <button className="p-4 w-full x-2 font-bold text-black bg-main-color rounded-2xl">
               {selectedBankIds.length}개 연결하기

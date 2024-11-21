@@ -8,8 +8,6 @@ interface AfterLinkPageProps {
 }
 
 const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts, month, monthlySpend }) => {
-  // const totalPrice = "213000";
-
   // 천 단위 구분 함수
   const formatBalance = (balance: string): string => {
     const balanceNumber = parseFloat(balance); // balance를 number로 변환
