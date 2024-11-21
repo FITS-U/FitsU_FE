@@ -9,12 +9,6 @@ import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 
 const LinkPage: React.FC = () => {
-  // 임의의 계좌 데이터
-  // const accounts = [
-  //   { accountId: 1, accountNum: "1234567891111", accName: "나라사랑우대통장", userId: "user1", bankId: 1, bankName: "국민은행" },
-  //   { accountId: 2, accountNum: "9876543212222", accName: "쏠편한입출금통장", userId: "user2", bankId: 2, bankName: "신한은행" },
-  // ];
-
   const { selectedBankIds } = useBankStore();
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
