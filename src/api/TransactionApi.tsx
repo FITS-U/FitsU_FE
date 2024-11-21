@@ -9,10 +9,10 @@ export const getTransactionByAccountId = async(userId:UUID, accountId:number) =>
   return data;
 }
 
-export const getMonthSpend = async(userId:UUID) => {
+export const getMonthlySpend = async(userId:UUID, year:number, month:number) => {
   const {data} = await axios ({
     method: "GET",
-    url: `http://localhost:8084/api/v1/mth-spend/users/${userId}`
+    url: `http://localhost:8084/api/v1/transactions/mth-spend/users/${userId}?year=${year}&month=${month}`
   });
   return data;
 }

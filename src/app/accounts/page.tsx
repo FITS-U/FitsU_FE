@@ -1,23 +1,36 @@
 "use client"
 
 import { useEffect, useState } from "react";
-// import { useState } from "react";
 import AfterLinkPage from "./components/AfterLink";
 import BeforeLinkPage from "./components/BeforeLink";
 import { getLinkedAccounts } from "@/api/AccountApi";
 import { UUID } from "crypto";
 import { Account } from "../types/account";
+import { getMonthlySpend } from "@/api/TransactionApi";
 
 const HomePage: React.FC = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
+  const [monthlySpend, setMonthlySpend] = useState<string>("0");
   const [loading, setLoading] = useState<boolean>(true);
-  const userId: UUID = "8b365953-d7ac-40f5-b57a-f975a8e3c9e5";
+
+  const userId: UUID = "62c92f85-a7d0-11ef-b6a4-c43d1a367887";
+  // 현재 연도와 월 계산
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
 
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const data = await getLinkedAccounts(userId);
-        setAccounts(data);
+        // 두 개의 API 병렬로 호출
+        const [accountData, monthlySpendData] = await Promise.all([
+          getLinkedAccounts(userId),
+          getMonthlySpend(userId, year, month),
+        ]);
+
+        setAccounts(accountData);
+        setMonthlySpend(monthlySpendData);
+
       } catch (error) {
         console.error("Failed to fetch accout list:", error);
       } finally {
@@ -26,7 +39,7 @@ const HomePage: React.FC = () => {
     };
 
     fetchAccounts();
-  }, []);
+  }, [month, year]);
 
   if (loading) {
     return (
@@ -39,7 +52,7 @@ const HomePage: React.FC = () => {
   return (
     <div>
       {accounts.length ? (
-        <AfterLinkPage accounts={accounts} />
+        <AfterLinkPage accounts={accounts} month={month} monthlySpend={monthlySpend}/>
       ) : (
         <BeforeLinkPage />
       )}
