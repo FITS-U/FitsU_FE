@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
   const [monthlySpend, setMonthlySpend] = useState<string>("0");
   const [loading, setLoading] = useState<boolean>(true);
 
-  const userId: UUID = "62c92f85-a7d0-11ef-b6a4-c43d1a367887";
+  const userId: UUID = "d68ce080-a817-11ef-b6a4-c43d1a367887";
   // 현재 연도와 월 계산
   const today = new Date();
   const year = today.getFullYear();
