@@ -4,8 +4,9 @@ import { getBankList } from "@/api/AccountApi";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaCheckCircle, FaRegCheckCircle, FaChevronLeft } from "react-icons/fa";
-import { Bank } from "../types/account";
+import { Bank } from "../../types/account";
 import { useBankStore } from "@/store/useBankStore";
+import { Loading } from "../../components/Loading";
 
 const AccountPage: React.FC = () => {
   const [banks, setBanks] = useState<Bank[]>([]);
@@ -31,11 +32,7 @@ const AccountPage: React.FC = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen text-white">
-        <p>Loading...</p>
-      </div>
-    );
+    return <Loading />
   }
 
   return (

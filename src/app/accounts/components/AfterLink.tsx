@@ -1,4 +1,4 @@
-import { Account } from "@/app/types/account";
+import { Account } from "@/types/account";
 import Link from "next/link";
 
 interface AfterLinkPageProps {

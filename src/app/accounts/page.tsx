@@ -5,8 +5,9 @@ import AfterLinkPage from "./components/AfterLink";
 import BeforeLinkPage from "./components/BeforeLink";
 import { getLinkedAccounts } from "@/api/AccountApi";
 import { UUID } from "crypto";
-import { Account } from "../types/account";
+import { Account } from "../../types/account";
 import { getMonthlySpend } from "@/api/TransactionApi";
+import { Loading } from "../../components/Loading";
 
 const HomePage: React.FC = () => {
   const [accounts, setAccounts] = useState<Account[]>([]);
@@ -42,11 +43,7 @@ const HomePage: React.FC = () => {
   }, [month, year]);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen text-white">
-        <p>Loading...</p>
-      </div>
-    );
+    return <Loading />
   }
 
   return (

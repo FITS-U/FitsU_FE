@@ -1,12 +1,13 @@
 "use client";
 
 import { getUnlinkedAccounts } from "@/api/AccountApi";
-import { Account } from "@/app/types/account";
+import { Account } from "@/types/account";
 import { useBankStore } from "@/store/useBankStore";
 import { UUID } from "crypto";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
+import { Loading } from "@/components/Loading";
 
 const LinkPage: React.FC = () => {
   const { selectedBankIds } = useBankStore();
@@ -29,11 +30,7 @@ const LinkPage: React.FC = () => {
   }, [userId, selectedBankIds]);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen text-white">
-        <p>Loading...</p>
-      </div>
-    );
+    return <Loading />
   }
 
   return (
