@@ -1,7 +1,8 @@
 "use client"
 
+import { getBankList } from "@/api/AccountApi";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCheckCircle, FaRegCheckCircle, FaChevronLeft } from "react-icons/fa";
 
 interface Bank {
@@ -10,31 +11,34 @@ interface Bank {
 }
 
 const AccountPage: React.FC = () => {
+  const [banks, setBanks] = useState<Bank[]>([]);
   const [isChecked, setIsChecked] = useState<{ [key: number]: boolean }>({});
   const [selectedBankIds, setSelectedBankIds] = useState<number[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // 임의의 은행 데이터
-  const banks: Bank[] = [
-    { bankId: 1, bankName: "KB국민은행" },
-    { bankId: 2, bankName: "신한은행" },
-    { bankId: 3, bankName: "우리은행" },
-    { bankId: 4, bankName: "하나은행" },
-    { bankId: 5, bankName: "NH농협은행" },
-    { bankId: 6, bankName: "기업은행" },
-    { bankId: 7, bankName: "SC제일은행" },
-    { bankId: 8, bankName: "KDB산업은행" },
-    { bankId: 9, bankName: "카카오뱅크" },
-    { bankId: 10, bankName: "토스뱅크" },
-    { bankId: 11, bankName: "신협" },
-    { bankId: 12, bankName: "상호저축은행" },
-    { bankId: 13, bankName: "우체국은행" },
-    { bankId: 14, bankName: "광주은행" },
-    { bankId: 15, bankName: "전북은행" },
-    { bankId: 16, bankName: "제주은행" },
-    { bankId: 17, bankName: "대구은행" },
-    { bankId: 18, bankName: "부산은행" },
-    { bankId: 19, bankName: "경남은행" },
-  ];
+  // 은행 리스트 api 연동
+  useEffect(() => {
+    const fetchBanks = async () => {
+      try {
+        const data = await getBankList();
+        setBanks(data);
+      } catch (error) {
+        console.error("Failed to fetch bank list:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBanks();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-white">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   const handleClick = (bankId: number) => {
     setSelectedBankIds((prevState) =>
