@@ -1,6 +1,6 @@
 "use client";
 
-import { getUnlinkedAccounts } from "@/api/AccountApi";
+import { getUnlinkedAccounts, updateLinkStatus } from "@/api/AccountApi";
 import { Account } from "@/types/account";
 import { useBankStore } from "@/store/useBankStore";
 import { UUID } from "crypto";
@@ -11,23 +11,35 @@ import { Loading } from "@/components/Loading";
 
 const LinkPage: React.FC = () => {
   const { selectedBankIds } = useBankStore();
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [unlinkAccounts, setUnlinkAccounts] = useState<Account[]>([]);
+  const [updatedAccounts, setUpdatedAccounts] = useState<Account[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const userId: UUID = "62c92f85-a7d0-11ef-b6a4-c43d1a367887";
 
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const data = await getUnlinkedAccounts(userId, selectedBankIds);
-        setAccounts(data);
+        const unlinkAccData = await getUnlinkedAccounts(userId, selectedBankIds);
+        setUnlinkAccounts(unlinkAccData);
       } catch (error) {
-        console.error("Failed to fetch accounts:", error);
+        console.error("Failed to fetch unliked accounts:", error);
       } finally {
         setLoading(false);
       }
     };
     fetchAccounts();
   }, [userId, selectedBankIds]);
+
+  const updateAccounts = async () => {
+    try {
+      const updatedAccData = await updateLinkStatus(userId, selectedBankIds);
+      setUpdatedAccounts(updatedAccData);
+    } catch (error) {
+      console.error("Failed to fetch update accounts:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   if (loading) {
     return <Loading />
@@ -40,8 +52,8 @@ const LinkPage: React.FC = () => {
       </Link>
       <div className="mt-12 font-bold text-xl">아래 계좌를 연결할게요</div>
         <div className="mt-32">
-          {accounts.length ? (
-            accounts.map((account) => (
+          {unlinkAccounts.length ? (
+            unlinkAccounts.map((account) => (
               <div key={account.accountId} className="mb-6">
                 <div className="text-base/[15px] font-semibold tracking-tight">{account.accName}</div>
                 <div className="mt-1.5 text-sm font-light">
@@ -57,7 +69,7 @@ const LinkPage: React.FC = () => {
         <Link href="/accounts" className="absolute block bottom-4 w-full -left-0">
           <div className="px-6"> 
             <button
-              // onClick={}
+              onClick={updateAccounts}
               className="p-4 w-full x-2 text-black font-bold bg-main-color rounded-lg"
             >
               다음

@@ -33,7 +33,12 @@ export const getUnlinkedAccounts = async (
   return data;
 };
 
-export const updateLinkStatus = async(body:[]) => {
+export const updateLinkStatus = async(userId:UUID, bankIds:number[]) => {
+  const body = {
+    userId,
+    bankIds
+  };
+  
   const {data} = await axios({
     method: "POST",
     headers: {
