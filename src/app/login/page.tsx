@@ -40,7 +40,8 @@ const LoginPage = () => {
         } catch (error) {
           console.error("Failed to validation code:", error);
           alert("로그인에 실패했습니다.");
-          router.push("/login");
+          window.location.reload();
+          // router.push("/login");
         }
       },
       title:"verifyNum",
