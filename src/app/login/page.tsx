@@ -4,9 +4,10 @@ import { useState } from "react";
 import LoginInput, { LoginInputProps } from "./components/LoginInput";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
+import { isValidLogin } from "@/api/auth";
 
 const LoginPage = () => {
-  const { user } = useAuthStore();
+  const { user, setUser } = useAuthStore();
   const [step, setStep] = useState(0);
   const router = useRouter();
 
@@ -30,16 +31,19 @@ const LoginPage = () => {
     {
       inputText: "인증번호",
       descText: "인증번호를 입력해주세요.",
-      onNext: () => {
-        const isVerified = true; // 인증 번호 검증 api 연동 필요
-        if (isVerified) {
+      onNext: async () => {
+        try {
+          console.log("try문");
+          const data = await isValidLogin(user.name, user.phoneNum, user.token);
+          setUser({...user, token: data});
           router.push("/accounts");
-          console.log(user);  // user 객체 임시로 확인
-        } else {
-          alert("인증번호가 올바르지 않습니다.");
+        } catch (error) {
+          console.error("Failed to validation code:", error);
+          alert("로그인에 실패했습니다.");
+          router.push("/login");
         }
       },
-      title:"varifyNum",
+      title:"verifyNum",
       maxLen: 6,
       text:"",
     },

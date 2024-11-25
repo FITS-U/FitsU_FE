@@ -1,3 +1,4 @@
+import { varifyCode } from "@/api/auth";
 import { TitleType, useAuthStore } from "@/store/authStore";
 import { SignupType, useSignupStore } from "@/store/signupStore";
 import { ChangeEvent, KeyboardEvent } from "react";
@@ -28,11 +29,13 @@ export const AuthDescription = ({ text }: AuthProps) => {
 export interface AuthInputProps { text:string; title:TitleType; maxLen:number; onNext?:()=>void; }
 // input 버튼 컴포넌트
 export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
-  const { user, setUser } = useAuthStore();
+  const { user, setUser, setVerificationStatus } = useAuthStore();
 
   const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-    const {value} = e.target;
-    setUser({ ...user, [title]:value });
+    const { value } = e.target;
+    // 한글, 영문, 숫자만 허용
+    const filteredValue = value.replace(/[^ㄱ-힣a-zA-Z0-9]/g, "");
+    setUser({ ...user, [title]: filteredValue });
   }
 
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -41,19 +44,43 @@ export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
     }
   };
 
+  const varifyNum = async () => {
+    try {
+      const data = await varifyCode(user.phoneNum, user.verifyNum);
+      setUser({ ...user, token:data });
+      setVerificationStatus(true);
+    } catch (error) {
+      console.error("Failed to validation code:", error);
+      alert("인증번호가 올바르지 않습니다.");
+    } finally {
+      alert("번호 인증에 성공했습니다.");
+      console.log(user.token);
+    }
+  };
+
   return (
     <div className="flex items-center">
       <div className="w-full flex flex-col text-main-color">
         <div className="font-semibold mb-4">{text}</div>
-        <input
-          type="text"
-          placeholder={text}
-          maxLength={maxLen}
-          value={user[title]}
-          onChange={onChangeHandler}
-          onKeyDown={onKeyDownHandler}
-          className="w-full h-14 p-3 border border-current rounded-lg bg-black focus:outline-none focus:ring-0 placeholder:text-main-color"
-        />
+        <div className="relative">
+          <input
+            type="text"
+            placeholder={text}
+            maxLength={maxLen}
+            value={user[title]}
+            onChange={onChangeHandler}
+            onKeyDown={onKeyDownHandler}
+            className="w-full h-14 p-3 border border-current rounded-lg bg-black focus:outline-none focus:ring-0 placeholder:text-main-color"
+          />
+          {title == "verifyNum" && (
+            <button
+              onClick={varifyNum}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-main-color text-black px-4 py-2 rounded-lg font-bold"
+            >
+              확인
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -63,12 +90,16 @@ export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
 export interface AuthBtnProps { onNext?:()=>void; title:TitleType; }
 // 하단에 고정되어 있는 버튼 컴포넌트
 export const AuthFixedBtn = ({ onNext, title } :AuthBtnProps ) => {
-  const { user } = useAuthStore();
-  const isDisabled = user[title].trim() === "";
-  
-  const onDefault = ()=>{
-    console.log(user);
-  }
+  const { user, isVerified } = useAuthStore();
+  const isDisabled =
+    title === "verifyNum"
+      ? !isVerified
+      : (user[title] || "").trim() === "";
+
+  const handleClick = () => {
+    if (isDisabled) return;
+    if (onNext) onNext();
+  };
 
   return (
     <div className="absolute block bottom-4 w-full -left-0">
@@ -78,7 +109,7 @@ export const AuthFixedBtn = ({ onNext, title } :AuthBtnProps ) => {
             isDisabled ? "bg-gray-500" : "bg-main-color"
           }`}
           disabled={isDisabled}
-          onClick={onNext}
+          onClick={handleClick}
         >
           확인
         </button>
