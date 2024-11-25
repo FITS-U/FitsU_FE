@@ -5,15 +5,6 @@ interface AuthProps {
   text: string;
 }
 
-// 로그인 또는 회원가입 선택 버튼 컴포넌트
-export const AuthBtn = ({ text }: AuthProps) => {
-  return (
-    <button className="border-2 border-current w-full h-16 text-xl text-main-color font-bold rounded-xl">
-      {text}
-    </button>
-  );
-}
-
 // 로그인-회원가입 단계별 설명 컴포넌트
 export const AuthDescription = ({ text }: AuthProps) => {
   return (

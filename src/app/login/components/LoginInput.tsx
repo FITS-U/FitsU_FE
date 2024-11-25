@@ -1,4 +1,4 @@
-import { AuthBtnProps, AuthDescription, AuthFixedBtn, AuthInput, AuthInputProps } from "@/components/AboutAuth";
+import { AuthBtnProps, AuthDescription, AuthFixedBtn, AuthInput, AuthInputProps } from "@/app/login/components/AboutAuth";
 
 export interface LoginInputProps extends AuthBtnProps, AuthInputProps {
   inputText: string;
