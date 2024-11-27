@@ -267,9 +267,6 @@ export const SignupFixedBtn = ({ onNext, title }: RegisterBtnProps) => {
       if (title === "phoneNum" && newUser.secondRrn) {
         updateUserRrn(); // 두 번째 주민번호가 존재하면 업데이트
       }
-      // if (onNext) {
-      //   onNext(); // 다음 단계로 이동
-      // }
     }
   };
 
