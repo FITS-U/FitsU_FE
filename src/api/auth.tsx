@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // 인증번호 확인
-export const varifyCode = async(phoneNum: string, code:string) => {
+export const verifyCode = async(phoneNum: string, code:string) => {
   const body = {
     phoneNum,
     code
@@ -19,9 +19,9 @@ export const varifyCode = async(phoneNum: string, code:string) => {
 }
 
 // 로그인 유효성 확인
-export const isValidLogin = async(name:string, phoneNum: string, token:string) => {
+export const isValidLogin = async(userName:string, phoneNum: string, token:string) => {
   const body = {
-    name,
+    userName,
     phoneNum
   };
   
@@ -34,6 +34,28 @@ export const isValidLogin = async(name:string, phoneNum: string, token:string) =
     data: body,
     withCredentials: true,
     url: `http://localhost:8080/api/v1/auth/login`
+  });
+  return data;
+}
+
+// 회원가입
+export const Register = async(userName:string, RRNum:string, phoneNum:string, nickName:string, token:string) => {
+  const body = {
+    userName,
+    RRNum,
+    phoneNum,
+    nickName
+  };
+  
+  const {data} = await axios({
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    data: body,
+    withCredentials: true,
+    url: `http://192.168.1.33:8080/api/v1/auth/register`
   });
   return data;
 }

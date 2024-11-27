@@ -33,7 +33,6 @@ const LoginPage = () => {
       descText: "인증번호를 입력해주세요.",
       onNext: async () => {
         try {
-          console.log("try문");
           const data = await isValidLogin(user.name, user.phoneNum, user.token);
           setUser({...user, token: data});
           router.push("/accounts");
@@ -41,7 +40,6 @@ const LoginPage = () => {
           console.error("Failed to validation code:", error);
           alert("로그인에 실패했습니다.");
           window.location.reload();
-          // router.push("/login");
         }
       },
       title:"verifyNum",
