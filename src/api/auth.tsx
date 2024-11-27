@@ -13,7 +13,7 @@ export const verifyCode = async(phoneNum: string, code:string) => {
       'Content-Type': 'application/json'
     },
     data: body,
-    url: `http://localhost:8080/api/v1/auth/verify-code`
+    url: `http://192.168.1.33:8080/api/v1/auth/verify-code`
   });
   return data;
 }
@@ -33,7 +33,7 @@ export const isValidLogin = async(userName:string, phoneNum: string, token:strin
     },
     data: body,
     withCredentials: true,
-    url: `http://localhost:8080/api/v1/auth/login`
+    url: `http://192.168.1.33:8080/api/v1/auth/login`
   });
   return data;
 }
