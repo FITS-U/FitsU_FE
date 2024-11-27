@@ -1,4 +1,4 @@
-import { AuthBtn } from "@/app/login/components/AboutAuth";
+import { AuthBtn } from "@/components/AboutAuth";
 import Link from "next/link";
 
 export default function Home() {

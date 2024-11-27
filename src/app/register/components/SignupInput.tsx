@@ -1,4 +1,5 @@
-import { AuthDescription, CardBenefitsList, RegisterBtnProps, RegisterInputProps, RrnInput, SignupFixedBtn, SignupInput } from "@/app/login/components/AboutAuth";
+import { AuthDescription } from "@/components/AboutAuth";
+import { CardBenefitsList, RegisterBtnProps, RegisterInputProps, RrnInput, SignupFixedBtn, SignupInput } from "@/app/register/components/ForRegister";
 
 export interface SignupInputProps extends RegisterBtnProps, RegisterInputProps {
   descText: string;
