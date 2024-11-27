@@ -1,6 +1,6 @@
 "use client"
 
-import { getBankList } from "@/api/AccountApi";
+import { getBankList } from "@/api/account";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaCheckCircle, FaRegCheckCircle, FaChevronLeft } from "react-icons/fa";

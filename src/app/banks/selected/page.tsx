@@ -1,6 +1,6 @@
 "use client";
 
-import { getUnlinkedAccounts, updateLinkStatus } from "@/api/AccountApi";
+import { getUnlinkedAccounts, updateLinkStatus } from "@/api/account";
 import { Account } from "@/types/account";
 import { useBankStore } from "@/store/useBankStore";
 import { UUID } from "crypto";
@@ -8,18 +8,22 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { Loading } from "@/components/Loading";
+import { useAuthStore } from "@/store/authStore";
 
 const LinkPage: React.FC = () => {
   const { selectedBankIds } = useBankStore();
+  const { user } = useAuthStore();
+
   const [unlinkAccounts, setUnlinkAccounts] = useState<Account[]>([]);
   const [updatedAccounts, setUpdatedAccounts] = useState<Account[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const userId: UUID = "62c92f85-a7d0-11ef-b6a4-c43d1a367887";
+
+  // const userId: UUID = "62c92f85-a7d0-11ef-b6a4-c43d1a367887";
 
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const unlinkAccData = await getUnlinkedAccounts(userId, selectedBankIds);
+        const unlinkAccData = await getUnlinkedAccounts(user.token, selectedBankIds);
         setUnlinkAccounts(unlinkAccData);
       } catch (error) {
         console.error("Failed to fetch unliked accounts:", error);
@@ -28,11 +32,11 @@ const LinkPage: React.FC = () => {
       }
     };
     fetchAccounts();
-  }, [userId, selectedBankIds]);
+  }, [selectedBankIds]);
 
   const updateAccounts = async () => {
     try {
-      const updatedAccData = await updateLinkStatus(userId, selectedBankIds);
+      const updatedAccData = await updateLinkStatus(user.token, selectedBankIds);
       setUpdatedAccounts(updatedAccData);
     } catch (error) {
       console.error("Failed to fetch update accounts:", error);

@@ -55,7 +55,6 @@ export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
       alert("인증번호가 올바르지 않습니다.");
     } finally {
       alert("번호 인증에 성공했습니다.");
-      console.log(user.token);
     }
   };
 

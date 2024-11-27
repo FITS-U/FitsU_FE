@@ -26,10 +26,7 @@ const RegisterPage = () => {
       descText: "휴대폰 번호를 입력해주세요.",
       inputText: "휴대폰 번호",
       // onNext: () => setStep(2),
-      onNext: () => {
-        console.log(newUser.rrn);
-        setStep(2);
-      },
+      onNext: () => setStep(2),
       maxLen: 11,
       text: ""
     },
@@ -48,7 +45,7 @@ const RegisterPage = () => {
       onNext: async() => {
         try {
           const data = await Register(newUser.name, newUser.rrn, newUser.phoneNum, newUser.nickname, newUser.token);
-          setNewUser({...newUser, rrn: data});
+          setNewUser({...newUser, token: data});
           setStep(4);
         } catch (error) {
           console.error("Failed to validation code:", error);
@@ -66,7 +63,6 @@ const RegisterPage = () => {
       onNext: async() => {
         try {
           const cardBenefitsAsNumbers = newUser.cardBenefits.map(Number);
-          console.log(newUser);
           await saveInterestCtg(cardBenefitsAsNumbers, newUser.token);
           alert("관심 카드혜택 등록 성공");
           router.push("/login");

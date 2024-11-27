@@ -28,7 +28,6 @@ export const SignupInput = ({ text, title, maxLen, onNext } : RegisterInputProps
       const data = await verifyCode(newUser.phoneNum, newUser.verifyNum);
       setNewUser({ ...newUser, token:data });
       setVerificationStatus(true);
-      console.log(newUser.token);
       alert("번호 인증에 성공했습니다.");
     } catch (error) {
       console.error("Failed to validation code:", error);
@@ -88,7 +87,6 @@ export const RrnInput = ({ title, onNext }: RegisterBtnProps) => {
   const handleSecondPartChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
     if (value.length <= 1) {
-      console.log(value);
       setSecondPart(value);
       if (value.length === 1) {
           setNewUser({ ...newUser, secondRrn: value });
