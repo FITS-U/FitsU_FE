@@ -21,7 +21,7 @@ const AccountTransactions = () => {
     const fetchAccTransactions = async () => {
       try {
         const data = await getTransactionByAccountId(user.token, selectedAccount.accountId);
-        setTransactions(data);
+        setTransactions(data.content);
       } catch (error) {
         console.error("Failed to fetch transaction list of account:", error);
       } finally {
@@ -29,7 +29,7 @@ const AccountTransactions = () => {
       }
     }
     fetchAccTransactions();
-  });
+  }, [user.token, selectedAccount.accountId]);
 
   if (loading) {
     return <Loading />

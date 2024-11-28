@@ -12,7 +12,7 @@ export const TransactionItem = ({ recipient, time, price}:TransactionItemProps) 
         <div className="mt-0.5 text-sm">{time}</div>
       </span>
       <span className="flex flex-col items-end">
-        <div className="text-xl font-semibold">{price}</div>
+        <div className="text-xl font-semibold">{price}원</div>
         {/* <div className="mt-0.5 text-sm">1,276,380원</div> */}
       </span>
     </div>

@@ -27,23 +27,39 @@ export const Transactions: React.FC<TransactionsProps> = ({ transactions }) => {
     return type === "expense" ? `-${formattedPrice}` : formattedPrice;
   }
 
+  // 날짜별로 거래 내역을 그룹화
+  const groupedTransactions = transactions.reduce((groups: Record<string, Transaction[]>, transaction) => {
+    const [date] = formatDate(transaction.createdAt);
+    console.log(date);
+    if (!groups[date]) {
+      groups[date] = [];
+    }
+    groups[date].push(transaction);
+    return groups;
+  }, {});
+
   return (
     <div className="mt-8">
-      {transactions.map((transaction, index) => {
-        const [formattedDate, formattedTime] = formatDate(transaction.createdAt);
-        return (
-          <div key={index}>
-            <div className="text-sm">{formattedDate}</div>
-            <Link href={`/accounts/${accountId}/transactions/${index + 1}`}>
-              <TransactionItem
-                recipient={transaction.recipient} 
-                time={formattedTime}
-                price={formatPrice(transaction.price, transaction.transactionType)}
-              />
-            </Link>
-          </div>
-        );
-      })}
+      {Object.entries(groupedTransactions).map(([date, transactions]) => (
+        <div key={date}>
+          <div className="text-sm font-bold mb-2">{date}</div>
+          {transactions.map((transaction, index) => {
+            const [, formattedTime] = formatDate(transaction.createdAt);
+            return (
+              <Link
+                key={index}
+                href={`/accounts/${accountId}/transactions/${index + 1}`}
+              >
+                <TransactionItem
+                  recipient={transaction.recipient}
+                  time={formattedTime}
+                  price={formatPrice(transaction.price, transaction.transactionType)}
+                />
+              </Link>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 }

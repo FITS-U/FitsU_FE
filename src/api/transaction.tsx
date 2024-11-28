@@ -7,7 +7,7 @@ export const getTransactionByAccountId = async(token:string|null, accountId:numb
     headers: {
       Authorization: `Bearer ${token}`
     },
-    url: `http://${IP}:8084/api/v1/users/transactions/accounts/${accountId}`
+    url: `http://${IP}:8084/api/v1/transactions/accounts/${accountId}`
   });
   return data;
 }
