@@ -1,6 +1,5 @@
 import axios from "axios";
 import qs from "qs";
-import { UUID } from "crypto";
 
 export const getBankList = async() => {
   const {data} = await axios({
@@ -10,7 +9,7 @@ export const getBankList = async() => {
   return data;
 }
 
-export const getLinkedAccounts = async(token:string) => {
+export const getLinkedAccounts = async(token:string|null) => {
   const {data} = await axios({
     method: "GET",
     headers: {
@@ -21,7 +20,7 @@ export const getLinkedAccounts = async(token:string) => {
   return data;
 }
 
-export const getUnlinkedAccounts = async (token:string, bankIds: number[]) => {
+export const getUnlinkedAccounts = async (token:string|null, bankIds: number[]) => {
   const { data } = await axios({
     method: "GET",
     headers: {
@@ -36,7 +35,7 @@ export const getUnlinkedAccounts = async (token:string, bankIds: number[]) => {
   return data;
 };
 
-export const updateLinkStatus = async(token:string, bankIds:number[]) => {
+export const updateLinkStatus = async(token:string|null, bankIds:number[]) => {
   const body = {
     bankIds
   };

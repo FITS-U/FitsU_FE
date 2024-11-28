@@ -9,7 +9,7 @@ export const getCategories = async() => {
 }
 
 
-export const saveInterestCtg = async(categoryIds:number[], token:string) => {
+export const saveInterestCtg = async(categoryIds:number[], token:string|null) => {
   const body = {
     categoryIds
   }

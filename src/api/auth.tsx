@@ -19,7 +19,7 @@ export const verifyCode = async(phoneNum: string, code:string) => {
 }
 
 // 로그인 유효성 확인
-export const isValidLogin = async(userName:string, phoneNum: string, token:string) => {
+export const isValidLogin = async(userName:string, phoneNum: string, token:string|null) => {
   const body = {
     userName,
     phoneNum
@@ -39,7 +39,7 @@ export const isValidLogin = async(userName:string, phoneNum: string, token:strin
 }
 
 // 회원가입
-export const Register = async(userName:string, RRNum:string, phoneNum:string, nickName:string, token:string) => {
+export const Register = async(userName:string, RRNum:string, phoneNum:string, nickName:string, token:string|null) => {
   const body = {
     userName,
     RRNum,
