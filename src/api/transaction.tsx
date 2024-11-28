@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IP } from "./account";
 
 export const getTransactionByAccountId = async(token:string|null, accountId:number|undefined) => {
   const {data} = await axios({
@@ -6,7 +7,7 @@ export const getTransactionByAccountId = async(token:string|null, accountId:numb
     headers: {
       Authorization: `Bearer ${token}`
     },
-    url: `http://192.168.1.33:8084/api/v1/users/transactions/accounts/${accountId}`
+    url: `http://${IP}:8084/api/v1/users/transactions/accounts/${accountId}`
   });
   return data;
 }
@@ -17,7 +18,7 @@ export const getMonthlySpend = async(token:string|null, year:number, month:numbe
     headers: {
       Authorization: `Bearer ${token}`
     },
-    url: `http://192.168.1.33:8084/api/v1/transactions/mth-spend?year=${year}&month=${month}`
+    url: `http://${IP}:8084/api/v1/transactions/mth-spend?year=${year}&month=${month}`
   });
   return data;
 }

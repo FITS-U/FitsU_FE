@@ -1,9 +1,10 @@
 import axios from "axios";
+import { IP } from "./account";
 
 export const getCategories = async() => {
   const {data} = await axios({
     method: "GET",
-    url: `http://192.168.1.33:8082/api/v1/cards/categories`
+    url: `http://${IP}:8082/api/v1/cards/categories`
   });
   return data;
 }
@@ -19,6 +20,6 @@ export const saveInterestCtg = async(categoryIds:number[], token:string|null) =>
       Authorization: `Bearer ${token}`
     },
     data: body,
-    url: `http://192.168.1.33:8085/api/v1/interest-category`
+    url: `http://${IP}:8085/api/v1/interest-category`
   });
 }
