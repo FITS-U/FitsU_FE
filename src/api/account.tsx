@@ -1,5 +1,4 @@
 import axios from "axios";
-import qs from "qs";
 
 export const getBankList = async() => {
   const {data} = await axios({
@@ -27,9 +26,8 @@ export const getUnlinkedAccounts = async (token:string|null, bankIds: number[]) 
       Authorization: `Bearer ${token}`
     },
     url: `http://192.168.1.33:8087/api/v1/accounts/unlinked`,
-    params: { bankId: bankIds },
-    paramsSerializer: (params) => {
-      return qs.stringify(params, { arrayFormat: "repeat" });
+    params: {
+      bankIds: bankIds.join(","), // bankIds=1,2
     },
   });
   return data;
