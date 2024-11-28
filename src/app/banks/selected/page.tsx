@@ -2,7 +2,7 @@
 
 import { getUnlinkedAccounts, updateLinkStatus } from "@/api/account";
 import { Account } from "@/types/account";
-import { useBankStore } from "@/store/useBankStore";
+import { useBankStore } from "@/store/bankStore";
 import { UUID } from "crypto";
 import Link from "next/link";
 import { useEffect, useState } from "react";

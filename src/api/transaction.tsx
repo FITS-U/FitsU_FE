@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getTransactionByAccountId = async(token:string|null, accountId:number) => {
+export const getTransactionByAccountId = async(token:string|null, accountId:number|undefined) => {
   const {data} = await axios({
     method: "GET",
     headers: {

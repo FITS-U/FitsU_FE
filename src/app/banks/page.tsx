@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaCheckCircle, FaRegCheckCircle, FaChevronLeft } from "react-icons/fa";
 import { Bank } from "../../types/account";
-import { useBankStore } from "@/store/useBankStore";
+import { useBankStore } from "@/store/bankStore";
 import { Loading } from "../../components/Loading";
 
 const AccountPage: React.FC = () => {

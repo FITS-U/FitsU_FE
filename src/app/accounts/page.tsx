@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import AfterLinkPage from "./components/AfterLink";
 import BeforeLinkPage from "./components/BeforeLink";
 import { getLinkedAccounts } from "@/api/account";
-import { Account } from "../../types/account";
 import { getMonthlySpend } from "@/api/transaction";
 import { Loading } from "../../components/Loading";
 import { useAuthStore } from "@/store/authStore";
+import { useAccountStore } from "@/store/accountStore";
 
 const HomePage: React.FC = () => {
   const { user } = useAuthStore();
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const { accounts, setAccounts } = useAccountStore();
   const [monthlySpend, setMonthlySpend] = useState<string>("0");
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
       }
     };
     fetchAccounts();
-  }, [month, year]);
+  }, [month, year, setAccounts, user.token]);
 
   if (loading) {
     return <Loading />
