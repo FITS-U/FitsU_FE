@@ -7,14 +7,14 @@ import { useEffect, useState } from "react";
 import { getTransactionByAccountId } from "@/api/transaction";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
-import { Transaction } from "@/types/account";
 import { Loading } from "@/components/Loading";
 import { Transactions } from "./components/Transactions";
+import { useTransactionStore } from "@/store/transactionStore";
 
 const AccountTransactions = () => {
   const { user } = useAuthStore();
   const { selectedAccount } = useAccountStore();
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const { transactions, setTransactions } = useTransactionStore();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const AccountTransactions = () => {
       }
     }
     fetchAccTransactions();
-  }, [user.token, selectedAccount.accountId]);
+  }, [user.token, selectedAccount.accountId, setTransactions]);
 
   if (loading) {
     return <Loading />
@@ -47,7 +47,7 @@ const AccountTransactions = () => {
       <AccountInfo />
       <div className="mt-8 -mx-8 h-4 flex bg-box-color"></div>
       {transactions.length 
-        ? <Transactions transactions={transactions}/>
+        ? <Transactions />
         : <div className="flex items-center justify-center mt-32">거래 내역이 존재하지 않습니다.</div>
       }
     </div>
