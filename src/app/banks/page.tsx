@@ -94,7 +94,7 @@ const AccountPage: React.FC = () => {
         <div className="absolute block bottom-4 w-full -left-0">
           <div className="px-6">
             <button
-              className="p-4 w-full x-2 font-bold bg-gray-500 rounded-2xl"
+              className="p-4 w-full x-2 font-bold bg-contrast-600 rounded-2xl"
               disabled
             >
               은행을 선택해주세요

@@ -106,7 +106,7 @@ export const AuthFixedBtn = ({ onNext, title } :AuthBtnProps ) => {
       <div className="px-6">
         <button
           className={`p-4 w-full x-2 font-bold text-black text-lg rounded-2xl ${
-            isDisabled ? "bg-gray-500" : "bg-orange-500"
+            isDisabled ? "bg-contrast-600" : "bg-orange-500"
           }`}
           disabled={isDisabled}
           onClick={handleClick}
