@@ -22,7 +22,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts, month, monthlyS
 
   return (
     <div className="p-6 text-white">
-      <div className="mb-10 bg-box-color h-auto rounded-2xl p-4">
+      <div className="mb-10 bg-contrast-800 h-auto rounded-2xl p-4">
         {accounts.map((account, index) => (
           <div key={index}>
             <div className="flex justify-between items-center mb-5">
@@ -46,7 +46,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts, month, monthlyS
           <div className="text-center text-sm cursor-pointer">다른 계좌 연결하기</div>
         </Link>
       </div>
-      <div className="bg-box-color rounded-2xl p-4 flex items-center justify-between">
+      <div className="bg-contrast-800 rounded-2xl p-4 flex items-center justify-between">
         <span>
           <div className="text-xl font-bold">{formatBalance(monthlySpend)}원</div>
           <div className="text-sm">{month}월에 쓴 돈</div>

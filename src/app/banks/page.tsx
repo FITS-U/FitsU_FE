@@ -70,7 +70,7 @@ const AccountPage: React.FC = () => {
               <span className="text-lg">{bank.bankName}</span>
               <span>
                 {selectedBankIds.includes(bank.bankId) ? 
-                  <FaCheckCircle className="w-7 h-7 text-main-color" />
+                  <FaCheckCircle className="w-7 h-7 text-orange-500" />
                 : 
                   <FaRegCheckCircle className="w-7 h-7" />
                 }
@@ -85,7 +85,7 @@ const AccountPage: React.FC = () => {
           className="absolute block bottom-4 w-full -left-0"
         >
           <div className="px-6">
-            <button className="p-4 w-full x-2 font-bold text-black bg-main-color rounded-2xl">
+            <button className="p-4 w-full x-2 font-bold text-black bg-orange-500 rounded-2xl">
               {selectedBankIds.length}개 연결하기
             </button>
           </div>
