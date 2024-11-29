@@ -8,6 +8,8 @@ import { getMonthlySpend } from "@/api/transaction";
 import { Loading } from "../../components/Loading";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
+import BottomNav from "@/components/BottomNav";
+import { LogoToAccounts } from "@/components/Logo";
 
 const HomePage: React.FC = () => {
   const { user } = useAuthStore();
@@ -56,12 +58,16 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div>
-      {accounts.length ? (
-        <AfterLinkPage accounts={accounts} month={month} monthlySpend={monthlySpend}/>
-      ) : (
-        <BeforeLinkPage />
-      )}
+    <div className="p-8 text-white">
+      <LogoToAccounts />
+      <div className="mt-8">
+        {accounts.length ? (
+          <AfterLinkPage accounts={accounts} month={month} monthlySpend={monthlySpend}/>
+        ) : (
+          <BeforeLinkPage />
+        )}
+      </div>
+      <BottomNav />
     </div>
   )
 }
