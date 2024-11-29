@@ -5,6 +5,7 @@ import LoginInput, { LoginInputProps } from "./components/LoginInput";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { isValidLogin } from "@/api/auth";
+import { LogoToRoot } from "@/components/Logo";
 
 const LoginPage = () => {
   const { user, setUser } = useAuthStore();
@@ -50,6 +51,7 @@ const LoginPage = () => {
 
   return (
     <div className="p-8 text-white h-screen relative overflow-hidden">
+      <LogoToRoot />
       <LoginInput {...LoginInputList[step]} />
     </div>
   );

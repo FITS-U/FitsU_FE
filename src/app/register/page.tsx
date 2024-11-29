@@ -6,6 +6,7 @@ import { useState } from "react";
 import SignupInput, { SignupInputProps } from "./components/SignupInput";
 import { Register } from "@/api/auth";
 import { saveInterestCtg } from "@/api/category";
+import { LogoToRoot } from "@/components/Logo";
 
 const RegisterPage = () => {
   const { newUser, setNewUser } = useSignupStore();
@@ -79,6 +80,7 @@ const RegisterPage = () => {
 
   return (
     <div className="p-8 text-white h-screen relative overflow-hidden">
+      <LogoToRoot />
       <SignupInput {...SignupInputList[step]} />
     </div>
   );

@@ -50,12 +50,11 @@ export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
       const data = await verifyCode(user.phoneNum, user.verifyNum);
       setUser({ ...user, token:data });
       setVerificationStatus(true);
+      alert("번호 인증에 성공했습니다.");
     } catch (error) {
       console.error("Failed to validation code:", error);
       alert("인증번호가 올바르지 않습니다.");
-    } finally {
-      alert("번호 인증에 성공했습니다.");
-    }
+    } 
   };
 
   return (
