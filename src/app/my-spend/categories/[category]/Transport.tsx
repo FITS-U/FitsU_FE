@@ -18,10 +18,10 @@ const TransportPage = () => {
         </span>
         <CategoryLogo w={60} h={60} name="교통" iconSrc="/icons/transport.png" />
       </div>
-      <div className="mt-8 bg-box-color rounded-2xl p-2 w-[64px] text-sm flex items-center justify-center">
+      <div className="mt-8 bg-contrast-800 rounded-2xl p-2 w-[64px] text-sm flex items-center justify-center">
         <p>총 {count}회</p>
       </div>
-      <div className="mt-8 mx-[-32px] flex bg-box-color h-4"></div>
+      <div className="mt-8 mx-[-32px] flex bg-contrast-800 h-4"></div>
       <section className="mt-8">
         {spending.map((spending, index) => (
           <div key={index}>

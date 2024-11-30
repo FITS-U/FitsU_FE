@@ -53,7 +53,7 @@ const CardDetailPage = () => {
     <div className="p-8 text-white">
       <Link href="/recommends" className="text-3xl">&lt;</Link>
       <div className="mt-12 flex flex-col items-center">
-        <div className="w-3/5 aspect-[5/3] bg-box-color flex items-center justify-center">카드이미지</div>
+        <div className="w-3/5 aspect-[5/3] bg-contrast-800 flex items-center justify-center">카드이미지</div>
       </div>
       <h1 className="text-xl font-bold mt-14">{cardDetail.title}</h1>
       <p className="text-sm mt-4">{cardDetail.maindsc}</p>
@@ -63,7 +63,7 @@ const CardDetailPage = () => {
             <span>
               <div className="text-lg font-semibold">
                 <span>{benefits.ctg} </span>
-                <span className="text-main-color">{benefits.discRate} </span>
+                <span className="text-orange-500">{benefits.discRate} </span>
                 <span>할인</span>
               </div>
               <div className="font-light text-sm/[15px] mt-1 leading-normal">{benefits.catDesc}</div>
@@ -71,7 +71,7 @@ const CardDetailPage = () => {
           </div>
         ))}
       </section>
-      <div className="mt-8 mx-[-32px] flex bg-box-color h-4"></div>
+      <div className="mt-8 mx-[-32px] flex bg-contrast-800 h-4"></div>
       <div className="mt-8">
         <h1 className="font-semibold text-lg/[17px]">안내사항</h1>
         <div className="mt-10 text-sm">
@@ -87,7 +87,7 @@ const CardDetailPage = () => {
       </div>
       <div className="mt-10">
         <Link href={cardDetail.applyLink}>
-          <button className="w-full h-16 bg-main-color text-black font-bold text-lg py-3 rounded-2xl">
+          <button className="w-full h-16 bg-orange-500 text-black font-bold text-lg py-3 rounded-2xl">
             카드 신청하기
           </button>
         </Link>

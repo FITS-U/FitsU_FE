@@ -7,7 +7,7 @@ interface TopSpendingCategoryProps {
 
 const TopSpendingCategory = ({name, iconSrc} : TopSpendingCategoryProps) => {
   return (
-    <div className="bg-box-color w-60 mt-5 p-5 rounded-[16px] flex items-center justify-between">
+    <div className="bg-contrast-800 w-60 mt-5 p-5 rounded-[16px] flex items-center justify-between">
       <span>
         <div>이 달의 최고 소비</div>
         <div>{name}</div>
