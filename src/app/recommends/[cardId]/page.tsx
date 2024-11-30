@@ -50,7 +50,7 @@ const CardDetailPage = () => {
   }
 
   return (
-    <div className="p-8 text-white">
+    <div className="p-8 text-white relative">
       <Link href="/recommends" className="text-3xl">&lt;</Link>
       <div className="mt-12 flex flex-col items-center">
         <div className="w-3/5 aspect-[5/3] bg-contrast-800 flex items-center justify-center">카드이미지</div>
@@ -85,12 +85,14 @@ const CardDetailPage = () => {
           </div>
         </div>
       </div>
-      <div className="mt-10">
-        <Link href={cardDetail.applyLink}>
-          <button className="w-full h-16 bg-orange-500 text-black font-bold text-lg py-3 rounded-2xl">
-            카드 신청하기
-          </button>
-        </Link>
+      <div className="mt-20">
+        <div className="absolute block w-full -left-0 bottom-4">
+          <Link href={cardDetail.applyLink}>
+            <button className="w-full h-16 bg-orange-500 text-black font-bold text-lg py-3 rounded-2xl">
+              카드 신청하기
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
