@@ -1,4 +1,3 @@
-// import { v4 as uuidv4 } from "uuid";
 import DailySpending from "@/components/DailySpending";
 import TopSpendingCategory from "./components/TopSpendingCategory";
 import Link from "next/link";
@@ -15,15 +14,7 @@ interface Transaction {
   userCardId: string | null;
 }
 
-// 임시 UUID 기본값 생성
-// const TEMP_USER_ID: UUID = uuidv4();
 const TEMP_USER_ID = "b7d6237a-a640-11ef-8a92-00155d15297e";
-
-// UUID 정규식 검증 함수
-// function isValidUUID(uuid: string): boolean {
-//   const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-//   return UUID_REGEX.test(uuid);
-// }
 
 // API 호출 함수
 async function fetchTransactions(userId: UUID): Promise<Transaction[]> {

@@ -8,7 +8,7 @@ const BottomNav = () => {
   const currentPath = usePathname();
 
   const links = [
-    { href: "/", icon: FaHouse, label: "홈" },
+    { href: "/accounts", icon: FaHouse, label: "홈" },
     { href: "/my-spend", icon: FaChartPie, label: "내소비" },
     { href: "/recommend", icon: FaBoltLightning, label: "카드추천" },
     { href: "/shopping", icon: FaCartShopping, label: "중고쇼핑" },

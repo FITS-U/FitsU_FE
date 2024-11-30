@@ -46,7 +46,7 @@ const TransactionItemDetail = () => {
         <span>카테고리 설정</span>
         <Link href={`/accounts/${accountId}/transactions/${transactionId}/edit-category`}>
           <span className="flex items-center justify-between">
-            <span className="mr-2 text-main-color">{selectedTransaction.categoryName}</span>
+            <span className="mr-2 text-orange-500">{selectedTransaction.categoryName}</span>
             <FaChevronRight className="h-3" />
           </span>
         </Link>

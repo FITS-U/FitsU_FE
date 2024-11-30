@@ -45,7 +45,7 @@ const AccountTransactions = () => {
         <div></div>
       </div>
       <AccountInfo />
-      <div className="mt-8 -mx-8 h-4 flex bg-box-color"></div>
+      <div className="mt-8 -mx-8 h-4 flex bg-contrast-800"></div>
       {transactions.length 
         ? <Transactions />
         : <div className="flex items-center justify-center mt-32">거래 내역이 존재하지 않습니다.</div>

@@ -37,7 +37,7 @@ export const SignupInput = ({ text, title, maxLen, onNext } : RegisterInputProps
 
   return (
     <div className="flex items-center">
-      <div className="w-full flex flex-col text-main-color">
+      <div className="w-full flex flex-col text-orange-500">
         <div className="font-semibold mb-4">{text}</div>
         <div className="relative">
           <input
@@ -47,12 +47,12 @@ export const SignupInput = ({ text, title, maxLen, onNext } : RegisterInputProps
             value={newUser[title]}
             onChange={onChangeHandler}
             onKeyDown={onKeyDownHandler}
-            className="w-full h-14 p-3 border border-current rounded-lg bg-black focus:outline-none focus:ring-0 placeholder:text-main-color"
+            className="w-full h-14 p-3 border border-current rounded-lg bg-black focus:outline-none focus:ring-0 placeholder:text-orange-500"
           />
           {title == "verifyNum" && (
             <button
               onClick={verifyNum}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-main-color text-black px-4 py-2 rounded-lg font-bold"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-orange-500 text-black px-4 py-2 rounded-lg font-bold"
             >
               확인
             </button>
@@ -98,7 +98,7 @@ export const RrnInput = ({ title, onNext }: RegisterBtnProps) => {
   const onBlurHandler = () => setShowPlaceholder(true);
 
   return (
-    <div className="mt-10 flex items-center text-main-color">
+    <div className="mt-10 flex items-center text-orange-500">
       <div className="w-full flex flex-col">
         <div>주민등록번호</div>
         <div className="w-full flex space-x-4">
@@ -110,11 +110,11 @@ export const RrnInput = ({ title, onNext }: RegisterBtnProps) => {
             onFocus={onFocusHandler}
             onBlur={onBlurHandler}
             onChange={handleFirstPartChange}
-            className="w-1/2 h-14 text-center bg-black border-b-current border-b-2 focus:outline-none focus:ring-0 placeholder:text-main-color"
+            className="w-1/2 h-14 text-center bg-black border-b-current border-b-2 focus:outline-none focus:ring-0 placeholder:text-orange-500"
           />
           <div className="flex w-6 items-center justify-center">ㅡ</div>
           <div className="w-1/2 h-14 text-center bg-black border-b-current border-b-2 flex items-center justify-center relative">
-            <span className="w-full h-full flex justify-center items-center text-main-color pointer-events-none">
+            <span className="w-full h-full flex justify-center items-center text-orange-500 pointer-events-none">
               {secondPart ? `******` : "******"}
             </span>
             <input
@@ -164,7 +164,7 @@ export const SignupFixedBtn = ({ onNext, title }: RegisterBtnProps) => {
       <div className="px-6">
         <button
           className={`p-4 w-full x-2 font-bold text-black text-lg rounded-2xl ${
-            isDisabled ? "bg-gray-500" : "bg-main-color"
+            isDisabled ? "bg-contrast-600" : "bg-orange-500"
           }`}
           disabled={isDisabled}
           onClick={() => {
@@ -236,12 +236,12 @@ export const CardBenefitsList = ({ title, onNext }: RegisterBtnProps) => {
         <span>{newUser.cardBenefits.length}개 선택됨</span>
         <span onClick={deselectBenefits} className="cursor-pointer">선택 해제</span>
       </div>
-      <div className="w-full grid grid-cols-3 gap-4 justify-between text-main-color overflow-y-auto scrollbar-hide max-h-[calc(100vh-360px)]">
+      <div className="w-full grid grid-cols-3 gap-4 justify-between text-orange-500 overflow-y-auto scrollbar-hide max-h-[calc(100vh-360px)]">
         {categories.map(({categoryId, categoryName}) => (
           <div 
             key={categoryId}
             onClick={() => handleSelect(categoryId)}
-            className={`p-2 h-20 rounded-lg border-current border-2 cursor-pointer flex items-center justify-center font-semibold text-center break-words ${newUser.cardBenefits.includes(categoryId.toString()) ? "bg-main-color text-black" : ""}`}
+            className={`p-2 h-20 rounded-lg border-current border-2 cursor-pointer flex items-center justify-center font-semibold text-center break-words ${newUser.cardBenefits.includes(categoryId.toString()) ? "bg-orange-500 text-black" : ""}`}
           >
             <span className="block">{categoryName}</span>
           </div>

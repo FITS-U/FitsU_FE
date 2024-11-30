@@ -74,7 +74,7 @@ const LinkPage: React.FC = () => {
           <div className="px-6"> 
             <button
               onClick={updateAccounts}
-              className="p-4 w-full x-2 text-black font-bold bg-main-color rounded-lg"
+              className="p-4 w-full x-2 text-black font-bold bg-orange-500 rounded-lg"
             >
               다음
             </button>
