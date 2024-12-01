@@ -15,7 +15,7 @@ const BottomNav = () => {
   ];
 
   return (
-    <div className="w-full h-20 fixed -left-0 bottom-0 border-t-[1px] border-contrast-500 rounded-3xl bg-black">
+    <div className="w-full h-20 absolute -left-0 bottom-0 border-t-[1px] border-contrast-500 rounded-3xl bg-black">
       <div className="flex items-center justify-between px-8 py-4">
         {links.map(({ href, icon: Icon, label }) => (
           <Link key={href} href={href}>

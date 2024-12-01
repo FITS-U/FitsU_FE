@@ -86,7 +86,7 @@ const CardDetailPage = () => {
         </div>
       </div>
       <div className="mt-20">
-        <div className="absolute block w-full -left-0 bottom-4">
+        <div className="absolute block w-full -left-0 bottom-4 px-6">
           <Link href={cardDetail.applyLink}>
             <button className="w-full h-16 bg-orange-500 text-black font-bold text-lg py-3 rounded-2xl">
               카드 신청하기
