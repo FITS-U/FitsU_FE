@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { FaChevronLeft } from "react-icons/fa";
 
 const cardDetails = [
   {
@@ -51,7 +52,9 @@ const CardDetailPage = () => {
 
   return (
     <div className="p-8 text-white relative">
-      <Link href="/recommends" className="text-3xl">&lt;</Link>
+      <Link href="/recommends" className="text-3xl">
+        <FaChevronLeft className="h-5" />
+      </Link>
       <div className="mt-12 flex flex-col items-center">
         <div className="w-3/5 aspect-[5/3] bg-contrast-800 flex items-center justify-center">카드이미지</div>
       </div>
