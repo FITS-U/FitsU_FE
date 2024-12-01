@@ -1,21 +1,17 @@
+import { useFormatPrice } from "@/hooks/useFormatPrice";
 import { AccountState, useAccountStore } from "@/store/accountStore";
+import { useMonthlyStore } from "@/store/monthlyStore";
 import Link from "next/link";
 
 interface AfterLinkPageProps {
   accounts: AccountState[];
-  month: number;
-  monthlySpend: string;
 }
 
-const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts, month, monthlySpend }) => {
+const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
   const { setSelectedAccount } = useAccountStore();
-  
-  // 천 단위 구분 함수
-  const formatBalance = (balance: string): string => {
-    const balanceNumber = parseFloat(balance); // balance를 number로 변환
-    return new Intl.NumberFormat('ko-KR').format(balanceNumber);
-  };
-  
+  const { month, monthlySpend } = useMonthlyStore();
+  const {} = useFormatPrice(monthlySpend);
+
   const handleAccountClick = (account: AccountState) => {
     setSelectedAccount(account);
   };
@@ -27,7 +23,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts, month, monthlyS
           <div key={index}>
             <div className="flex justify-between items-center mb-5">
               <span>
-                <div className="text-xl font-bold">{formatBalance(account.balance)}원</div>
+                <div className="text-xl font-bold">{useFormatPrice(account.balance)}원</div>
                 <div className="text-sm">{account.accName}</div>
               </span>
               <Link href={`/accounts/${index + 1}`}>
@@ -48,7 +44,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts, month, monthlyS
       </div>
       <div className="bg-contrast-800 rounded-2xl p-4 flex items-center justify-between">
         <span>
-          <div className="text-xl font-bold">{formatBalance(monthlySpend)}원</div>
+          <div className="text-xl font-bold">{useFormatPrice(monthlySpend)}원</div>
           <div className="text-sm">{month}월에 쓴 돈</div>
         </span>
         <Link href="/my-spend">

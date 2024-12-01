@@ -10,23 +10,20 @@ import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
 import BottomNav from "@/components/BottomNav";
 import { LogoToAccounts } from "@/components/Logo";
+import { useMonthlyStore } from "@/store/monthlyStore";
 
 const HomePage: React.FC = () => {
   const { user } = useAuthStore();
   const { accounts, setAccounts } = useAccountStore();
-  const [monthlySpend, setMonthlySpend] = useState<string>("0");
+  const { year, month, monthlySpend, setMonthlySpend, updateDate } = useMonthlyStore();
   const [loading, setLoading] = useState<boolean>(true);
 
-  // 현재 연도와 월 계산
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
-
   useEffect(() => {
+    updateDate();
+
     const fetchAccounts = async () => {
       try {
         // 두 개의 API 병렬로 호출
-        console.log(user.token);
         const [accountData, monthlySpendData] = await Promise.allSettled([
           getLinkedAccounts(user.token),
           getMonthlySpend(user.token, year, month),
@@ -51,7 +48,7 @@ const HomePage: React.FC = () => {
       }
     };
     fetchAccounts();
-  }, [month, year, setAccounts, user.token]);
+  }, [month, year, setAccounts, setMonthlySpend, user.token, updateDate]);
 
   if (loading) {
     return <Loading />
@@ -62,7 +59,7 @@ const HomePage: React.FC = () => {
       <LogoToAccounts />
       <div className="mt-8">
         {accounts.length ? (
-          <AfterLinkPage accounts={accounts} month={month} monthlySpend={monthlySpend}/>
+          <AfterLinkPage accounts={accounts} />
         ) : (
           <BeforeLinkPage />
         )}
