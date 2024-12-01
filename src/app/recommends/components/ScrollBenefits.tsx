@@ -1,4 +1,7 @@
-import { FaChevronDown } from "react-icons/fa";
+"use client"
+
+import { useRef, useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 export const ScrollBenefits = () => {
   // 임시데이터
@@ -39,19 +42,67 @@ export const ScrollBenefits = () => {
     { id: 34, name: "그린카드" },
   ];
 
+  const [isDropDownOpen, setIsDropDownOpen] = useState<boolean>(false);
+  const [selectedBenefit, setSelectedBenefit] = useState(categories[0].id);
+  const scrollRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const toggleDropDown = () => setIsDropDownOpen(!isDropDownOpen);
+
+  const handleSelectBenefit = (id: number) => {
+    setSelectedBenefit(id);
+    setIsDropDownOpen(false);
+
+    // 해당 카테고리를 가운데로 스크롤
+    const selectedIndex = categories.findIndex((cat) => cat.id === id);
+    scrollRefs.current[selectedIndex]?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  };
+
   return (
     <div>
       <div className="flex overflow-x-auto scrollbar-hide gap-3 mr-0">
-        <div  className="ml-8">
-          <div className="inline-flex h-10 px-4 min-w-20 whitespace-nowrap bg-white rounded-full items-center justify-center">
+        <div className="ml-8">
+          <div 
+            onClick={toggleDropDown}
+            className="inline-flex h-10 px-4 min-w-20 whitespace-nowrap bg-white rounded-full items-center justify-center cursor-pointer"
+          >
             <div className="flex items-center justify-center text-black text-sm font-semibold">
-              혜택보기 <FaChevronDown className="h-3 ml-1" />
+              혜택보기 
+              {isDropDownOpen ? <FaChevronUp className="h-3 ml-1" /> : <FaChevronDown className="h-3 ml-1" />}
             </div>
           </div>
+
+          {/* 드롭다운 메뉴 */}
+          {isDropDownOpen && (
+            <div className="absolute mt-3 flex shadow-lg rounded-lg z-10 h-full overflow-y-auto max-h-[550px] text-black scrollbar-hide">
+              <div className="grid grid-cols-3 gap-1 items-center justify-center">
+                {categories.map((category) => (
+                  <div
+                    key={category.id}
+                    onClick={() => handleSelectBenefit(category.id)}
+                    className="flex items-center justify-center text-center p-2 cursor-pointer hover:bg-orange-500 hover:border-current rounded-md border bg-white"
+                  >
+                    {category.name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-        {categories.map((category) => (
-          <div key={category.id}>
-            <div className="inline-flex h-10 px-4 min-w-20 whitespace-nowrap bg-white rounded-full items-center justify-center">
+
+        {/* 카테고리 버튼 */}
+        {categories.map((category, index) => (
+          <div 
+            key={category.id}
+            ref={(el) => { scrollRefs.current[index] = el; }}
+          >
+            <div 
+              onClick={() => setSelectedBenefit(category.id)}
+              className={`inline-flex h-10 px-4 min-w-20 whitespace-nowrap rounded-full items-center justify-center cursor-pointer ${category.id === selectedBenefit ? "bg-orange-500" : "bg-white"}`}
+            >
               <div className="text-black text-sm font-semibold">{category.name}</div>
             </div>
           </div>
