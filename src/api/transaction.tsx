@@ -22,3 +22,25 @@ export const getMonthlySpend = async(token:string|null, year:number, month:numbe
   });
   return data;
 }
+
+export const getAllTransactions = async (token:string|null) => {
+  const {data} = await axios ({
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    url: `http://${IP}:8084/api/v1/transactions`
+  });
+  return data;
+}
+
+export const getMthlySpendOfCtg = async (token:string|null, year:number, month:number) => {
+  const {data} = await axios ({
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    url: `http://${IP}:8084/api/v1/transactions/mth-expenses-by-category?year=${year}&month=${month}`
+  });
+  return data;
+}
