@@ -37,7 +37,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
 
   // 지출이 가장 큰 카테고리를 첫 번째로 설정
   getLargestSpendingCtg: () => {
-    const largestCategory = get().getSortedCtgBySpending()[0];
-    return largestCategory;
+    const sortedCategories = get().getSortedCtgBySpending();
+    return sortedCategories[0];
   },
 }));

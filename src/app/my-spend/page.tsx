@@ -55,7 +55,7 @@ const MySpendPage = () => {
   return (
     <div className="text-white p-8">
       {/* 월 소비 정보 */}
-      <div className="font-semibold">{month}</div>
+      <div className="font-semibold">{month}월</div>
       <div className="text-2xl font-semibold">{useFormatPrice(monthlySpend)}원</div>
 
       {/* 카테고리 링크 */}
