@@ -1,3 +1,12 @@
+export const useFormatDateByDayName = (dateString:string) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+  const dayName = dayNames[date.getDay()];
+
+  return `${day}일 ${dayName}요일`;
+}
+
 export const useFormatDateByDay = (dateString:string) => {
   const date = new Date(dateString);
   const month = date.getMonth() + 1;

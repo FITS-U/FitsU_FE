@@ -12,8 +12,9 @@ import { useCategoryStore } from "@/store/categoryStore";
 import { MonthlyInfo } from "./components/MonthlyInfo";
 import BottomNav from "@/components/BottomNav";
 import { Transaction } from "@/types/account";
-import { useFormatDateByDay } from "@/hooks/useFormatDate";
+import { useFormatDateByDayName } from "@/hooks/useFormatDate";
 import { useFormatTransactionPrice } from "@/hooks/useFormatPrice";
+import Calendar from "./components/Calender";
 
 const MySpendPage = () => {
   const { user } = useAuthStore();
@@ -21,6 +22,14 @@ const MySpendPage = () => {
   const { year, month } = useMonthlyStore();
   const { setCategories } = useCategoryStore();
   const [loading, setLoading] = useState<boolean>(true);
+
+  const [expenses, setExpenses] = useState<Record<number, number>>({
+    1: -20000,
+    2: 15000,
+    3: -3000,
+    4: 5000,
+    6: 7000,
+  });
 
   useEffect(() => {
     const fetchAllTransactions = async () => {
@@ -62,7 +71,7 @@ const MySpendPage = () => {
   // 일별로 거래 내역 그룹화 함수
   const groupTransactionsByDate = (transactions: Transaction[]) => {
     return transactions.reduce((groups: Record<string, Transaction[]>, transaction) => {
-      const date = useFormatDateByDay(transaction.createdAt);
+      const date = useFormatDateByDayName(transaction.createdAt);
       if (!groups[date]) {
         groups[date] = [];
       }
@@ -85,16 +94,20 @@ const MySpendPage = () => {
           <TopSpendingCategory />
         </Link>
 
+        <div className="mt-8 flex flex-col items-center justify-center">
+          <Calendar month={month} year={year} expenses={expenses} />
+        </div>
+
         {/* 월별 -> 일별 소비 데이터 */}
         {Object.entries(groupedByDate).map(([date, dailyTransactions]) => (
           <div key={date} className="mt-8">
-            <div className="text-sm font-semibold mb-2">{date}</div>
+            <div className="text-sm font-semibold mb-6 text-contrast-200">{date}</div>
             {dailyTransactions.map((transaction) => (
-              <div key={transaction.transactionId} className="mb-8">
+              <div key={transaction.transactionId} className="mb-6">
                 <div className="font-bold text-lg">
                   {useFormatTransactionPrice(transaction.price, transaction.transactionType)}
                 </div>
-                <div className="text-xs">
+                <div className="text-xs text-contrast-200">
                   {transaction.recipient} | {transaction.userCardId ? transaction.cardName : transaction.accName}
                 </div>
               </div>
