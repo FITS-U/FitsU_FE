@@ -11,6 +11,7 @@ import { useAuthStore } from "@/store/authStore";
 import { Loading } from "@/components/Loading";
 import { useFormatPrice } from "@/hooks/useFormatPrice";
 import { useCategoryStore } from "@/store/categoryStore";
+import { MonthlyInfo } from "./components/MonthlyInfo";
 
 const MySpendPage = () => {
   const { user } = useAuthStore();
@@ -55,8 +56,7 @@ const MySpendPage = () => {
   return (
     <div className="text-white p-8">
       {/* 월 소비 정보 */}
-      <div className="font-semibold">{month}월</div>
-      <div className="text-2xl font-semibold">{useFormatPrice(monthlySpend)}원</div>
+      <MonthlyInfo />
 
       {/* 카테고리 링크 */}
       <Link href="/my-spend/categories">
