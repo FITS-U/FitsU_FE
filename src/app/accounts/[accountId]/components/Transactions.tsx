@@ -3,22 +3,15 @@ import { TransactionItem } from "./TransactionItem"
 import { useParams } from "next/navigation";
 import { Transaction } from "@/types/account";
 import { useTransactionStore } from "@/store/transactionStore";
+import { useFormatDateToMonthly } from "@/hooks/useFormatDate";
 
 export const Transactions = () => {
   const { accountId } = useParams();
-  const { transactions, selectedTransaction, setSelectedTransaction } = useTransactionStore();
-
-  function formatDate(dateString:string) {
-    const date = new Date(dateString);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    return `${month}월 ${day}일`;
-  }
+  const { transactions, setSelectedTransaction } = useTransactionStore();
 
   // 날짜별로 거래 내역을 그룹화
   const groupedTransactions = transactions.reduce((groups: Record<string, Transaction[]>, transaction) => {
-    const date = formatDate(transaction.createdAt);
+    const date = useFormatDateToMonthly(transaction.createdAt);
     if (!groups[date]) {
       groups[date] = [];
     }
