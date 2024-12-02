@@ -17,7 +17,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
   };
 
   return (
-    <div className="p-6 text-white">
+    <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-170px)]">
       <div className="mb-10 bg-contrast-800 h-auto rounded-2xl p-4">
         {accounts.map((account, index) => (
           <div key={index}>
@@ -29,7 +29,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
               <Link href={`/accounts/${index + 1}`}>
                 <button
                   onClick={() => handleAccountClick(account)}
-                  className="bg-[#333230] rounded-lg w-14 h-8 text-sm"
+                  className="bg-contrast-600 rounded-lg w-14 h-8 text-sm"
                 >
                   내역
                 </button>
@@ -48,7 +48,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
           <div className="text-sm">{month}월에 쓴 돈</div>
         </span>
         <Link href="/my-spend">
-          <button className="bg-[#333230] rounded-lg w-14 h-8 text-sm">내역</button>
+          <button className="bg-contrast-600 rounded-lg w-14 h-8 text-sm">내역</button>
         </Link>
       </div>
     </div>

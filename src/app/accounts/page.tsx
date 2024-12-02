@@ -55,9 +55,9 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className="p-8 text-white">
+    <div className="px-8 pt-4 relative h-screen overflow-hidden text-white">
       <LogoToAccounts />
-      <div className="mt-8">
+      <div className="mt-5">
         {accounts.length ? (
           <AfterLinkPage accounts={accounts} />
         ) : (
