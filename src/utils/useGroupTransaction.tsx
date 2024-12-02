@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { Transaction } from "@/types/account";
-import { useFormatDateByDay } from "@/hooks/useFormatDate";
+import { formatDateByDay } from "@/utils/formatDate";
 
-export const useGroupTransactionsByDate = (transactions: Transaction[]) => {
+export const groupTransactionsByDate = (transactions: Transaction[]) => {
   return useMemo(() => {
     return transactions.reduce((groups: Record<string, Transaction[]>, transaction) => {
-      const date = useFormatDateByDay(transaction.createdAt);
+      const date = formatDateByDay(transaction.createdAt);
       if (!groups[date]) {
         groups[date] = [];
       }

@@ -4,8 +4,6 @@ interface MonthlyStore {
   year: number;
   month: number;
   monthlySpend: string;
-  selectedMonth: number;
-  setSelectedMonth: (month: number) => void;
   setMonthlySpend: (spend: string) => void;
   updateDate: () => void;
   getNextOrPrevMonth: (direction: 'prev' | 'next') => void;
@@ -15,8 +13,6 @@ export const useMonthlyStore = create<MonthlyStore>((set) => ({
   year: new Date().getFullYear(),
   month: new Date().getMonth() + 1,
   monthlySpend: "0",
-  selectedMonth: 0,
-  setSelectedMonth: (month) => set({ month }),
   setMonthlySpend: (spend) => set({ monthlySpend: spend }),
   
   updateDate: () => {

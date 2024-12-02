@@ -1,12 +1,15 @@
+import { formatCalenderPrice } from '@/utils/formatPrice';
+import { useMonthlyStore } from '@/store/monthlyStore';
+import { useTransactionStore } from '@/store/transactionStore';
 import React from 'react';
 
 interface CalendarProps {
-  month: number;
-  year: number;
   expenses: Record<number, number>; // 날짜와 소비 데이터 매핑
 }
 
-const Calendar: React.FC<CalendarProps> = ({ month, year, expenses }) => {
+const Calendar: React.FC<CalendarProps> = ({ expenses }) => {
+  const { year, month } = useMonthlyStore();
+
   const daysInMonth = new Date(year, month, 0).getDate();
   const firstDay = new Date(year, month - 1, 1).getDay();
   const weeks: (number | null)[][] = [];
@@ -39,7 +42,7 @@ const Calendar: React.FC<CalendarProps> = ({ month, year, expenses }) => {
                         <span className={`text-xs text-center text-contrast-300 font-semibold 
                           ${expenses[day] < 0 ? "text-orange-500" : "text-blue"}`}
                         >
-                          {expenses[day]}
+                          {formatCalenderPrice(expenses[day])}
                         </span>
                       </div>
                     ) : (

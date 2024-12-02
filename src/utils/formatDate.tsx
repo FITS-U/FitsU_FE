@@ -1,4 +1,4 @@
-export const useFormatDateByDayName = (dateString:string) => {
+export const formatDateByDayName = (dateString:string) => {
   const date = new Date(dateString);
   const day = date.getDate();
   const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
@@ -7,7 +7,7 @@ export const useFormatDateByDayName = (dateString:string) => {
   return `${day}일 ${dayName}요일`;
 }
 
-export const useFormatDateByDay = (dateString:string) => {
+export const formatDateByDay = (dateString:string) => {
   const date = new Date(dateString);
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -15,7 +15,7 @@ export const useFormatDateByDay = (dateString:string) => {
   return `${month}월 ${day}일`;
 }
 
-export const useFormatFullDate = (dateString:string) => {
+export const formatFullDate = (dateString:string) => {
   const date = new Date(dateString);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;

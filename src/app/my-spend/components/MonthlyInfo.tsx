@@ -1,4 +1,4 @@
-import { useFormatPrice } from "@/hooks/useFormatPrice";
+import { formatPrice } from "@/utils/formatPrice";
 import { useMonthlyStore } from "@/store/monthlyStore";
 import { GoTriangleLeft, GoTriangleRight } from "react-icons/go";
 
@@ -26,7 +26,7 @@ export const MonthlyInfo = () => {
           className="w-6 h-6 text-contrast-400 cursor-pointer hover:text-contrast-200"
         />
       </div>
-      <div className="text-2xl font-semibold">{useFormatPrice(monthlySpend)}원</div>
+      <div className="text-2xl font-semibold">{formatPrice(monthlySpend)}원</div>
     </div>
   );
 }

@@ -2,14 +2,14 @@ import Link from "next/link";
 import { TransactionItem } from "./TransactionItem"
 import { useParams } from "next/navigation";
 import { useTransactionStore } from "@/store/transactionStore";
-import { useGroupTransactionsByDate } from "@/hooks/useGroupTransaction";
+import { groupTransactionsByDate } from "@/utils/useGroupTransaction";
 
 export const Transactions = () => {
   const { accountId } = useParams();
   const { transactions, setSelectedTransaction } = useTransactionStore();
 
   // 그룹화된 거래 내역 가져오기
-  const groupedTransactions = useGroupTransactionsByDate(transactions);
+  const groupedTransactions = groupTransactionsByDate(transactions);
 
   return (
     <div className="mt-8">

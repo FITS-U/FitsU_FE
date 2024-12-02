@@ -1,7 +1,7 @@
 "use client"
 
-import { useFormatFullDate } from "@/hooks/useFormatDate";
-import { useFormatTransactionPrice } from "@/hooks/useFormatPrice";
+import { formatFullDate } from "@/utils/formatDate";
+import { formatTransactionPrice } from "@/utils/formatPrice";
 import { useTransactionStore } from "@/store/transactionStore";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -23,7 +23,7 @@ const TransactionItemDetail = () => {
       <div className="mt-10">
         <div>{selectedTransaction.recipient}</div>
         <div className="text-3xl font-semibold tracking-wider">
-          {useFormatTransactionPrice(selectedTransaction.price, selectedTransaction.transactionType)}
+          {formatTransactionPrice(selectedTransaction.price, selectedTransaction.transactionType)}
         </div>
       </div>
       <div className="mt-16 flex items-center justify-between">
@@ -44,7 +44,7 @@ const TransactionItemDetail = () => {
       </div>
       <div className="mt-8 flex items-center justify-between">
         <span>결제일시</span>
-        <span>{useFormatFullDate(selectedTransaction.createdAt)}</span>
+        <span>{formatFullDate(selectedTransaction.createdAt)}</span>
       </div>
       <div className="mt-8 flex items-center justify-between">
         <span>입금처</span>
