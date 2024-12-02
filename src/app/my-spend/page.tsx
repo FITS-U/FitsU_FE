@@ -12,6 +12,8 @@ import { Loading } from "@/components/Loading";
 import { useFormatPrice } from "@/hooks/useFormatPrice";
 import { useCategoryStore } from "@/store/categoryStore";
 import { MonthlyInfo } from "./components/MonthlyInfo";
+import { LogoToAccounts } from "@/components/Logo";
+import BottomNav from "@/components/BottomNav";
 
 const MySpendPage = () => {
   const { user } = useAuthStore();
@@ -54,25 +56,28 @@ const MySpendPage = () => {
   }
 
   return (
-    <div className="text-white p-8">
-      {/* 월 소비 정보 */}
-      <MonthlyInfo />
+    <div className="text-white p-8 relative h-screen overflow-hidden">
+      <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-100px)]">
+        <BottomNav />
+        {/* 월 소비 정보 */}
+        <MonthlyInfo />
 
-      {/* 카테고리 링크 */}
-      <Link href="/my-spend/categories">
-        <TopSpendingCategory />
-      </Link>
+        {/* 카테고리 링크 */}
+        <Link href="/my-spend/categories">
+          <TopSpendingCategory />
+        </Link>
 
-      {/* 일별 소비 데이터 */}
-      {transactions.map((transaction) => (
-        <DailySpending
-          key={transaction.transactionId}
-          date={new Date(transaction.createdAt).getDate()} // 날짜 계산
-          dayName={new Intl.DateTimeFormat("ko-KR", { weekday: "long" }).format(
-            new Date(transaction.createdAt)
-          )} // 요일 계산
-        />
-      ))}
+        {/* 일별 소비 데이터 */}
+        {transactions.map((transaction) => (
+          <DailySpending
+            key={transaction.transactionId}
+            date={new Date(transaction.createdAt).getDate()} // 날짜 계산
+            dayName={new Intl.DateTimeFormat("ko-KR", { weekday: "long" }).format(
+              new Date(transaction.createdAt)
+            )} // 요일 계산
+          />
+        ))}
+      </div>
     </div>
   );
 }
