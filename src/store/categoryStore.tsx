@@ -29,11 +29,12 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
   getSortedCtgBySpending: () => {
     const { categories } = get();
     return [...categories].sort((a, b) => {
-      const spendingA = parseFloat(a.totalSpending.replace(/,/g, ''));
-      const spendingB = parseFloat(b.totalSpending.replace(/,/g, ''));
-      return spendingB - spendingA;
+      const spendingA = String(a.totalSpending).replace(/,/g, '');
+      const spendingB = String(b.totalSpending).replace(/,/g, '');
+      return parseFloat(spendingB) - parseFloat(spendingA);
     });
   },
+  
 
   // 지출이 가장 큰 카테고리를 첫 번째로 설정
   getLargestSpendingCtg: () => {

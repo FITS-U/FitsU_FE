@@ -1,4 +1,4 @@
-export const useFormatDateToMonthly = (dateString:string) => {
+export const useFormatDateByDay = (dateString:string) => {
   const date = new Date(dateString);
   const month = date.getMonth() + 1;
   const day = date.getDate();

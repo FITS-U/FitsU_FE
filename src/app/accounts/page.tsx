@@ -15,7 +15,7 @@ import { useMonthlyStore } from "@/store/monthlyStore";
 const HomePage: React.FC = () => {
   const { user } = useAuthStore();
   const { accounts, setAccounts } = useAccountStore();
-  const { year, month, monthlySpend, setMonthlySpend, updateDate } = useMonthlyStore();
+  const { year, month, setMonthlySpend, updateDate } = useMonthlyStore();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className="px-8 pt-4 relative h-screen overflow-hidden text-white">
+    <div className="p-8 relative h-screen overflow-hidden text-white">
       <LogoToAccounts />
       <div className="mt-5">
         {accounts.length ? (

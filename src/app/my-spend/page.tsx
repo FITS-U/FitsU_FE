@@ -1,6 +1,5 @@
 "use client"
 
-import DailySpending from "@/components/DailySpending";
 import TopSpendingCategory from "./components/TopSpendingCategory";
 import Link from "next/link";
 import { useTransactionStore } from "@/store/transactionStore";
@@ -9,18 +8,18 @@ import { useEffect, useState } from "react";
 import { getAllTransactions, getMthlySpendOfCtg } from "@/api/transaction";
 import { useAuthStore } from "@/store/authStore";
 import { Loading } from "@/components/Loading";
-import { useFormatPrice } from "@/hooks/useFormatPrice";
 import { useCategoryStore } from "@/store/categoryStore";
 import { MonthlyInfo } from "./components/MonthlyInfo";
-import { LogoToAccounts } from "@/components/Logo";
 import BottomNav from "@/components/BottomNav";
+import { Transaction } from "@/types/account";
+import { useFormatDateByDay } from "@/hooks/useFormatDate";
+import { useFormatTransactionPrice } from "@/hooks/useFormatPrice";
 
 const MySpendPage = () => {
   const { user } = useAuthStore();
   const { transactions, setTransactions } = useTransactionStore();
-  const { year, month, monthlySpend } = useMonthlyStore();
+  const { year, month } = useMonthlyStore();
   const { setCategories } = useCategoryStore();
-  const {} = useFormatPrice(monthlySpend);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const MySpendPage = () => {
       try {
         const [transacData, ctgData] = await Promise.allSettled([
           getAllTransactions(user.token),
-          getMthlySpendOfCtg(user.token, year, month)
+          getMthlySpendOfCtg(user.token, year, month),
         ]);
 
         if (transacData.status === "fulfilled") {
@@ -47,13 +46,32 @@ const MySpendPage = () => {
       } finally {
         setLoading(false);
       }
-    }
+    };
     fetchAllTransactions();
-  }, [user.token, setTransactions, monthlySpend, setCategories, year, month]);
+  }, [user.token, setTransactions, setCategories, year, month]);
 
   if (loading) {
-    return <Loading />
+    return <Loading />;
   }
+
+  // 현재 월에 해당하는 거래만 필터링
+  const filteredTransactions = transactions.filter(
+    (transaction) => new Date(transaction.createdAt).getMonth() + 1 === month
+  );
+
+  // 일별로 거래 내역 그룹화 함수
+  const groupTransactionsByDate = (transactions: Transaction[]) => {
+    return transactions.reduce((groups: Record<string, Transaction[]>, transaction) => {
+      const date = useFormatDateByDay(transaction.createdAt);
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(transaction);
+      return groups;
+    }, {});
+  };
+
+  const groupedByDate = groupTransactionsByDate(filteredTransactions);
 
   return (
     <div className="text-white p-8 relative h-screen overflow-hidden">
@@ -67,19 +85,25 @@ const MySpendPage = () => {
           <TopSpendingCategory />
         </Link>
 
-        {/* 일별 소비 데이터 */}
-        {transactions.map((transaction) => (
-          <DailySpending
-            key={transaction.transactionId}
-            date={new Date(transaction.createdAt).getDate()} // 날짜 계산
-            dayName={new Intl.DateTimeFormat("ko-KR", { weekday: "long" }).format(
-              new Date(transaction.createdAt)
-            )} // 요일 계산
-          />
+        {/* 월별 -> 일별 소비 데이터 */}
+        {Object.entries(groupedByDate).map(([date, dailyTransactions]) => (
+          <div key={date} className="mt-8">
+            <div className="text-sm font-semibold mb-2">{date}</div>
+            {dailyTransactions.map((transaction) => (
+              <div key={transaction.transactionId} className="mb-8">
+                <div className="font-bold text-lg">
+                  {useFormatTransactionPrice(transaction.price, transaction.transactionType)}
+                </div>
+                <div className="text-xs">
+                  {transaction.recipient} | {transaction.userCardId ? transaction.cardName : transaction.accName}
+                </div>
+              </div>
+            ))}
+          </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default MySpendPage;
