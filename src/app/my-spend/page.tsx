@@ -63,7 +63,13 @@ const MySpendPage = () => {
     filteredTransactions.forEach(transaction => {
       const day = new Date(transaction.createdAt).getDate();
       const formattedDate = formatDateByDayName(transaction.createdAt);
-      const amount = parseFloat(transaction.price);
+      
+      let amount = parseFloat(transaction.price);
+
+      if (transaction.transactionType === "expense") {
+        amount *= -1;
+      }
+      console.log(amount);
 
       // 집계된 소비 데이터
       expensesData[day] = (expensesData[day] || 0) + amount;

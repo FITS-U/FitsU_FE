@@ -14,7 +14,7 @@ export const verifyCode = async(phoneNum: string, code:string) => {
       'Content-Type': 'application/json'
     },
     data: body,
-    url: `http://${IP}:8080/api/v1/auth/verify-code`
+    url: `http://${IP}:8092/api/v1/auth/verify-code`
   });
   return data;
 }
@@ -34,7 +34,7 @@ export const isValidLogin = async(userName:string, phoneNum: string, token:strin
     },
     data: body,
     withCredentials: true,
-    url: `http://${IP}:8080/api/v1/auth/login`
+    url: `http://${IP}:8092/api/v1/auth/login`
   });
   return data;
 }
@@ -56,7 +56,7 @@ export const Register = async(userName:string, RRNum:string, phoneNum:string, ni
     },
     data: body,
     withCredentials: true,
-    url: `http://${IP}:8080/api/v1/auth/register`
+    url: `http://${IP}:8092/api/v1/auth/register`
   });
   return data;
 }
