@@ -15,7 +15,7 @@ import { useMonthlyStore } from "@/store/monthlyStore";
 const HomePage: React.FC = () => {
   const { user } = useAuthStore();
   const { accounts, setAccounts } = useAccountStore();
-  const { year, month, setMonthlySpend, resetToCurrentDate } = useMonthlyStore();
+  const { currentYear, currentMonth, setMonthlySpend, resetToCurrentDate } = useMonthlyStore();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -26,11 +26,11 @@ const HomePage: React.FC = () => {
         // 두 개의 API 병렬로 호출
         const [accountData, monthlySpendData] = await Promise.allSettled([
           getLinkedAccounts(user.token),
-          getMonthlySpend(user.token, year, month),
+          getMonthlySpend(user.token, currentYear, currentMonth),
         ]);
 
         if (accountData.status === "fulfilled") setAccounts(accountData.value);
-        if (monthlySpendData.status === "fulfilled") setMonthlySpend(monthlySpendData.value);
+        if (monthlySpendData.status === "fulfilled") setMonthlySpend(currentYear, currentMonth, monthlySpendData.value);
 
       } catch (error) {
         console.error("Failed to fetch accout list:", error);
@@ -39,7 +39,7 @@ const HomePage: React.FC = () => {
       }
     };
     fetchAccounts();
-  }, [month, year, setAccounts, setMonthlySpend, user.token, resetToCurrentDate]);
+  }, [currentMonth, currentYear, setAccounts, setMonthlySpend, user.token, resetToCurrentDate]);
 
   if (loading) {
     return <Loading />

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTransactionStore } from "@/store/transactionStore";
 import { useMonthlyStore } from "@/store/monthlyStore";
 import { useEffect, useState } from "react";
-import { getMonthlyTransactions, getMthlySpendOfCtg } from "@/api/transaction";
+import { getMonthlySpend, getMonthlyTransactions, getMthlySpendOfCtg } from "@/api/transaction";
 import { useAuthStore } from "@/store/authStore";
 import { Loading } from "@/components/Loading";
 import { useCategoryStore } from "@/store/categoryStore";
@@ -19,7 +19,7 @@ import Calendar from "./components/Calender";
 const MySpendPage = () => {
   const { user } = useAuthStore();
   const { transactions, setTransactions } = useTransactionStore();
-  const { year, month } = useMonthlyStore();
+  const { currentYear, currentMonth, setMonthlySpend } = useMonthlyStore();
   const { setCategories } = useCategoryStore();
   const [loading, setLoading] = useState(true);
   const [expenses, setExpenses] = useState<Record<number, number>>({});
@@ -29,14 +29,16 @@ const MySpendPage = () => {
     const fetchMonthlyTransactions = async () => {
       try {
         setLoading(true);
-        const [transacData, ctgData] = await Promise.allSettled([
-          getMonthlyTransactions(user.token, year, month),
-          getMthlySpendOfCtg(user.token, year, month),
+        const [monthlySpendData, transacData, ctgData] = await Promise.allSettled([
+          getMonthlySpend(user.token, currentYear, currentMonth),
+          getMonthlyTransactions(user.token, currentYear, currentMonth),
+          getMthlySpendOfCtg(user.token, currentYear, currentMonth),
         ]);
 
+        if (monthlySpendData.status === "fulfilled") setMonthlySpend(currentYear, currentMonth, monthlySpendData.value);
         if (transacData.status === "fulfilled") setTransactions(transacData.value);
         if (ctgData.status === "fulfilled") setCategories(ctgData.value);
-        
+
       } catch (error) {
         console.error("데이터 페칭 실패:", error);
       } finally {
@@ -45,7 +47,7 @@ const MySpendPage = () => {
     };
 
     fetchMonthlyTransactions();
-  }, [user.token, year, month, setTransactions, setCategories]);
+  }, [user.token, currentYear, currentMonth, setTransactions, setCategories]);
 
   useEffect(() => {
     // 일별 소비 데이터 집계
@@ -71,7 +73,7 @@ const MySpendPage = () => {
 
     setExpenses(expensesData);
     setGroupedByDate(groupedData);
-  }, [transactions, month]);
+  }, [transactions]);
 
   if (loading) {
     return <Loading />;
