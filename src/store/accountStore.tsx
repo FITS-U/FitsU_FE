@@ -4,7 +4,7 @@ export interface AccountState {
   accountId: number;
   accountNum: string;
   accName: string;
-  balance: string;
+  balance: number;
   bankId: number;
   bankName: string;
   isLinked: boolean;
@@ -24,7 +24,7 @@ export const useAccountStore = create<AccountStore>((set) => ({
     accountId: 0,
     accountNum: "",
     accName: "",
-    balance: "",
+    balance: 0,
     bankId: 0,
     bankName: "",
     isLinked: true,

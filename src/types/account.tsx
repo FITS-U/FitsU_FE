@@ -5,7 +5,7 @@ export interface Bank {
 
 export interface Transaction {
   transactionId: number;
-  price: string;
+  price: number;
   recipient: string;
   createdAt: string;
   accountId: number;

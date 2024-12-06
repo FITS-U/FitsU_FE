@@ -1,12 +1,9 @@
-export const formatPrice = (price: string) => {
-  const priceNumber = parseFloat(price);
-  return new Intl.NumberFormat('ko-KR').format(priceNumber);
+export const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('ko-KR').format(price);
 };
 
-export const formatTransactionPrice = (price:string, type:string) => {
-  const priceNum = parseFloat(price);
-  const formattedPrice = new Intl.NumberFormat('ko-KR').format(priceNum);
-
+export const formatTransactionPrice = (price:number, type:string) => {
+  const formattedPrice = new Intl.NumberFormat('ko-KR').format(price);
   return type === "expense" ? `-${formattedPrice}` : formattedPrice;
 }
 

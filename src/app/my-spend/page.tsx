@@ -34,12 +34,9 @@ const MySpendPage = () => {
           getMthlySpendOfCtg(user.token, year, month),
         ]);
 
-        if (transacData.status === "fulfilled") {
-          setTransactions(transacData.value);
-        }
-        if (ctgData.status === "fulfilled") {
-          setCategories(ctgData.value);
-        }
+        if (transacData.status === "fulfilled") setTransactions(transacData.value);
+        if (ctgData.status === "fulfilled") setCategories(ctgData.value);
+        
       } catch (error) {
         console.error("데이터 페칭 실패:", error);
       } finally {
@@ -59,7 +56,7 @@ const MySpendPage = () => {
       const day = new Date(transaction.createdAt).getDate();
       const formattedDate = formatDateByDayName(transaction.createdAt);
       
-      let amount = parseFloat(transaction.price);
+      let amount = transaction.price;
       if (transaction.transactionType === "expense") {
         amount *= -1;
       }

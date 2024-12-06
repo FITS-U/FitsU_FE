@@ -15,11 +15,11 @@ import { useMonthlyStore } from "@/store/monthlyStore";
 const HomePage: React.FC = () => {
   const { user } = useAuthStore();
   const { accounts, setAccounts } = useAccountStore();
-  const { year, month, setMonthlySpend, updateDate } = useMonthlyStore();
+  const { year, month, setMonthlySpend, resetToCurrentDate } = useMonthlyStore();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    updateDate();
+    resetToCurrentDate();
 
     const fetchAccounts = async () => {
       try {
@@ -29,18 +29,9 @@ const HomePage: React.FC = () => {
           getMonthlySpend(user.token, year, month),
         ]);
 
-        if (accountData.status === "fulfilled") {
-          setAccounts(accountData.value);
-        } else {
-          console.error("계좌 정보 불러오기 실패:", accountData.reason);
-        }
-  
-        if (monthlySpendData.status === "fulfilled") {
-          setMonthlySpend(monthlySpendData.value);
-        } else {
-          console.error("월별 소비 불러오기 실패:", monthlySpendData.reason);
-          setMonthlySpend("데이터 없음"); // 기본 값 설정
-        }
+        if (accountData.status === "fulfilled") setAccounts(accountData.value);
+        if (monthlySpendData.status === "fulfilled") setMonthlySpend(monthlySpendData.value);
+
       } catch (error) {
         console.error("Failed to fetch accout list:", error);
       } finally {
@@ -48,7 +39,7 @@ const HomePage: React.FC = () => {
       }
     };
     fetchAccounts();
-  }, [month, year, setAccounts, setMonthlySpend, user.token, updateDate]);
+  }, [month, year, setAccounts, setMonthlySpend, user.token, resetToCurrentDate]);
 
   if (loading) {
     return <Loading />
