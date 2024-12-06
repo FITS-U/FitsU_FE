@@ -9,10 +9,8 @@ interface CategoryState {
 interface CategoryStore {
   categories: CategoryState[];
   selectedCategory: CategoryState;
-  lastFetchedTimeOfCtg: string | null;
   setCategories: (categories: CategoryState[]) => void;
   setSelectedCategory: (selectedCategory: CategoryState) => void;
-  getSortedCtgBySpending: () => CategoryState[];
   getLargestSpendingCtg: () => CategoryState;
 }
 
@@ -23,24 +21,12 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
     categoryName: "",
     totalSpending: "0",
   },
-  lastFetchedTimeOfCtg: null,
   setCategories: (categories) => set({ categories }),
   setSelectedCategory: (selectedCategory) => set({ selectedCategory }),
-  
-  // 지출 총액 기준으로 내림차순 정렬된 카테고리 목록 반환
-  getSortedCtgBySpending: () => {
-    const { categories } = get();
-    return [...categories].sort((a, b) => {
-      const spendingA = String(a.totalSpending).replace(/,/g, '');
-      const spendingB = String(b.totalSpending).replace(/,/g, '');
-      return parseFloat(spendingB) - parseFloat(spendingA);
-    });
-  },
-  
 
-  // 지출이 가장 큰 카테고리를 첫 번째로 설정
+  // 가장 첫 번째 카테고리를 반환 (서버에서 내림차순으로 정렬된 데이터)
   getLargestSpendingCtg: () => {
-    const sortedCategories = get().getSortedCtgBySpending();
-    return sortedCategories[0];
+    const { categories } = get();
+    return categories[0];
   },
 }));
