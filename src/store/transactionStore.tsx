@@ -1,24 +1,13 @@
 import { create } from "zustand";
-
-export interface TransactionState {
-  transactionId: number;
-  price: string;
-  recipient: string;
-  createdAt: string;
-  accountId: number;
-  accName: string;
-  categoryId: number;
-  categoryName: string;
-  userCardId: number | null;
-  cardName: string | null;
-  transactionType: string;
-}
+import { Transaction } from "@/types/account";
 
 interface TransactionStore {
-  transactions: TransactionState[];
-  selectedTransaction: TransactionState;
-  setTransactions: (transactions: TransactionState[]) => void;
-  setSelectedTransaction: (selectedTransaction: TransactionState) => void;
+  transactions: Transaction[];
+  selectedTransaction: Transaction;
+  setTransactions: (
+    transactions: Transaction[] | ((prev: Transaction[]) => Transaction[])
+  ) => void;
+  setSelectedTransaction: (selectedTransaction: Transaction) => void;
 }
 
 export const useTransactionStore = create<TransactionStore>((set) => ({
@@ -36,6 +25,12 @@ export const useTransactionStore = create<TransactionStore>((set) => ({
     cardName: null,
     transactionType: "",
   },
-  setTransactions: (transactions: any) => set({ transactions }),
+  setTransactions: (transactions) =>
+    set((state) => ({
+      transactions:
+        typeof transactions === "function"
+          ? transactions(state.transactions)
+          : [...transactions],
+    })),
   setSelectedTransaction: (selectedTransaction) => set({ selectedTransaction }),
-}))
+}));

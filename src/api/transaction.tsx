@@ -23,13 +23,13 @@ export const getMonthlySpend = async(token:string|null, year:number, month:numbe
   return data;
 }
 
-export const getAllTransactions = async (token:string|null) => {
+export const getMonthlyTransactions = async (token:string|null, year:number, month:number) => {
   const {data} = await axios ({
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`
     },
-    url: `http://${IP}:8084/api/v1/transactions`
+    url: `http://${IP}:8084/api/v1/transactions/monthly?year=${year}&month=${month}`
   });
   return data;
 }

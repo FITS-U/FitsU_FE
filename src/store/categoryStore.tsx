@@ -9,6 +9,7 @@ interface CategoryState {
 interface CategoryStore {
   categories: CategoryState[];
   selectedCategory: CategoryState;
+  lastFetchedTimeOfCtg: string | null;
   setCategories: (categories: CategoryState[]) => void;
   setSelectedCategory: (selectedCategory: CategoryState) => void;
   getSortedCtgBySpending: () => CategoryState[];
@@ -22,6 +23,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
     categoryName: "",
     totalSpending: "0",
   },
+  lastFetchedTimeOfCtg: null,
   setCategories: (categories) => set({ categories }),
   setSelectedCategory: (selectedCategory) => set({ selectedCategory }),
   

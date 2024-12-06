@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTransactionStore } from "@/store/transactionStore";
 import { useMonthlyStore } from "@/store/monthlyStore";
 import { useEffect, useState } from "react";
-import { getAllTransactions, getMthlySpendOfCtg } from "@/api/transaction";
+import { getMonthlyTransactions, getMthlySpendOfCtg } from "@/api/transaction";
 import { useAuthStore } from "@/store/authStore";
 import { Loading } from "@/components/Loading";
 import { useCategoryStore } from "@/store/categoryStore";
@@ -26,11 +26,11 @@ const MySpendPage = () => {
   const [groupedByDate, setGroupedByDate] = useState<Record<string, Transaction[]>>({});
 
   useEffect(() => {
-    const fetchAllTransactions = async () => {
+    const fetchMonthlyTransactions = async () => {
       try {
         setLoading(true);
         const [transacData, ctgData] = await Promise.allSettled([
-          getAllTransactions(user.token),
+          getMonthlyTransactions(user.token, year, month),
           getMthlySpendOfCtg(user.token, year, month),
         ]);
 
@@ -47,29 +47,22 @@ const MySpendPage = () => {
       }
     };
 
-    fetchAllTransactions();
+    fetchMonthlyTransactions();
   }, [user.token, year, month, setTransactions, setCategories]);
 
   useEffect(() => {
-    // 거래 내역 필터링
-    const filteredTransactions = transactions.filter(
-      (transaction) => new Date(transaction.createdAt).getMonth() + 1 === month
-    );
-
     // 일별 소비 데이터 집계
     const expensesData: Record<number, number> = {};
     const groupedData: Record<string, Transaction[]> = {};
 
-    filteredTransactions.forEach(transaction => {
+    transactions.forEach(transaction => {
       const day = new Date(transaction.createdAt).getDate();
       const formattedDate = formatDateByDayName(transaction.createdAt);
       
       let amount = parseFloat(transaction.price);
-
       if (transaction.transactionType === "expense") {
         amount *= -1;
       }
-      console.log(amount);
 
       // 집계된 소비 데이터
       expensesData[day] = (expensesData[day] || 0) + amount;
