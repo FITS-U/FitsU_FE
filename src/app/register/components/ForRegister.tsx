@@ -197,7 +197,7 @@ export const CardBenefitsList = ({ title, onNext }: RegisterBtnProps) => {
         const data = await getCategories();
         setCategories(data);
       } catch (error) {
-        console.error("Failed to fetch bank list:", error);
+        console.error("Failed to fetch category list:", error);
       } finally {
         setLoading(false);
       }

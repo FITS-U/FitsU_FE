@@ -1,11 +1,14 @@
 "use client"
 
-import { useRef, useState } from "react";
+import { getCategories } from "@/api/category";
+import { Category } from "@/app/register/components/ForRegister";
+import { Loading } from "@/components/Loading";
+import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 export const ScrollBenefits = () => {
   // 임시데이터
-  const categories = [
+  const category = [
     { id: 1, name: "항공마일리지" },
     { id: 2, name: "쇼핑" },
     { id: 3, name: "간편결제" },
@@ -41,10 +44,28 @@ export const ScrollBenefits = () => {
     { id: 33, name: "국민행복카드" },
     { id: 34, name: "그린카드" },
   ];
-
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [isDropDownOpen, setIsDropDownOpen] = useState<boolean>(false);
-  const [selectedBenefit, setSelectedBenefit] = useState(categories[0].id);
+  const [selectedBenefit, setSelectedBenefit] = useState(categories[0].categoryId);
   const scrollRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async() => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error("Failed to fetch category list:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) return <Loading />
 
   const toggleDropDown = () => setIsDropDownOpen(!isDropDownOpen);
 
@@ -53,7 +74,7 @@ export const ScrollBenefits = () => {
     setIsDropDownOpen(false);
 
     // 해당 카테고리를 가운데로 스크롤
-    const selectedIndex = categories.findIndex((cat) => cat.id === id);
+    const selectedIndex = categories.findIndex((cat) => cat.categoryId === id);
     scrollRefs.current[selectedIndex]?.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
@@ -81,11 +102,11 @@ export const ScrollBenefits = () => {
               <div className="grid grid-cols-3 gap-1 items-center justify-center">
                 {categories.map((category) => (
                   <div
-                    key={category.id}
-                    onClick={() => handleSelectBenefit(category.id)}
+                    key={category.categoryId}
+                    onClick={() => handleSelectBenefit(category.categoryId)}
                     className="flex items-center justify-center text-center p-2 cursor-pointer hover:bg-orange-500 hover:border-current rounded-md border bg-white"
                   >
-                    {category.name}
+                    {category.categoryName}
                   </div>
                 ))}
               </div>
@@ -96,14 +117,14 @@ export const ScrollBenefits = () => {
         {/* 카테고리 버튼 */}
         {categories.map((category, index) => (
           <div 
-            key={category.id}
+            key={category.categoryId}
             ref={(el) => { scrollRefs.current[index] = el; }}
           >
             <div 
-              onClick={() => setSelectedBenefit(category.id)}
-              className={`inline-flex h-10 px-4 min-w-20 whitespace-nowrap rounded-full items-center justify-center cursor-pointer ${category.id === selectedBenefit ? "bg-orange-500" : "bg-white"}`}
+              onClick={() => setSelectedBenefit(category.categoryId)}
+              className={`inline-flex h-10 px-4 min-w-20 whitespace-nowrap rounded-full items-center justify-center cursor-pointer ${category.categoryId === selectedBenefit ? "bg-orange-500" : "bg-white"}`}
             >
-              <div className="text-black text-sm font-semibold">{category.name}</div>
+              <div className="text-black text-sm font-semibold">{category.categoryName}</div>
             </div>
           </div>
         ))}
