@@ -6,6 +6,7 @@ import { SwitchTabs } from "./components/SwitchTabs";
 import { useTabStore } from "@/store/tabStore";
 import { ScrollBenefits } from "./components/ScrollBenefits";
 import { useAuthStore } from "@/store/authStore";
+import { CardList } from "./components/CardList";
 
 const CardRecommends = () => {
   const { user } = useAuthStore();
@@ -23,6 +24,7 @@ const CardRecommends = () => {
         ) : (
           <div className="mt-8">
             <ScrollBenefits />
+            <CardList />
           </div>
         )}
       </div>
