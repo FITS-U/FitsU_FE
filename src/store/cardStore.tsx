@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface CardState {
+export interface CardState {
   cardId: number;
   cardName: string;
   benefitTitle: string;
@@ -14,14 +14,22 @@ interface CardStore {
   setSelectedCard: (selectedCard: CardState) => void;
 }
 
+const SESSION_KEY = "selectedCard";
+
 export const useCardStore = create<CardStore>((set) => ({
   cards: [],
-  selectedCard: {
-    cardId: 0,
-    cardName: "",
-    benefitTitle: "",
-    categoryId: 0
-  },
+  selectedCard: (() => {
+    if (typeof window !== "undefined") {
+      const savedCard = sessionStorage.getItem(SESSION_KEY);
+      return savedCard ? JSON.parse(savedCard) : { cardId: 0, cardName: "", benefitTitle: "", categoryId: 0 };
+    }
+    return { cardId: 0, cardName: "", benefitTitle: "", categoryId: 0 };
+  })(),
   setCards: (cards) => set({ cards }),
-  setSelectedCard: (selectedCard) => set({ selectedCard })
-}))
+  setSelectedCard: (selectedCard) => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(selectedCard)); // 세션에 저장
+    }
+    set({ selectedCard });
+  },
+}));

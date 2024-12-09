@@ -1,11 +1,15 @@
+"use client";
+
 import { getAllCards } from "@/api/card";
 import { useBenefitCtgStore } from "@/store/benefitCtgStore";
-import { useCardStore } from "@/store/cardStore";
+import { CardState, useCardStore } from "@/store/cardStore";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export const CardList = () => {
-  const { cards, setCards } = useCardStore();
+  const { cards, setCards, setSelectedCard } = useCardStore();
   const selectedBenefitCtgId = useBenefitCtgStore((state) => state.selectedBenefit);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCardList = async() => {
@@ -24,11 +28,20 @@ export const CardList = () => {
     ? cards.filter((card) => card.categoryId === selectedBenefitCtgId)
     : cards;
 
+    const handleCardClick = (card: CardState, index: number) => {
+      console.log("cardId:",card.cardId);
+      setSelectedCard(card);
+      router.push(`/recommends/${index + 1}`);
+    };
+
   return (
     <div className="px-8 pt-8">
       {filteredCards.map((card, index) => (
         <div key={index} className={`${index === filteredCards.length - 1 ? "" : "mb-5"}`}>
-          <div className="flex items-center justify-start">
+          <div 
+            className="flex items-center justify-start cursor-pointer"
+            onClick={() => handleCardClick(card, index)}
+          >
             <div className="w-10 h-16 bg-contrast-800"></div>
             <div className="ml-4 flex flex-col gap-y-1">
               <div className="text-xl font-semibold truncate max-w-64">{card.cardName}</div>
