@@ -18,7 +18,7 @@ import Calendar from "./components/Calender";
 
 const MySpendPage = () => {
   const { user } = useAuthStore();
-  const { transactions, setTransactions } = useTransactionStore();
+  const { transactions, setTransactions, setSelectedTransaction } = useTransactionStore();
   const { currentYear, currentMonth, setMonthlySpend } = useMonthlyStore();
   const { setCategories } = useCategoryStore();
   const [loading, setLoading] = useState(true);
@@ -96,14 +96,19 @@ const MySpendPage = () => {
         {Object.entries(groupedByDate).map(([date, dailyTransactions]) => (
           <div key={date} className="mt-8">
             <div className="text-sm font-semibold mb-6 text-contrast-200">{date}</div>
-            {dailyTransactions.map((transaction) => (
-              <div key={transaction.transactionId} className="mb-6">
-                <div className="font-bold text-lg">
-                  {formatTransactionPrice(transaction.price, transaction.transactionType)}
-                </div>
-                <div className="text-xs text-contrast-200">
-                  {transaction.recipient} | {transaction.userCardId ? transaction.cardName : transaction.accName}
-                </div>
+            {dailyTransactions.map((transaction, index) => (
+              <div key={index} className="mb-6 cursor-pointer">
+                <Link 
+                  href={`/my-spend/transactions/${index + 1}`}
+                  onClick={() => setSelectedTransaction(transaction)}
+                >
+                  <div className="font-bold text-lg">
+                    {formatTransactionPrice(transaction.price, transaction.transactionType)}
+                  </div>
+                  <div className="text-xs text-contrast-200">
+                    {transaction.recipient} | {transaction.userCardId ? transaction.cardName : transaction.accName}
+                  </div>
+                </Link>
               </div>
             ))}
           </div>
