@@ -1,8 +1,9 @@
 "use client"
 
-import { getCategories } from "@/api/category";
+import { getCategories, saveLogDatas } from "@/api/category";
 import { Category } from "@/app/register/components/ForRegister";
 import { Loading } from "@/components/Loading";
+import { useAuthStore } from "@/store/authStore";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -49,6 +50,7 @@ export const ScrollBenefits = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState<boolean>(false);
   const [selectedBenefit, setSelectedBenefit] = useState(categories[0].categoryId);
   const scrollRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { user } = useAuthStore();
 
   useEffect(() => {
     const fetchCategories = async() => {
@@ -80,6 +82,15 @@ export const ScrollBenefits = () => {
       block: "nearest",
       inline: "center",
     });
+
+    // 카테고리 클릭 시 로그데이터 저장
+    async() => {
+      try {
+        await saveLogDatas(id, "click", user.token);
+      } catch (error) {
+        console.error("Failed to post log data:", error);
+      }
+    }
   };
 
   return (
