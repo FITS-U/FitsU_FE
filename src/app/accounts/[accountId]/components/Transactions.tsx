@@ -22,7 +22,7 @@ export const Transactions = () => {
               href={`/accounts/${accountId}/transactions/${index + 1}`}
               onClick={() => setSelectedTransaction(transaction)}
             >
-              <TransactionItem transaction={transaction} />
+              <TransactionItem />
             </Link>
           ))}
         </div>

@@ -12,7 +12,7 @@ import { useCategoryStore } from "@/store/categoryStore";
 const Categories = () => {
   const { user } = useAuthStore();
   const { currentYear, currentMonth, getMonthlySpend } = useMonthlyStore();
-  const { categories, setCategories } = useCategoryStore();
+  const { categories, setCategories, setSelectedCategory } = useCategoryStore();
   
   useEffect(() => {
     const fetchCtgSpending = async() => {
@@ -48,8 +48,8 @@ const Categories = () => {
 
         return (
           <div key={index}>
-            <Link href="">
-              <EachCategory name={ctg.categoryName} percent={percent} totalAmount={ctg.totalSpending} iconSrc="" />
+            <Link href="" onClick={() => setSelectedCategory(ctg)}>
+              <EachCategory index={index + 1} name={ctg.categoryName} percent={percent} totalAmount={ctg.totalSpending} iconSrc="" />
             </Link>
           </div>
         );

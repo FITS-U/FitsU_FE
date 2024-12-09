@@ -1,36 +1,20 @@
-import { TransactionState } from "@/store/transactionStore";
+import { useTransactionStore } from "@/store/transactionStore";
+import { formatTime } from "@/utils/formatDate";
+import { formatTransactionPrice } from "@/utils/formatPrice";
 
-interface TransactionItemProps {
-  transaction: TransactionState;
-}
-
-export const TransactionItem: React.FC<TransactionItemProps> = ({ transaction }) => {
-  function formatTime(dateString:string) {
-    const date = new Date(dateString);
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-
-    return `${hours}:${minutes}`;
-  }
-
-  function formatPrice(price:string, type:string) {
-    const priceNum = parseFloat(price);
-    const formattedPrice = new Intl.NumberFormat('ko-KR').format(priceNum);
-
-    return type === "expense" ? `-${formattedPrice}` : formattedPrice;
-  }
+export const TransactionItem = () => {
+  const { selectedTransaction } = useTransactionStore();
 
   return (
     <div className="mt-6 flex items-center justify-between">
       <span className="flex flex-col">
-        <div className="text-lg font-semibold">{transaction.recipient}</div>
-        <div className="mt-0.5 text-sm">{formatTime(transaction.createdAt)}</div>
+        <div className="text-lg font-semibold">{selectedTransaction.recipient}</div>
+        <div className="mt-0.5 text-sm">{formatTime(selectedTransaction.createdAt)}</div>
       </span>
       <span className="flex flex-col items-end">
         <div className="text-xl font-semibold">
-          {formatPrice(transaction.price, transaction.transactionType)}원
+          {formatTransactionPrice(selectedTransaction.price, selectedTransaction.transactionType)}원
         </div>
-        {/* <div className="mt-0.5 text-sm">1,276,380원</div> */}
       </span>
     </div>
 );

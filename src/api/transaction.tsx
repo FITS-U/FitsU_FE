@@ -55,3 +55,14 @@ export const getMthSpendOfCtgByLast30Days = async (token:string|null) => {
   });
   return data;
 }
+
+export const getCtgSpendDetails = async (token:string|null, categoryId:number) => {
+  const {data} = await axios({
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    url: `http://${IP}:8084/api/v1/transactios/category/${categoryId}`
+  });
+  return data;
+}
