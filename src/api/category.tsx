@@ -25,9 +25,9 @@ export const saveInterestCtg = async(categoryIds:number[], token:string|null) =>
 }
 
 
-export const saveLogDatas = async(mainCtgId:number, eventType:string, token:string|null) => {
+export const saveLogDatas = async(categoryId:number, eventType:string, token:string|null) => {
   const body = {
-    mainCtgId,
+    categoryId,
     eventType
   }
   await axios({
@@ -36,6 +36,6 @@ export const saveLogDatas = async(mainCtgId:number, eventType:string, token:stri
       Authorization: `Bearer ${token}`
     },
     data: body,
-    url: `http://${IP}:8086/api/v1/log`
+    url: `http://${IP}:8088/api/v1/log`
   });
 }

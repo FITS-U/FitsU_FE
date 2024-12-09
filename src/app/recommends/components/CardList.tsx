@@ -25,14 +25,14 @@ export const CardList = () => {
     : cards;
 
   return (
-    <div className="p-8">
+    <div className="px-8 pt-8">
       {filteredCards.map((card, index) => (
-        <div key={index} className="mb-5">
+        <div key={index} className={`${index === filteredCards.length - 1 ? "" : "mb-5"}`}>
           <div className="flex items-center justify-start">
             <div className="w-10 h-16 bg-contrast-800"></div>
             <div className="ml-4 flex flex-col gap-y-1">
-              <div className="text-xl font-semibold">{card.cardName}</div>
-              <div>{card.description}</div>
+              <div className="text-xl font-semibold truncate max-w-64">{card.cardName}</div>
+              <div>{card.benefitTitle}</div>
             </div>
           </div>
         </div>

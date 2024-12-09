@@ -6,7 +6,7 @@ export const SwitchTabs = () => {
   return (
     <div className="p-8">
       <div className="absolute w-full -left-0 border-b border-contrast-500">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between bg-black">
           <div className="w-2/4 flex items-end justify-end">
             <div 
               className={`w-5/6 flex items-center justify-center cursor-pointer 

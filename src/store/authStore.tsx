@@ -7,7 +7,7 @@ interface State {
   phoneNum: string;
   verifyNum: string;
   token: string | null;
-};
+}
 
 interface User {
   user: State;
@@ -15,32 +15,41 @@ interface User {
   setUser: (user: State) => void;
   setVerificationStatus: (status: boolean) => void;
   clearToken: () => void; // 로그아웃 시 토큰 제거
+  hydrateUser: () => void;
 }
 
+const SESSION_KEY = "authUser";
+
 export const useAuthStore = create<User>((set) => ({
-  user:{
-    name: "",
-    phoneNum: "",
-    verifyNum: "",
-    token: typeof window !== "undefined" ? sessionStorage.getItem("token") : null,
-  },
-  isVerified: false, // 초기값은 인증되지 않음
-  
+  user: { name: "", phoneNum: "", verifyNum: "", token: null }, // 기본값
+  isVerified: false,
+
   setUser: (user) => {
-    if (user.token) {
-      sessionStorage.setItem("token", user.token);  // 토큰을 세션 스토리지에 저장
-    } else {
-      sessionStorage.removeItem("token");
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(user));
     }
     set({ user });
   },
-  
+
   setVerificationStatus: (status) => set({ isVerified: status }),
 
   clearToken: () => {
-    sessionStorage.removeItem("token"); // 세션 스토리지에서 토큰 제거
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem(SESSION_KEY);
+    }
     set((state) => ({
-      user: {...state.user, token: null},
+      user: { ...state.user, token: null, name: "", phoneNum: "", verifyNum: "" },
     }));
   },
+
+  // 클라이언트에서 세션 정보를 초기화
+  hydrateUser: () => {
+    if (typeof window !== "undefined") {
+      const savedUser = sessionStorage.getItem(SESSION_KEY);
+      if (savedUser) {
+        set({ user: JSON.parse(savedUser) });
+      }
+    }
+  },
 }));
+

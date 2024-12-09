@@ -7,15 +7,21 @@ import { useTabStore } from "@/store/tabStore";
 import { ScrollBenefits } from "./components/ScrollBenefits";
 import { useAuthStore } from "@/store/authStore";
 import { CardList } from "./components/CardList";
+import { useEffect } from "react";
+import { hydrate } from "react-dom";
 
 const CardRecommends = () => {
-  const { user } = useAuthStore();
+  const { user, hydrateUser } = useAuthStore();
   const currentTab = useTabStore((state) => state.currentTab);
+
+  useEffect(() => {
+    hydrateUser();
+  }, [user.name])
   
   return (
     <div className="text-white relative h-screen overflow-hidden">
       <SwitchTabs />
-      <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-195px)]">
+      <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-150px)]">
         {currentTab === "recommend" ? (
           <div className="p-8">
             <h1 className="text-lg font-bold">{user.name}님 소비에 맞는 카드</h1>

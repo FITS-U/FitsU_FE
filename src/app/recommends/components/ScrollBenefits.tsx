@@ -40,7 +40,14 @@ export const ScrollBenefits = () => {
 
   const toggleDropDown = () => setIsDropDownOpen(!isDropDownOpen);
 
-  const handleSelectBenefit = (id: number) => {
+  const handleSelectBenefit = async (id: number) => {
+    console.log("비동기 handle 함수 내부");
+    try {
+      await saveLogDatas(id, "click", user.token);
+    } catch (error) {
+      console.error("Failed to post log data:", error);
+    };
+
     setSelectedBenefit(id);
     setIsDropDownOpen(false);
 
@@ -51,15 +58,6 @@ export const ScrollBenefits = () => {
       block: "nearest",
       inline: "center",
     });
-
-    // 카테고리 클릭 시 로그데이터 저장
-    async() => {
-      try {
-        await saveLogDatas(id, "click", user.token);
-      } catch (error) {
-        console.error("Failed to post log data:", error);
-      }
-    }
   };
 
   return (
@@ -83,7 +81,7 @@ export const ScrollBenefits = () => {
                 {categories.map((category) => (
                   <div
                     key={category.categoryId}
-                    onClick={() => handleSelectBenefit(category.categoryId)}
+                    onClick={async() => await handleSelectBenefit(category.categoryId)}
                     className="flex items-center justify-center text-center p-2 cursor-pointer hover:bg-orange-500 hover:border-current rounded-md border bg-white"
                   >
                     {category.categoryName}

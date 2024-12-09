@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface CardState {
   cardId: number;
   cardName: string;
-  description: string;
+  benefitTitle: string;
   categoryId: number;
 }
 
@@ -19,7 +19,7 @@ export const useCardStore = create<CardStore>((set) => ({
   selectedCard: {
     cardId: 0,
     cardName: "",
-    description: "",
+    benefitTitle: "",
     categoryId: 0
   },
   setCards: (cards) => set({ cards }),
