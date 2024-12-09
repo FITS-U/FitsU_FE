@@ -9,8 +9,13 @@ interface AfterLinkPageProps {
 
 const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
   const { setSelectedAccount } = useAccountStore();
-  const { month, monthlySpend } = useMonthlyStore();
-  const {} = formatPrice(monthlySpend);
+  const { monthlySpends, currentMonth, currentYear } = useMonthlyStore();
+
+  const mapping = monthlySpends.map((mthSpend, index) => {
+    if (mthSpend.year === currentYear && mthSpend.month === currentMonth) {
+      
+    }
+  })
 
   const handleAccountClick = (account: AccountState) => {
     setSelectedAccount(account);
@@ -43,10 +48,18 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
         </Link>
       </div>
       <div className="bg-contrast-800 rounded-2xl p-4 flex items-center justify-between">
-        <span>
-          <div className="text-xl font-bold">{formatPrice(monthlySpend)}원</div>
-          <div className="text-sm">{month}월에 쓴 돈</div>
-        </span>
+        {monthlySpends.map((monthly, index) => (
+          <div key={index}>
+            <span>
+              {monthly.year === currentYear && monthly.month === currentMonth && (
+                <div>
+                  <div className="text-xl font-bold">{formatPrice(monthly.spend)}원</div>
+                  <div className="text-sm">{monthly.month}월에 쓴 돈</div>
+                </div>
+              )}
+            </span>
+          </div>
+        ))}
         <Link href="/my-spend">
           <button className="bg-contrast-600 rounded-lg w-14 h-8 text-sm">내역</button>
         </Link>

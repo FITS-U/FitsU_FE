@@ -1,12 +1,35 @@
+import { getMthSpendOfCtgByLast30Days } from "@/api/transaction";
 import CategoryLogo from "@/components/CategoryLogo";
+import { Loading } from "@/components/Loading";
+import { useAuthStore } from "@/store/authStore";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const RecCard = () => {
+  // 임시 데이터
   const ctgAndCard = [
     {ctgEng: "food", ctgKo: "식비", totalAmount: "127,900", cardId: 1, cardName: "IBK 무민카드", cardCtg: "패스트푸드", discountRate: "60%"},
     {ctgEng: "transport", ctgKo: "교통", totalAmount: "60,000", cardId: 2, cardName: "KB 청춘대로 톡톡카드", cardCtg: "대중교통", discountRate: "10%"},
     {ctgEng: "shopping", ctgKo: "쇼핑", totalAmount: "40,300", cardId: 1, cardName: "IBK 무민카드", cardCtg: "온라인 쇼핑", discountRate: "20%"}
   ]
+
+  const { user } = useAuthStore();
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchCtgAndCard = async() => {
+      try {
+        const data = await getMthSpendOfCtgByLast30Days(user.token);
+      } catch (error) {
+        console.error("Failed to fetch categories and cards:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCtgAndCard();
+  }, []);
+
+  if (loading) return <Loading />
 
   return (
     <div className="mt-8">
