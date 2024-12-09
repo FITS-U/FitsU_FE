@@ -14,7 +14,7 @@ export const useTransactionStore = create<TransactionStore>((set) => ({
   transactions: [],
   selectedTransaction: {
     transactionId: 0,
-    price: "",
+    price: 0,
     recipient: "",
     createdAt: "",
     accountId: 0,

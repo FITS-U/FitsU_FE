@@ -1,21 +1,17 @@
 import { getAllCards } from "@/api/card";
+import { useBenefitCtgStore } from "@/store/benefitCtgStore";
+import { useCardStore } from "@/store/cardStore";
 import { useEffect } from "react";
 
 export const CardList = () => {
-  // 임시데이터
-  const cards = [
-    {cardId: 1, cardName: "신한카드", description: "10% 할인", categoryId: 1},
-    {cardId: 2, cardName: "국민카드", description: "10% 할인", categoryId: 2},
-    {cardId: 3, cardName: "우리카드", description: "10% 할인", categoryId: 3},
-    {cardId: 4, cardName: "토뱅카드", description: "10% 할인", categoryId: 4},
-    {cardId: 5, cardName: "하나카드", description: "10% 할인", categoryId: 5},
-    {cardId: 6, cardName: "카카오카드", description: "10% 할인", categoryId: 6},
-  ]
+  const { cards, setCards } = useCardStore();
+  const selectedBenefitCtgId = useBenefitCtgStore((state) => state.selectedBenefit);
 
   useEffect(() => {
     const fetchCardList = async() => {
       try {
         const data = await getAllCards();
+        setCards(data);
       } catch (error) {
         console.error("Failed to fetch card list:", error);
       }
@@ -23,9 +19,14 @@ export const CardList = () => {
     fetchCardList();
   }, []);
 
+  // 선택된 카테고리에 따라 필터링
+  const filteredCards = selectedBenefitCtgId
+    ? cards.filter((card) => card.categoryId === selectedBenefitCtgId)
+    : cards;
+
   return (
     <div className="p-8">
-      {cards.map((card, index) => (
+      {filteredCards.map((card, index) => (
         <div key={index} className="mb-5">
           <div className="flex items-center justify-start">
             <div className="w-10 h-16 bg-contrast-800"></div>

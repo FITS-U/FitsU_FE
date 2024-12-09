@@ -16,20 +16,20 @@ const RecCard = () => {
   const { user } = useAuthStore();
   const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchCtgAndCard = async() => {
-      try {
-        const data = await getMthSpendOfCtgByLast30Days(user.token);
-      } catch (error) {
-        console.error("Failed to fetch categories and cards:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCtgAndCard();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCtgAndCard = async() => {
+  //     try {
+  //       const data = await getMthSpendOfCtgByLast30Days(user.token);
+  //     } catch (error) {
+  //       console.error("Failed to fetch categories and cards:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchCtgAndCard();
+  // }, []);
 
-  if (loading) return <Loading />
+  // if (loading) return <Loading />
 
   return (
     <div className="mt-8">

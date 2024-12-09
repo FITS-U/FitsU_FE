@@ -4,6 +4,7 @@ import { getCategories, saveLogDatas } from "@/api/category";
 import { Category } from "@/app/register/components/ForRegister";
 import { Loading } from "@/components/Loading";
 import { useAuthStore } from "@/store/authStore";
+import { useBenefitCtgStore } from "@/store/benefitCtgStore";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -11,7 +12,7 @@ export const ScrollBenefits = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [isDropDownOpen, setIsDropDownOpen] = useState<boolean>(false);
-  const [selectedBenefit, setSelectedBenefit] = useState<number | null>(null);
+  const { selectedBenefit, setSelectedBenefit } = useBenefitCtgStore();
   const scrollRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { user } = useAuthStore();
 
