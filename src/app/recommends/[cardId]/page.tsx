@@ -55,13 +55,13 @@ const CardDetailPage = () => {
       <div className="mt-8">
         <h1 className="font-semibold text-lg/[17px]">안내사항</h1>
         <div className="mt-10 text-sm">
-          <div>
-            <span className="font-semibold">연회비&nbsp;&nbsp;</span>
-            <span className="ml-[10vw]">{card.annualFee}</span>
+          <div className="flex items-center">
+            <span className="w-16 font-semibold">연회비&nbsp;&nbsp;</span>
+            <span className="ml-2 flex-1">{card.annualFee}</span>
           </div>
-          <div className="mt-8">
-            <span className="font-semibold">전월실적</span>
-            <span className="ml-[9.5vw]">{card.prevSales}</span>
+          <div className="mt-8 flex items-center">
+            <span className="w-16 font-semibold">전월실적</span>
+            <span className="ml-2 flex-1">{card.prevSales}</span>
           </div>
         </div>
       </div>

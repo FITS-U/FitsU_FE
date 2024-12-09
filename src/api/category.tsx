@@ -36,6 +36,6 @@ export const saveLogDatas = async(categoryId:number, eventType:string, token:str
       Authorization: `Bearer ${token}`
     },
     data: body,
-    url: `http://${IP}:8088/api/v1/log`
+    url: `http://${IP}:8088/api/v1/logs`
   });
 }

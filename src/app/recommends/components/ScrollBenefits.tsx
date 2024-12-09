@@ -41,9 +41,9 @@ export const ScrollBenefits = () => {
   const toggleDropDown = () => setIsDropDownOpen(!isDropDownOpen);
 
   const handleSelectBenefit = async (id: number) => {
-    console.log("비동기 handle 함수 내부");
     try {
-      await saveLogDatas(id, "click", user.token);
+      const data = await saveLogDatas(id, "click", user.token);
+      console.log(data);
     } catch (error) {
       console.error("Failed to post log data:", error);
     };
@@ -81,7 +81,7 @@ export const ScrollBenefits = () => {
                 {categories.map((category) => (
                   <div
                     key={category.categoryId}
-                    onClick={async() => await handleSelectBenefit(category.categoryId)}
+                    onClick={() => handleSelectBenefit(category.categoryId)}
                     className="flex items-center justify-center text-center p-2 cursor-pointer hover:bg-orange-500 hover:border-current rounded-md border bg-white"
                   >
                     {category.categoryName}
@@ -99,7 +99,7 @@ export const ScrollBenefits = () => {
             ref={(el) => { scrollRefs.current[index] = el; }}
           >
             <div 
-              onClick={() => setSelectedBenefit(category.categoryId)}
+              onClick={() => handleSelectBenefit(category.categoryId)}
               className={`inline-flex h-10 px-4 min-w-20 whitespace-nowrap rounded-full items-center justify-center cursor-pointer ${category.categoryId === selectedBenefit ? "bg-orange-500" : "bg-white"}`}
             >
               <div className="text-black text-sm font-semibold">{category.categoryName}</div>
