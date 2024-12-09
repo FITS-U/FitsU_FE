@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface CategoryState {
   categoryId: number;
   categoryName: string;
-  totalSpending: string; // 문자열 형태의 지출 금액
+  totalSpending: number;
 }
 
 interface CategoryStore {
@@ -19,7 +19,7 @@ export const useCategoryStore = create<CategoryStore>((set, get) => ({
   selectedCategory: {
     categoryId: 0,
     categoryName: "",
-    totalSpending: "0",
+    totalSpending: 0,
   },
   setCategories: (categories) => set({ categories }),
   setSelectedCategory: (selectedCategory) => set({ selectedCategory }),

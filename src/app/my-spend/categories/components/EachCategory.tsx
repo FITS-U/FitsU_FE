@@ -3,13 +3,13 @@ import CategoryLogo from "@/components/CategoryLogo";
 interface EachCategoryProps {
   name: string;
   percent: string;
-  totalAmount: string;
+  totalAmount: number;
   iconSrc: string;
 }
 
 const EachCategory = ({ name, percent, totalAmount, iconSrc }: EachCategoryProps) => {
   return (
-    <div className="mt-7 flex items-center justify-between text-sm">
+    <div className="mt-6 flex items-center justify-between text-sm">
       <div className="flex items-center justify-between">
         <CategoryLogo w={45} h={45} iconSrc={iconSrc} name={name} />
         <span className="ml-4">
