@@ -8,10 +8,10 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ expenses }) => {
-  const { year, month } = useMonthlyStore();
+  const { currentYear, currentMonth } = useMonthlyStore();
 
-  const daysInMonth = new Date(year, month, 0).getDate();
-  const firstDay = new Date(year, month - 1, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+  const firstDay = new Date(currentYear, currentMonth - 1, 1).getDay();
   const weeks: (number | null)[][] = [];
 
   // 주 단위로 날짜 배열 생성
