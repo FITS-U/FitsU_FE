@@ -11,12 +11,6 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
   const { setSelectedAccount } = useAccountStore();
   const { monthlySpends, currentMonth, currentYear } = useMonthlyStore();
 
-  const mapping = monthlySpends.map((mthSpend, index) => {
-    if (mthSpend.year === currentYear && mthSpend.month === currentMonth) {
-      
-    }
-  })
-
   const handleAccountClick = (account: AccountState) => {
     setSelectedAccount(account);
   };
