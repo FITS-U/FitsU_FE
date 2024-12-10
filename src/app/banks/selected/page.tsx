@@ -5,7 +5,6 @@ import { useBankStore } from "@/store/bankStore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
-import { Loading } from "@/components/Loading";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
 
@@ -17,18 +16,15 @@ const LinkPage: React.FC = () => {
 
   useEffect(() => {
     const fetchAccounts = async () => {
-      // 페이지 로드 시점에서 바로 API 호출 시작
-      setTimeout(async () => {
-        try {
-          const unlinkAccData = await getUnlinkedAccounts(user.token, selectedBankIds);
-          setAccounts(unlinkAccData);
-        } catch (error) {
-          console.error("Failed to fetch unlinked accounts:", error);
-        } finally {
-          setLoading(false); // 3초 후 로딩 완료
-        }
-      }, 3000); // 3초 후에 로딩 완료
-    };
+      try {
+        const unlinkAccData = await getUnlinkedAccounts(user.token, selectedBankIds);
+        setAccounts(unlinkAccData);
+      } catch (error) {
+        console.error("Failed to fetch unlinked accounts:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
     fetchAccounts();
   }, [selectedBankIds]);
 
@@ -78,7 +74,7 @@ const LinkPage: React.FC = () => {
           <p className="text-center">계좌 정보가 없습니다.</p>
         )}
       </div>
-      <Link href="/accounts" className="absolute block bottom-4 w-full -left-0">
+      <Link href={`${accounts.length ? "banks/selected/connection" : "/accounts"}`} className="absolute block bottom-4 w-full -left-0">
         <div className="px-6">
           <button
             onClick={updateAccounts}
