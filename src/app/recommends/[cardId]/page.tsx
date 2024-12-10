@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import { getCardDetails } from "@/api/card";
 import { useCardDetailStore } from "@/store/cardDetailStore";
 import { Loading } from "@/components/Loading";
+import { useRouter } from "next/navigation";
 
 const CardDetailPage = () => {
   const { selectedCard } = useCardStore();
   const { card, setCard } = useCardDetailStore();
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCardInfo = async() => {
@@ -35,9 +37,9 @@ const CardDetailPage = () => {
 
   return (
     <div className="p-8 text-white relative">
-      <Link href="/recommends" className="text-3xl">
+      <div onClick={() => router.back()} className="text-3xl">
         <FaChevronLeft className="h-5" />
-      </Link>
+      </div>
       <div className="mt-12 flex flex-col items-center">
         <div className="w-3/5 aspect-[5/3] bg-contrast-800 flex items-center justify-center">카드이미지</div>
       </div>

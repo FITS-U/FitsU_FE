@@ -11,7 +11,7 @@ const BottomNav = () => {
     { href: "/accounts", icon: FaHouse, label: "홈" },
     { href: "/my-spend", icon: FaChartPie, label: "내소비" },
     { href: "/recommends", icon: FaBoltLightning, label: "카드추천" },
-    { href: "/shopping", icon: FaCreditCard, label: "모든카드" },
+    { href: "/cards", icon: FaCreditCard, label: "모든카드" },
   ];
 
   return (

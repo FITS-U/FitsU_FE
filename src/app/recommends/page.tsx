@@ -2,17 +2,11 @@
 
 import BottomNav from "@/components/BottomNav";
 import RecCard from "./components/RecCard";
-import { SwitchTabs } from "./components/SwitchTabs";
-import { useTabStore } from "@/store/tabStore";
-import { ScrollBenefits } from "./components/ScrollBenefits";
 import { useAuthStore } from "@/store/authStore";
-import { CardList } from "./components/CardList";
 import { useEffect } from "react";
-import { hydrate } from "react-dom";
 
 const CardRecommends = () => {
   const { user, hydrateUser } = useAuthStore();
-  const currentTab = useTabStore((state) => state.currentTab);
 
   useEffect(() => {
     hydrateUser();
@@ -20,19 +14,11 @@ const CardRecommends = () => {
   
   return (
     <div className="text-white relative h-screen overflow-hidden">
-      <SwitchTabs />
       <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-150px)]">
-        {currentTab === "recommend" ? (
-          <div className="p-8">
-            <h1 className="text-lg font-bold">{user.name}님 소비에 맞는 카드</h1>
-            <RecCard />
-          </div>
-        ) : (
-          <div className="mt-8">
-            <ScrollBenefits />
-            <CardList />
-          </div>
-        )}
+        <div className="p-8">
+          <h1 className="text-xl font-bold">{user.name}님 소비에 기반한 카드 추천</h1>
+          <RecCard />
+        </div>
       </div>
       <BottomNav />
     </div>
