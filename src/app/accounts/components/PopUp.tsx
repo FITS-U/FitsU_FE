@@ -1,13 +1,13 @@
 import { IoIosCloseCircle } from "react-icons/io";
 import { useState } from "react";
 
-export const PopUp = ({ onClose }: { onClose: () => void }) => {
-  const advers = [
-    { cardId: 1, adCopy1: "당신의 여행 꿈이 현실로! ✈️", adCopy2: "197 원더카드 LIVING으로 항공마일리지 쌓고 여행하세요!" },
-    { cardId: 2, adCopy1: "아름다움도 스마트하게! 💖", adCopy2: "KB국민 와이즈카드로 뷰티 할인과 함께 나만의 스타일을 완성해보세요!" },
-    { cardId: 3, adCopy1: "쇼핑 혜택의 끝판왕! 🛍️", adCopy2: "위클리 쇼핑카드로 최대 할인 혜택을 받아보세요!" },
-  ];
-
+export const PopUp = ({
+  onClose, adData, loading 
+} : { 
+  onClose: () => void;
+  adData: { cardId: number; adCopy1: string; adCopy2: string }[];
+  loading: boolean; 
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -33,7 +33,7 @@ export const PopUp = ({ onClose }: { onClose: () => void }) => {
           className="mt-10 flex gap-4 overflow-x-auto w-full px-4 scrollbar-hide snap-x snap-mandatory"
           onScroll={handleScroll}
         >
-          {advers.map((ad, index) => (
+          {adData.map((ad, index) => (
             <div
               key={index}
               className="flex-none w-full snap-center rounded-lg p-4 text-center"
@@ -45,7 +45,7 @@ export const PopUp = ({ onClose }: { onClose: () => void }) => {
           ))}
         </div>
         <div className="flex justify-center gap-2 mt-2 mb-10">
-          {advers.map((_, index) => (
+          {adData.map((_, index) => (
             <div
               key={index}
               className={`w-2 h-2 rounded-full ${
