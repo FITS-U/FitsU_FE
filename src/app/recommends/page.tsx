@@ -14,7 +14,7 @@ const CardRecommends = () => {
   
   return (
     <div className="text-white relative h-screen overflow-hidden">
-      <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-150px)]">
+      <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-90px)]">
         <div className="p-8">
           <h1 className="text-xl font-bold">{user.name}님 소비에 기반한 카드 추천</h1>
           <RecCard />

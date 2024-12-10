@@ -1,58 +1,63 @@
-import CategoryLogo from "@/components/CategoryLogo";
+import { getRecommendModelData } from "@/api/model";
 import { Loading } from "@/components/Loading";
 import { useAuthStore } from "@/store/authStore";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const RecCard = () => {
-  // 임시 데이터
-  const ctgAndCard = [
-    {ctgEng: "food", ctgKo: "식비", totalAmount: "127,900", cardId: 1, cardName: "IBK 무민카드", cardCtg: "패스트푸드", discountRate: "60%"},
-    {ctgEng: "transport", ctgKo: "교통", totalAmount: "60,000", cardId: 2, cardName: "KB 청춘대로 톡톡카드", cardCtg: "대중교통", discountRate: "10%"},
-    {ctgEng: "shopping", ctgKo: "쇼핑", totalAmount: "40,300", cardId: 1, cardName: "IBK 무민카드", cardCtg: "온라인 쇼핑", discountRate: "20%"}
-  ]
-
-  const { user } = useAuthStore();
+  const { user, hydrateUser } = useAuthStore();
   const [loading, setLoading] = useState<boolean>(true);
+  const [recData, setRecData] = useState<{ cardId: number; cardName: string; details: string; repBenefits: string }[]>([]);
 
-  // useEffect(() => {
-  //   const fetchCtgAndCard = async() => {
-  //     try {
-  //       const data = await getMthSpendOfCtgByLast30Days(user.token);
-  //     } catch (error) {
-  //       console.error("Failed to fetch categories and cards:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchCtgAndCard();
-  // }, []);
+  useEffect(() => {
+    hydrateUser();
 
-  // if (loading) return <Loading />
+    const fetchCtgAndCard = async() => {
+      try {
+        if (user.token) {
+          const response = await getRecommendModelData(user.token);
+          setRecData(response);
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories and cards:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCtgAndCard();
+  }, []);
+
+  if (loading) return <Loading />
 
   return (
-    <div className="mt-8">
-      {ctgAndCard.map((ctgAndCard, index) => (
-        <div key={index}>
-          <div className="mt-4 flex items-center">
-            <CategoryLogo w={45} h={45} name={ctgAndCard.ctgKo} iconSrc={`/icons/${ctgAndCard.ctgEng}.png`} />
-            <span className="ml-4">
-              <div className="text-lg">{ctgAndCard.ctgKo} 할인 BEST</div>
-              <div className="text-sm font-light">총 {ctgAndCard.totalAmount}원 썼어요</div>
-            </span>
-          </div>
-          <Link href={`/recommends/${ctgAndCard.cardId}`}>
-            <div className="border-l-4 h-16 rounded-sm ml-5 mt-4 flex items-center">
-              <div className="ml-9">
-                <p className="text-lg font-semibold">{ctgAndCard.cardCtg} {ctgAndCard.discountRate} 할인</p>
-                <p className="text-sm font-light">{ctgAndCard.cardName}</p>
-              </div>
+    <div className="mt-10">
+      {recData.map((card, index) => (
+        <div key={index} className="mt-8 flex flex-col items-center justify-center">
+          <div className="mb-2 w-40 h-24 bg-contrast-800 rounded-lg"></div>
+          <div className="space-y-1 flex flex-col items-center justify-center">
+            <div className="font-bold text-lg">{card.cardName}</div>
+            <div className="flex items-center justify-center text-center">
+              {card.details.split(/(\d+)/).map((segment, index) => {
+                // 숫자인 부분만 강조 처리
+                return /\d+/.test(segment) ? (
+                  <span
+                    key={index}
+                    className="text-orange-500 font-semibold whitespace-nowrap"
+                  >
+                    {segment}
+                  </span>
+                ) : (
+                  <span key={index} className="whitespace-nowrap">
+                    {segment}
+                  </span>
+                );
+              })}
             </div>
-          </Link>
-        </div>  
+            <div>{card.repBenefits}</div>
+          </div>
+        </div>
       ))}
     </div>
-  );
+  );  
 };
 
 export default RecCard;
