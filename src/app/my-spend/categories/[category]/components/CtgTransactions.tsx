@@ -12,13 +12,14 @@ export const CtgTransactions = () => {
     <div className="mt-8">
       {Object.entries(groupedTransactions).map(([date, transactions]) => (
         <div key={date}>
-          <div className="text-sm font-bold mb-2">{date}</div>
+          <div className="text-md mb-4 text-contrast-200">{date}</div>
           {transactions.map((transaction, index) => (
             <div key={index}>
-              <CtgTransItem 
+              <CtgTransItem
                 recipient={transaction.recipient}
                 price={transaction.price}
                 transactionType={transaction.transactionType}
+                method={transaction.cardName ? transaction.cardName : transaction.accName}
               />
             </div>
           ))}

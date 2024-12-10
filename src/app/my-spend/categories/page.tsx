@@ -8,11 +8,13 @@ import { useAuthStore } from "@/store/authStore";
 import { useMonthlyStore } from "@/store/monthlyStore";
 import { getMthlySpendOfCtg } from "@/api/transaction";
 import { useCategoryStore } from "@/store/categoryStore";
+import { useRouter } from "next/navigation";
 
 const Categories = () => {
   const { user } = useAuthStore();
   const { currentYear, currentMonth, getMonthlySpend } = useMonthlyStore();
   const { categories, setCategories, setSelectedCategory } = useCategoryStore();
+  const router = useRouter();
   
   useEffect(() => {
     const fetchCtgSpending = async() => {
@@ -47,10 +49,14 @@ const Categories = () => {
         }
 
         return (
-          <div key={index}>
-            <Link href="" onClick={() => setSelectedCategory(ctg)}>
-              <EachCategory index={index + 1} name={ctg.categoryName} percent={percent} totalAmount={ctg.totalSpending} iconSrc="" />
-            </Link>
+          <div
+            key={index}
+            onClick={() => {
+              setSelectedCategory(ctg);
+              router.push(`/my-spend/categories/${index + 1}`); 
+            }}
+          >
+            <EachCategory name={ctg.categoryName} percent={percent} totalAmount={ctg.totalSpending} iconSrc="" />
           </div>
         );
       })}
