@@ -12,12 +12,15 @@ import BottomNav from "@/components/BottomNav";
 import { LogoToAccounts } from "@/components/Logo";
 import { useMonthlyStore } from "@/store/monthlyStore";
 import { Advertisement } from "./components/Advertisement";
+import { IoSettingsSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 const HomePage: React.FC = () => {
   const { user, hydrateUser } = useAuthStore();
   const { accounts, setAccounts } = useAccountStore();
   const { currentYear, currentMonth, setMonthlySpend, resetToCurrentDate } = useMonthlyStore();
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   useEffect(() => {
     hydrateUser();
@@ -49,7 +52,13 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="p-8 relative h-screen overflow-hidden text-white">
-      <LogoToAccounts />
+      <div className="flex items-center justify-between">
+        <LogoToAccounts />
+        <IoSettingsSharp 
+          className="w-6 h-auto text-contrast-300"
+          onClick={() => router.push("/setting")}
+        />
+      </div>
       <Advertisement />
       <div className="mt-5">
         {accounts.length ? (

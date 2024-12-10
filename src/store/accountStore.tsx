@@ -8,6 +8,7 @@ export interface AccountState {
   bankId: number;
   bankName: string;
   isLinked: boolean;
+  imageUrl: string;
 }
 
 interface AccountStore {
@@ -28,6 +29,7 @@ export const useAccountStore = create<AccountStore>((set) => ({
     bankId: 0,
     bankName: "",
     isLinked: true,
+    imageUrl: "",
   },
   setAccounts: (accounts: any) => set({ accounts }),
   setSelectedAccount: (selectedAccount) => set({ selectedAccount }),

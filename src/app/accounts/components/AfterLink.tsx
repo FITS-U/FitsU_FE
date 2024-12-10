@@ -27,10 +27,17 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
         {accounts.map((account, index) => (
           <div key={index}>
             <div className="flex justify-between items-center mb-5">
-              <span>
-                <div className="text-xl font-bold">{formatPrice(account.balance)}원</div>
-                <div className="text-sm">{account.accName}</div>
-              </span>
+              <div className="flex items-center justify-start">
+                <div className="w-10 h-auto rounded-2xl bg-contrast-700 flex flex-col items-center p-2">
+                  <div className="w-6 h-auto">
+                    <img src={account.imageUrl} alt={account.bankName} className="rounded-lg" />
+                  </div>
+                </div>
+                <span className="ml-4">
+                  <div className="text-xl font-bold">{formatPrice(account.balance)}원</div>
+                  <div className="text-sm">{account.accName}</div>
+                </span>
+              </div>
               <Link href={`/accounts/${index + 1}`}>
                 <button
                   onClick={() => handleAccountClick(account)}

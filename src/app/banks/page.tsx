@@ -68,7 +68,7 @@ const AccountPage: React.FC = () => {
               onClick={() => toggleBankId(bank.bankId)}
             >
               <div className="flex items-start justify-start space-x-6">
-                <div className="w-6 h-auto rounded-full">
+                <div className="w-6 h-auto">
                   <img src={bank.imageUrl} alt={bank.bankName} className="w-full h-auto rounded-lg" />
                 </div>
                 <span className="text-lg">{bank.bankName}</span>
