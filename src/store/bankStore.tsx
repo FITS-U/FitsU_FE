@@ -9,6 +9,7 @@ interface Bank {
 interface BankStore {
   banks: Bank[];
   selectedBankIds: number[];
+  setBanks: (banks: Bank[]) => void;
   setSelectedBankIds: (ids: number[]) => void;
   toggleBankId: (id: number) => void;
   selectAllBanks: (ids: number[]) => void;
@@ -19,6 +20,7 @@ interface BankStore {
 export const useBankStore = create<BankStore>((set, get) => ({
   banks: [],
   selectedBankIds: [],
+  setBanks: (banks) => set({ banks }),
   setSelectedBankIds: (ids) => set({ selectedBankIds: ids }),
   toggleBankId: (id) =>
     set((state) => ({

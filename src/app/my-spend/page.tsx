@@ -11,7 +11,7 @@ import { Loading } from "@/components/Loading";
 import { useCategoryStore } from "@/store/categoryStore";
 import { MonthlyInfo } from "./components/MonthlyInfo";
 import BottomNav from "@/components/BottomNav";
-import { Transaction } from "@/types/account";
+import { Transaction } from "@/types/transaction";
 import { formatDateByDayName } from "@/utils/formatDate";
 import { formatTransactionPrice } from "@/utils/formatPrice";
 import Calendar from "./components/Calender";

@@ -1,9 +1,3 @@
-export interface Bank {
-  bankId: number;
-  bankName: string;
-  imageUrl: string;
-}
-
 export interface Transaction {
   transactionId: number;
   price: number;

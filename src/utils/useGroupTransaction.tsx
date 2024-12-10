@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Transaction } from "@/types/account";
+import { Transaction } from "@/types/transaction";
 import { formatDateByDay, formatDateByDayName } from "@/utils/formatDate";
 
 export const groupTransactionsByDate = (transactions: Transaction[]) => {

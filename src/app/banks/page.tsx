@@ -4,40 +4,31 @@ import { getBankList } from "@/api/account";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaCheckCircle, FaRegCheckCircle, FaChevronLeft } from "react-icons/fa";
-import { Bank } from "../../types/account";
 import { useBankStore } from "@/store/bankStore";
 import { Loading } from "../../components/Loading";
 
 const AccountPage: React.FC = () => {
-  // const [banks, setBanks] = useState<Bank[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const { selectedBankIds, toggleBankId, selectAllBanks, deselectAllBanks } = useBankStore();
+  const { banks, setBanks, selectedBankIds, toggleBankId, selectAllBanks, deselectAllBanks } = useBankStore();
 
-  // 임시데이터
-  const banks = [
-    {bankId: 1, bankName: "신한은행", imageUrl: ""},
-    {bankId: 2, bankName: "하나은행", imageUrl: ""},
-    {bankId: 3, bankName: "토스뱅크", imageUrl: ""},
-  ]
+  useEffect(() => {
+    const fetchBanks = async () => {
+      try {
+        const data = await getBankList();
+        setBanks(data);
+      } catch (error) {
+        console.error("Failed to fetch bank list:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // useEffect(() => {
-  //   const fetchBanks = async () => {
-  //     try {
-  //       const data = await getBankList();
-  //       setBanks(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch bank list:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+    fetchBanks();
+  }, []);
 
-  //   fetchBanks();
-  // }, []);
-
-  // if (loading) {
-  //   return <Loading />
-  // }
+  if (loading) {
+    return <Loading />
+  }
 
   return (
     <div className="p-8 pb-20 text-white relative h-screen overflow-hidden">

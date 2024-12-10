@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Transaction } from "@/types/account";
+import { Transaction } from "@/types/transaction";
 
 interface TransactionStore {
   transactions: Transaction[];
