@@ -1,6 +1,8 @@
 const EditProfilePage = () => {
   return (
-    <div></div>
+    <div className="p-8 text-white">
+      <div>내 정보 수정 페이지</div>
+    </div>
   );
 };
 
