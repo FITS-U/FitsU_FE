@@ -61,7 +61,7 @@ export const ScrollBenefits = () => {
   };
 
   return (
-    <div>
+    <div className="mt-28">
       <div className="flex overflow-x-auto scrollbar-hide gap-3 mr-0">
         <div className="ml-8">
           <div 
