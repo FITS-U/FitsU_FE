@@ -6,7 +6,7 @@ export const PopUp = ({
   adData,
 }: {
   onClose: () => void;
-  adData: { card_id: number; adCopy1: string; adCopy2: string; image_url: string }[];
+  adData: { card_id: number; card_name: string; adCopy1: string; adCopy2: string; image_url: string }[];
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageRatios, setImageRatios] = useState<Record<number, string>>({}); // 이미지 비율 저장
@@ -49,8 +49,9 @@ export const PopUp = ({
               key={ad.card_id}
               className="flex-none w-full snap-center p-4 flex flex-col justify-center items-center"
             >
-              <h2 className="text-xl font-bold mb-2">{ad.adCopy1}</h2>
-              <p className="text-md mb-4">{ad.adCopy2}</p>
+              <div className="font-bold text-2xl mb-3">{ad.card_name}</div>
+              <div className="text-lg font-semibold mb-1">{ad.adCopy1}</div>
+              <div className="text-lg font-semibold mb-4">{ad.adCopy2}</div>
               <img
                 src={ad.image_url}
                 alt="카드이미지"

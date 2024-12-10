@@ -10,8 +10,8 @@ export const Advertisement = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const [adData, setAdData] = useState([
-    { card_id: 1, adCopy1: "당신의 여행 꿈이 현실로! ✈️", adCopy2: "197 원더카드 LIVING으로 항공마일리지 쌓고 여행하세요!", image_url: "" },
-    { card_id: 2, adCopy1: "아름다움도 스마트하게! 💖", adCopy2: "KB국민 와이즈카드로 뷰티 할인과 함께 나만의 스타일을 완성해보세요!", image_url: "" },
+    { card_id: 1, card_name: "197 원더카드 LIVING", adCopy1: "당신의 여행 꿈이 현실로! ✈️", adCopy2: "197 원더카드 LIVING으로 항공마일리지 쌓고 여행하세요!", image_url: "" },
+    { card_id: 2, card_name: "KB국민 와이즈카드", adCopy1: "아름다움도 스마트하게! 💖", adCopy2: "KB국민 와이즈카드로 뷰티 할인과 함께 나만의 스타일을 완성해보세요!", image_url: "" },
   ]);
 
   useEffect(() => {
