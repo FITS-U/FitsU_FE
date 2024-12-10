@@ -2,18 +2,29 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { useState } from "react";
 
 export const PopUp = ({
-  onClose, adData, loading 
-} : { 
+  onClose,
+  adData,
+}: {
   onClose: () => void;
-  adData: { cardId: number; adCopy1: string; adCopy2: string }[];
-  loading: boolean; 
+  adData: { card_id: number; adCopy1: string; adCopy2: string; image_url: string }[];
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imageRatios, setImageRatios] = useState<Record<number, string>>({}); // 이미지 비율 저장
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
     const index = Math.round(container.scrollLeft / container.offsetWidth);
     setCurrentIndex(index);
+  };
+
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>, cardId: number) => {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+
+    // 이미지 비율 계산 및 저장
+    setImageRatios((prev) => ({
+      ...prev,
+      [cardId]: naturalWidth / naturalHeight > 1 ? "landscape" : "portrait",
+    }));
   };
 
   return (
@@ -33,14 +44,23 @@ export const PopUp = ({
           className="mt-10 flex gap-4 overflow-x-auto w-full px-4 scrollbar-hide snap-x snap-mandatory"
           onScroll={handleScroll}
         >
-          {adData.map((ad, index) => (
+          {adData.map((ad) => (
             <div
-              key={index}
-              className="flex-none w-full snap-center rounded-lg p-4 text-center"
+              key={ad.card_id}
+              className="flex-none w-full snap-center p-4 flex flex-col justify-center items-center"
             >
               <h2 className="text-xl font-bold mb-2">{ad.adCopy1}</h2>
               <p className="text-md mb-4">{ad.adCopy2}</p>
-              <div className="w-40 h-60 m-auto bg-contrast-800 rounded-md"></div>
+              <img
+                src={ad.image_url}
+                alt="카드이미지"
+                className={`rounded-md ${
+                  imageRatios[ad.card_id] === "landscape"
+                    ? "w-60 h-auto"
+                    : "w-auto h-60"
+                }`}
+                onLoad={(e) => handleImageLoad(e, ad.card_id)}
+              />
             </div>
           ))}
         </div>

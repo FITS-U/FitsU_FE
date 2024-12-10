@@ -5,6 +5,7 @@ export interface CardState {
   cardName: string;
   benefitTitle: string;
   categoryId: number;
+  imageUrl: string;
 }
 
 interface CardStore {

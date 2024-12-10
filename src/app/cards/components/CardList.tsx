@@ -23,10 +23,12 @@ export const CardList = () => {
     fetchCardList();
   }, []);
 
-  // 선택된 카테고리에 따라 필터링
-  const filteredCards = selectedBenefitCtgId
-    ? cards.filter((card) => card.categoryId === selectedBenefitCtgId)
-    : cards;
+    // 선택된 카테고리에 따라 필터링하며 중복 제거
+    const filteredCards = selectedBenefitCtgId
+    ? cards
+        .filter((card) => card.categoryId === selectedBenefitCtgId)
+        .filter((card, index, self) => self.findIndex((c) => c.cardId === card.cardId) === index)
+    : cards.filter((card, index, self) => self.findIndex((c) => c.cardId === card.cardId) === index);
 
     const handleCardClick = (card: CardState, index: number) => {
       console.log("cardId:",card.cardId);
@@ -42,7 +44,7 @@ export const CardList = () => {
             className="flex items-center justify-start cursor-pointer"
             onClick={() => handleCardClick(card, index)}
           >
-            <div className="w-10 h-16 bg-contrast-800"></div>
+            <img src={card.imageUrl} alt={`${card.cardName}`} width={40} height={60} />
             <div className="ml-4 flex flex-col gap-y-1">
               <div className="text-lg font-semibold truncate max-w-64">{card.cardName}</div>
               <div className="text-sm">{card.benefitTitle}</div>

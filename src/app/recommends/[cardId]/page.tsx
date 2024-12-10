@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { FaChevronLeft } from "react-icons/fa";
@@ -13,23 +13,31 @@ const CardDetailPage = () => {
   const { selectedCard } = useCardStore();
   const { card, setCard } = useCardDetailStore();
   const [loading, setLoading] = useState<boolean>(true);
+  const [imageRatio, setImageRatio] = useState<string>("landscape"); // 이미지 비율 상태
   const router = useRouter();
 
   useEffect(() => {
-    const fetchCardInfo = async() => {
+    const fetchCardInfo = async () => {
       try {
         const data = await getCardDetails(selectedCard.cardId);
         setCard(data);
       } catch (error) {
-        console.error("Failed to fatch card details:", error);
+        console.error("Failed to fetch card details:", error);
       } finally {
         setLoading(false);
       }
     };
     fetchCardInfo();
-  }, [card.cardId])
+  }, [selectedCard.cardId, setCard]);
 
-  if (loading) return <Loading />
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+
+    // 이미지 비율 계산
+    setImageRatio(naturalWidth / naturalHeight > 1 ? "landscape" : "portrait");
+  };
+
+  if (loading) return <Loading />;
 
   if (!card) {
     return <p>해당 카드를 찾을 수 없습니다.</p>;
@@ -41,7 +49,14 @@ const CardDetailPage = () => {
         <FaChevronLeft className="h-5" />
       </div>
       <div className="mt-12 flex flex-col items-center">
-        <div className="w-3/5 aspect-[5/3] bg-contrast-800 flex items-center justify-center">카드이미지</div>
+        <img
+          src={card.imageUrl}
+          alt={card.cardName}
+          className={`rounded-md ${
+            imageRatio === "landscape" ? "w-3/5 h-auto" : "w-auto h-52"
+          }`}
+          onLoad={handleImageLoad}
+        />
       </div>
       <h1 className="text-xl font-bold mt-14">{card.cardName}</h1>
       <section className="mt-12">
@@ -49,7 +64,9 @@ const CardDetailPage = () => {
           <div key={index} className="mt-8 space-y-1">
             <div className="text-orange-500 text-xl font-bold">{benefits.categoryName}</div>
             <div className="text-lg font-semibold">{benefits.benefitTitle}</div>
-            <div className="font-light text-sm leading-normal">{benefits.description}</div>
+            <div className="font-light text-sm leading-normal text-contrast-200">
+              {benefits.description}
+            </div>
           </div>
         ))}
       </section>

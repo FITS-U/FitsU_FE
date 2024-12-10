@@ -1,4 +1,3 @@
-import { getMthSpendOfCtgByLast30Days } from "@/api/transaction";
 import CategoryLogo from "@/components/CategoryLogo";
 import { Loading } from "@/components/Loading";
 import { useAuthStore } from "@/store/authStore";

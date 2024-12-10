@@ -13,6 +13,7 @@ interface CardDetailState {
   prevSales: string;
   annualFee: string;
   cardApplyUrl: string;
+  imageUrl: string;
   benefits: BenefitState[];
 }
 
@@ -28,6 +29,7 @@ export const useCardDetailStore = create<CardDetailStore>((set) => ({
     prevSales: "",
     annualFee: "",
     cardApplyUrl: "",
+    imageUrl: "",
     benefits: []
   },
   setCard: (card) => set({ card }),
