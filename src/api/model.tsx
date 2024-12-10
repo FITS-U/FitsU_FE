@@ -11,3 +11,14 @@ export const getAdModelData = async(token:string|null) => {
   });
   return data;
 }
+
+export const getRecommendModelData = async(token:string|null) => {
+  const {data} = await axios({
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    url: `http://${IP}:8091/api/v1/card-recommendation`
+  });
+  return data;
+}

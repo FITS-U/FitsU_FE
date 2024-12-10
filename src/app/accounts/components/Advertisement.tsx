@@ -16,21 +16,21 @@ export const Advertisement = () => {
     { cardId: 2, adCopy1: "아름다움도 스마트하게! 💖", adCopy2: "KB국민 와이즈카드로 뷰티 할인과 함께 나만의 스타일을 완성해보세요!" },
   ]);
 
-  // useEffect(() => {
-  //   const fetchAdModel = async() => {
-  //     try {
-  //       const response = await getAdModelData(user.token);
-  //       setAdData(response);
-  //     } catch (error) {
-  //       console.error("Failed to fetch advertise data:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchAdModel();
-  // }, [user.token]);
+  useEffect(() => {
+    const fetchAdModel = async() => {
+      try {
+        const response = await getAdModelData(user.token);
+        setAdData(response);
+      } catch (error) {
+        console.error("Failed to fetch advertise data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAdModel();
+  }, [user.token]);
 
-  // if (loading) return <Loading />
+  if (loading) return <Loading />
   
   return (
     <div className="mt-8">
