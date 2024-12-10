@@ -23,33 +23,33 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
-  useEffect(() => {
-    hydrateUser();
-    resetToCurrentDate();
+  // useEffect(() => {
+  //   hydrateUser();
+  //   resetToCurrentDate();
 
-    const fetchAccounts = async () => {
-      try {
-        if (user.token) {
-          const [accountData, monthlySpendData] = await Promise.allSettled([
-          getLinkedAccounts(user.token),
-          getMonthlySpend(user.token, currentYear, currentMonth),
-        ]);
+  //   const fetchAccounts = async () => {
+  //     try {
+  //       if (user.token) {
+  //         const [accountData, monthlySpendData] = await Promise.allSettled([
+  //         getLinkedAccounts(user.token),
+  //         getMonthlySpend(user.token, currentYear, currentMonth),
+  //       ]);
 
-        if (accountData.status === "fulfilled") setAccounts(accountData.value);
-        if (monthlySpendData.status === "fulfilled") setMonthlySpend(currentYear, currentMonth, monthlySpendData.value);
-        }
-      } catch (error) {
-        console.error("Failed to fetch accout list:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAccounts();
-  }, [currentMonth, currentYear, setAccounts, setMonthlySpend, user.token, resetToCurrentDate, hydrateUser]);
+  //       if (accountData.status === "fulfilled") setAccounts(accountData.value);
+  //       if (monthlySpendData.status === "fulfilled") setMonthlySpend(currentYear, currentMonth, monthlySpendData.value);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch accout list:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchAccounts();
+  // }, [currentMonth, currentYear, setAccounts, setMonthlySpend, user.token, resetToCurrentDate, hydrateUser]);
 
-  if (loading) {
-    return <Loading />
-  }
+  // if (loading) {
+  //   return <Loading />
+  // }
 
   return (
     <div className="p-8 relative h-screen overflow-hidden text-white">

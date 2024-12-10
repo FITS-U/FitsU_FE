@@ -9,31 +9,35 @@ import { useBankStore } from "@/store/bankStore";
 import { Loading } from "../../components/Loading";
 
 const AccountPage: React.FC = () => {
-  const [banks, setBanks] = useState<Bank[]>([]);
+  // const [banks, setBanks] = useState<Bank[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  // zustand - bankStore
   const { selectedBankIds, toggleBankId, selectAllBanks, deselectAllBanks } = useBankStore();
 
-  // 은행 리스트 api 연동
-  useEffect(() => {
-    const fetchBanks = async () => {
-      try {
-        const data = await getBankList();
-        setBanks(data);
-      } catch (error) {
-        console.error("Failed to fetch bank list:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // 임시데이터
+  const banks = [
+    {bankId: 1, bankName: "신한은행", imageUrl: ""},
+    {bankId: 2, bankName: "하나은행", imageUrl: ""},
+    {bankId: 3, bankName: "토스뱅크", imageUrl: ""},
+  ]
 
-    fetchBanks();
-  }, []);
+  // useEffect(() => {
+  //   const fetchBanks = async () => {
+  //     try {
+  //       const data = await getBankList();
+  //       setBanks(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch bank list:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  if (loading) {
-    return <Loading />
-  }
+  //   fetchBanks();
+  // }, []);
+
+  // if (loading) {
+  //   return <Loading />
+  // }
 
   return (
     <div className="p-8 pb-20 text-white relative h-screen overflow-hidden">
@@ -86,7 +90,7 @@ const AccountPage: React.FC = () => {
       </div>
       {selectedBankIds.length ? (
         <Link 
-          href="/banks/selected"
+          href="/banks/privacy-consent"
           className="absolute block bottom-4 w-full -left-0"
         >
           <div className="px-6">
