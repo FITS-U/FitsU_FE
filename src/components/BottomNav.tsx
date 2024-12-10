@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaHouse, FaChartPie, FaBoltLightning, FaCreditCard } from "react-icons/fa6";
-import { IoSettingsSharp } from "react-icons/io5";
 
 const BottomNav = () => {
   const currentPath = usePathname();
