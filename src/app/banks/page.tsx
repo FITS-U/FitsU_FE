@@ -67,7 +67,12 @@ const AccountPage: React.FC = () => {
               className="mt-8 flex items-center justify-between cursor-pointer"
               onClick={() => toggleBankId(bank.bankId)}
             >
-              <span className="text-lg">{bank.bankName}</span>
+              <div className="flex items-start justify-start space-x-6">
+                <div className="w-6 h-auto rounded-full">
+                  <img src={bank.imageUrl} alt={bank.bankName} className="w-full h-auto rounded-lg" />
+                </div>
+                <span className="text-lg">{bank.bankName}</span>
+              </div>
               <span>
                 {selectedBankIds.includes(bank.bankId) ? 
                   <FaCheckCircle className="w-7 h-7 text-orange-500" />
