@@ -10,7 +10,9 @@ import { SubTextMini } from "./components/SubTextMini";
 import { useRouter } from "next/navigation";
 
 const PrivacyConsentPage = () => {
-  const [checked, setChecked] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const { getSelectedBankNames } = useBankStore();
   const router = useRouter();
   // const { user, hydrateUser } = useAuthStore();
 
@@ -36,7 +38,7 @@ const PrivacyConsentPage = () => {
           <p className="mt-1 text-xs text-contrast-200 leading-normal">
             Fits U는 「신용정보의 이용 및 보호에 관한 법률」, 「개인정보 보호법」 등 관련 법령에 따라 개인신용정보를 처리해요.
           </p>
-          <SubText title="정보를 보내는 곳" description={"한국장학재단"} hasColor />
+          <SubText title="정보를 보내는 곳" description={getSelectedBankNames().join(", ")} hasColor />
           <SubText title="정보를 받는 곳" description="FITS U" hasColor />
           <SubText title="목적" description="상세정보 전송요구를 위한 가입상품목록 조회" />
           <SubText title="종료 시점 / 보유 &middot; 이용 기간" description="상세정보 전송요구 시까지 또는 최대 7일" hasColor />
@@ -54,9 +56,9 @@ const PrivacyConsentPage = () => {
           </div>
           <div 
             className="mt-10 flex items-center justify cursor-pointer"
-            onClick={() => setChecked(!checked)}
+            onClick={() => [setIsChecked(!isChecked), setIsDisabled(!isDisabled)]}
           >
-            <FaCheck className={`font-bold ${checked ? "text-orange-500" : "text-contrast-200"}`} />
+            <FaCheck className={`font-bold ${isChecked ? "text-orange-500" : "text-contrast-200"}`} />
             <div className="ml-4 text-sm text-contrast-200">
               [필수]개인신용정보 수집 &middot; 이용 동의
             </div>
@@ -66,9 +68,10 @@ const PrivacyConsentPage = () => {
       <div className="absolute bottom-4 w-full -left-0">
         <div className="px-6"> 
           <button
-            // onClick={}
+            onClick={() => router.push("/banks/selected")}
             className={`p-4 w-full x-2 text-black font-bold rounded-lg 
-              ${checked ? "bg-orange-500" : "bg-contrast-400 block"}`}
+              ${!isDisabled ? "bg-orange-500" : "bg-contrast-400"}`}
+            disabled={isDisabled}
           >
             동의하기
           </button>

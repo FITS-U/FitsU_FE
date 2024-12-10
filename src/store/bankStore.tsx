@@ -1,14 +1,23 @@
 import { create } from "zustand";
 
+interface Bank {
+  bankId: number;
+  bankName: string;
+  imageUrl: string;
+}
+
 interface BankStore {
+  banks: Bank[];
   selectedBankIds: number[];
   setSelectedBankIds: (ids: number[]) => void;
   toggleBankId: (id: number) => void;
   selectAllBanks: (ids: number[]) => void;
   deselectAllBanks: () => void;
+  getSelectedBankNames: () => string[];
 }
 
-export const useBankStore = create<BankStore>((set) => ({
+export const useBankStore = create<BankStore>((set, get) => ({
+  banks: [],
   selectedBankIds: [],
   setSelectedBankIds: (ids) => set({ selectedBankIds: ids }),
   toggleBankId: (id) =>
@@ -19,4 +28,10 @@ export const useBankStore = create<BankStore>((set) => ({
     })),
   selectAllBanks: (ids) => set({ selectedBankIds: ids }),
   deselectAllBanks: () => set({ selectedBankIds: [] }),
+  getSelectedBankNames: () => {
+    const { banks, selectedBankIds } = get();
+    return banks
+      .filter((bank) => selectedBankIds.includes(bank.bankId))
+      .map((bank) => bank.bankName);
+  },
 }));
