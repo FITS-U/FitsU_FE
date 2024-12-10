@@ -1,5 +1,7 @@
 import { IoIosCloseCircle } from "react-icons/io";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { CardState, useCardStore } from "@/store/cardStore";
 
 export const PopUp = ({
   onClose,
@@ -8,8 +10,10 @@ export const PopUp = ({
   onClose: () => void;
   adData: { card_id: number; card_name: string; adCopy1: string; adCopy2: string; image_url: string }[];
 }) => {
+  const { setSelectedCard } = useCardStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageRatios, setImageRatios] = useState<Record<number, string>>({}); // 이미지 비율 저장
+  const router = useRouter();
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const container = e.currentTarget;
@@ -25,6 +29,17 @@ export const PopUp = ({
       ...prev,
       [cardId]: naturalWidth / naturalHeight > 1 ? "landscape" : "portrait",
     }));
+  };
+
+  // adData 항목을 CardState로 변환하는 함수
+  const convertToCardState = (ad: { card_id: number; card_name: string; adCopy1: string; adCopy2: string; image_url: string }): CardState => {
+    return {
+      cardId: ad.card_id,
+      cardName: ad.card_name,
+      benefitTitle: '', // 해당 데이터에는 benefitTitle이 없으므로 빈 문자열 사용
+      categoryId: 0, // 해당 데이터에는 categoryId가 없으므로 기본값 0 사용
+      imageUrl: ad.image_url
+    };
   };
 
   return (
@@ -44,9 +59,9 @@ export const PopUp = ({
           className="mt-10 flex gap-4 overflow-x-auto w-full px-4 scrollbar-hide snap-x snap-mandatory"
           onScroll={handleScroll}
         >
-          {adData.map((ad) => (
+          {adData.map((ad, index) => (
             <div
-              key={ad.card_id}
+              key={index}
               className="flex-none w-full snap-center p-4 flex flex-col justify-center items-center"
             >
               <div className="font-bold text-2xl mb-3">{ad.card_name}</div>
@@ -62,6 +77,15 @@ export const PopUp = ({
                 }`}
                 onLoad={(e) => handleImageLoad(e, ad.card_id)}
               />
+              <div 
+                onClick={() => {[
+                  router.push(`/recommends/${index + 1}`),
+                  setSelectedCard(convertToCardState(ad))
+                ]}}
+                className="text-sm font-bold text-contrast-800 border-b border-black mt-2"
+              >
+                자세히 보기
+              </div>
             </div>
           ))}
         </div>

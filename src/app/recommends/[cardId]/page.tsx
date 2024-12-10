@@ -52,7 +52,7 @@ const CardDetailPage = () => {
         <img
           src={card.imageUrl}
           alt={card.cardName}
-          className={`rounded-md ${
+          className={`rounded-md shadow-lg shadow-contrast-400 ${
             imageRatio === "landscape" ? "w-3/5 h-auto" : "w-auto h-52"
           }`}
           onLoad={handleImageLoad}
