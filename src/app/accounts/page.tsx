@@ -14,6 +14,7 @@ import { useMonthlyStore } from "@/store/monthlyStore";
 import { Advertisement } from "./components/Advertisement";
 import { IoSettingsSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import LogoutButton from "./components/LogoutButton";
 
 const HomePage: React.FC = () => {
   const { user, hydrateUser } = useAuthStore();
@@ -54,10 +55,13 @@ const HomePage: React.FC = () => {
     <div className="p-8 relative h-screen overflow-hidden text-white">
       <div className="flex items-center justify-between">
         <LogoToAccounts />
-        <IoSettingsSharp 
-          className="w-6 h-auto text-contrast-300"
-          onClick={() => router.push("/setting")}
-        />
+        <div className="flex items-center justify-end cursor-pointer">
+          <LogoutButton />
+          <IoSettingsSharp 
+            className="w-6 h-auto text-contrast-300 ml-3"
+            onClick={() => router.push("/setting")}
+          />
+        </div>
       </div>
       <Advertisement />
       <div className="mt-5">

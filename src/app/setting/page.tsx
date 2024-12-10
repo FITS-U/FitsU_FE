@@ -2,10 +2,14 @@
 
 import { useAuthStore } from "@/store/authStore";
 import { useEffect } from "react";
-import { FaUserCircle, FaChevronRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa6";
+import { EditProfileBtn } from "./components/EditProfileBtn";
+import { useRouter } from "next/navigation";
+import { WithdrawBtn } from "./components/WithdrawBtn";
 
 const Setting = () => {
   const { user, hydrateUser } = useAuthStore();
+  const router = useRouter();
   
   useEffect(() => {
     hydrateUser();
@@ -13,15 +17,15 @@ const Setting = () => {
 
   return (
     <div className="p-8 text-white">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center justify-start">
-          <FaUserCircle className="w-12 h-auto" />
-          <div className="ml-4">
-            <div className="text-lg font-semibold">{user.name}</div>
-            <div className="text-sm">내 정보 수정하기</div>
-          </div>
-        </div>
-        <FaChevronRight />
+      <div className="flex items-center">
+        <FaArrowLeft className="text-2xl" onClick={() => router.back()} />
+        <div className="font-semibold text-lg ml-8">설정</div>
+      </div>
+      <div onClick={() => router.push("/setting/edit-profile")}>
+        <EditProfileBtn name={user.name} />
+      </div>
+      <div>
+        <WithdrawBtn />
       </div>
     </div>
   );
