@@ -11,7 +11,7 @@ import { useAccountStore } from "@/store/accountStore";
 const LinkPage: React.FC = () => {
   const { selectedBankIds } = useBankStore();
   const { user, hydrateUser } = useAuthStore();
-  const { accounts, setAccounts, updateAccount } = useAccountStore();
+  const { accounts, setAccounts } = useAccountStore();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -53,11 +53,16 @@ const LinkPage: React.FC = () => {
       <div className="mt-32">
         {accounts.length ? (
           accounts.map((account) => (
-            <div key={account.accountId} className="mb-6">
-              <div className="text-base/[15px] font-semibold tracking-tight">{account.accName}</div>
-              <div className="mt-1.5 text-sm font-light">
-                <span className="tracking-tight">{account.bankName} </span>
-                <span>{account.accountNum}</span>
+            <div key={account.accountId} className="mb-6 flex items-center">
+              <div className="w-12 h-auto">
+                <img src={account.imageUrl} alt={account.bankName} className="rounded-lg" />
+              </div>
+              <div className="ml-2">
+                <div className="text-base font-semibold tracking-tight">{account.accName}</div>
+                <div className="text-sm font-light">
+                  <span className="tracking-tight">{account.bankName} </span>
+                  <span>{account.accountNum}</span>
+                </div>
               </div>
             </div>
           ))
