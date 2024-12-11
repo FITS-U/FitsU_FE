@@ -5,7 +5,6 @@ import AfterLinkPage from "./components/AfterLink";
 import BeforeLinkPage from "./components/BeforeLink";
 import { getLinkedAccounts } from "@/api/account";
 import { getMonthlySpend } from "@/api/transaction";
-import { Loading } from "../../components/Loading";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
 import BottomNav from "@/components/BottomNav";

@@ -56,17 +56,17 @@ export const PopUp = ({
           onClick={onClose}
         />
         <div
-          className="mt-10 flex gap-4 overflow-x-auto w-full px-4 scrollbar-hide snap-x snap-mandatory"
+          className="mt-6 flex gap-4 overflow-x-auto w-full px-4 scrollbar-hide snap-x snap-mandatory"
           onScroll={handleScroll}
         >
           {adData.map((ad, index) => (
             <div
               key={index}
-              className="flex-none w-full snap-center p-4 flex flex-col justify-center items-center"
+              className="flex-none w-full snap-center flex flex-col justify-center items-center text-center"
             >
-              <div className="font-bold text-2xl mb-3">{ad.card_name}</div>
-              <div className="text-lg font-semibold mb-1">{ad.adCopy1}</div>
-              <div className="text-lg font-semibold mb-4">{ad.adCopy2}</div>
+              <div className="font-bold text-xl mb-3">{ad.card_name}</div>
+              <div className="font-semibold mb-1">{ad.adCopy1}</div>
+              <div className="font-semibold mb-4">{ad.adCopy2}</div>
               <img
                 src={ad.image_url}
                 alt="카드이미지"
@@ -89,7 +89,7 @@ export const PopUp = ({
             </div>
           ))}
         </div>
-        <div className="flex justify-center gap-2 mt-2 mb-10">
+        <div className="flex justify-center gap-2 mt-2 mb-8">
           {adData.map((_, index) => (
             <div
               key={index}

@@ -8,10 +8,21 @@ import { getAdModelData } from "@/api/model";
 export const Advertisement = () => {
   const { user } = useAuthStore();
   const [isClicked, setIsClicked] = useState<boolean>(false);
-
   const [adData, setAdData] = useState([
-    { card_id: 1, card_name: "197 원더카드 LIVING", adCopy1: "당신의 여행 꿈이 현실로! ✈️", adCopy2: "197 원더카드 LIVING으로 항공마일리지 쌓고 여행하세요!", image_url: "" },
-    { card_id: 2, card_name: "KB국민 와이즈카드", adCopy1: "아름다움도 스마트하게! 💖", adCopy2: "KB국민 와이즈카드로 뷰티 할인과 함께 나만의 스타일을 완성해보세요!", image_url: "" },
+    {
+      adCopy1: "쇼핑할 때마다 기분이 UP! 🛍️",
+      adCopy2: "맛있는 외식과 달콤한 카페도 함께 즐겨요! 🍽️☕",
+      card_id: 55,
+      card_name: "삼성 iD PET 카드",
+      image_url: "https://vertical.pstatic.net/vertical-cardad/creatives/SS/10184/SS_10184_20221004-224031_ver.png"
+    },
+    {
+      adCopy1: "쇼핑은 더 즐겁게, 외식은 더 맛있게! 🛍️🍽️",
+      adCopy2: "카페에서의 달콤한 순간, 납부도 스마트하게! ☕💳",
+      card_id: 135,
+      card_name: "KB국민 와이즈카드",
+      image_url: "https://vertical.pstatic.net/vertical-cardad/creatives/KB/99/KB_99_20230308-153721_hor.png"
+    }
   ]);
 
   useEffect(() => {
