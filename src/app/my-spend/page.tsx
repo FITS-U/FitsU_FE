@@ -94,10 +94,10 @@ const MySpendPage = () => {
         </div>
 
         {Object.entries(groupedByDate).map(([date, dailyTransactions]) => (
-          <div key={date} className="mt-8">
-            <div className="text-sm font-semibold mb-6 text-contrast-200">{date}</div>
+          <div key={date} className="mt-10">
+            <div className="text-sm font-semibold mb-6 text-white">{date}</div>
             {dailyTransactions.map((transaction, index) => (
-              <div key={index} className="mb-6 cursor-pointer">
+              <div key={index} className="mb-8 cursor-pointer">
                 <Link 
                   href={`/my-spend/transactions/${index + 1}`}
                   onClick={() => setSelectedTransaction(transaction)}

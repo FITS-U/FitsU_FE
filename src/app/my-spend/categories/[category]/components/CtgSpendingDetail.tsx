@@ -6,6 +6,7 @@ import { useMonthlyStore } from "@/store/monthlyStore";
 import { useTransactionStore } from "@/store/transactionStore";
 import { useEffect } from "react";
 import { CtgTransactions } from "./CtgTransactions";
+import { formatPrice } from "@/utils/formatPrice";
 
 export const CtgSpendingDetail = () => {  
   const { user, hydrateUser } = useAuthStore();
@@ -34,7 +35,7 @@ export const CtgSpendingDetail = () => {
       <div className="flex items-center justify-between mt-24">
         <span>
           <div className="text-md mb-2">{currentMonth}월 {selectedCategory.categoryName} 총 금액</div>
-          <div className="text-3xl font-semibold">{selectedCategory.totalSpending}원</div>
+          <div className="text-3xl font-semibold">{formatPrice(selectedCategory.totalSpending)}원</div>
         </span>
         {/* <CategoryLogo w={60} h={60} name="식비" iconSrc="/icons/food.png" /> */}
       </div>
