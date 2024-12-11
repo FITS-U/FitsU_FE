@@ -11,12 +11,14 @@ import { IoClose } from "react-icons/io5";
 
 const ConnectionPage = () => {
   const { selectedBankIds } = useBankStore();
-  const { user } = useAuthStore();
+  const { user, hydrateUser } = useAuthStore();
   const { accounts, updateAccount } = useAccountStore();
   const [loading, setLoading] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0);
 
   useEffect(() => {
+    hydrateUser();
+
     const updateAccounts = async () => {
       try {
         const updatedAccData = await updateLinkStatus(user.token, selectedBankIds);
@@ -50,16 +52,14 @@ const ConnectionPage = () => {
           <FaChevronLeft className="h-5" />
         </Link>
         <div className="mt-12 font-bold text-xl">{progress}%</div>
-        <div className="mt-32 flex items-center justify-center">
-          <div className="relative w-16 h-16">
-            <div
-              className="absolute inset-0 rounded-full border-8 border-contrast-800"
-              style={{
-                clipPath: `inset(0 ${100 - progress}% 0 0)`, // 진행률에 따라 클리핑
-              }}
-            />
-            <div className="w-full h-full border-8 border-t-6 border-t-orange-500 rounded-full animate-spin"></div>
-          </div>
+        <div className="mt-12 mx-[-32px] bg-contrast-700 h-[2px]"></div>
+        <div className="mt-8">
+          {accounts.map((account) => (
+            <div key={account.accountId} className="mb-6">
+              <div className="text-base/[15px] font-semibold tracking-tight">{account.accName}</div>
+              <div className="mt-1.5 text-sm font-light">{account.accName}</div>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -67,20 +67,32 @@ const ConnectionPage = () => {
 
   return (
     <div className="p-8 text-white">
-      <div className="flex items-center justify-between">
-        <Link href="/banks">
-          <FaChevronLeft className="h-5" />
-        </Link>
-        <Link href="/accounts">
-          <IoClose />
-        </Link>
-      </div>
-      <div>
-        <p>이세연님의</p>
+      <Link href="/accounts">
+        <IoClose className="text-2xl" />
+      </Link>
+      <div className="mt-12 font-bold text-xl space-y-2">
+        <p>{user.name}님의</p>
         <p>계좌 연결이 끝났어요!</p>
       </div>
-      <div>
-        <div>연결 성공</div>
+      <div className="mt-12 mx-[-32px] bg-contrast-700 h-[2px]"></div>
+      <div className="mt-8">
+        <div className="font-semibold">연결 성공</div>
+        <div className="mt-10 text-contrast-200 font-semibold">은행</div>
+        <div className="mt-6">
+          {accounts.length ? (
+            accounts.map((account) => (
+              <div key={account.accountId} className="mb-6">
+                <div className="text-base/[15px] font-semibold tracking-tight">{account.accName}</div>
+                <div className="mt-1.5 text-sm font-light">
+                  <span className="tracking-tight">{account.bankName} </span>
+                  <span>{account.accountNum}</span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center">계좌 정보가 없습니다.</p>
+          )}
+        </div>
       </div>
     </div>
   );
