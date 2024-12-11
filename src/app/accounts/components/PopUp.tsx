@@ -72,8 +72,8 @@ export const PopUp = ({
                 alt="카드이미지"
                 className={`rounded-md ${
                   imageRatios[ad.card_id] === "landscape"
-                    ? "w-60 h-auto"
-                    : "w-auto h-60"
+                    ? "w-48 h-auto"
+                    : "w-auto h-48"
                 }`}
                 onLoad={(e) => handleImageLoad(e, ad.card_id)}
               />
@@ -89,7 +89,7 @@ export const PopUp = ({
             </div>
           ))}
         </div>
-        <div className="flex justify-center gap-2 mt-2 mb-8">
+        <div className="flex justify-center gap-2 mt-6 mb-8">
           {adData.map((_, index) => (
             <div
               key={index}
