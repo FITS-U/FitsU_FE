@@ -16,7 +16,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
   };
 
   return (
-    <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-170px)]">
+    <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-90px)]">
       <div className="mb-10 bg-contrast-800 h-auto rounded-2xl p-4">
         {accounts.map((account, index) => (
           <div key={index}>

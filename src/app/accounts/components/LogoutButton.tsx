@@ -1,14 +1,19 @@
+"use client";
+
 import { useAuthStore } from "@/store/authStore";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoExit } from "react-icons/io5";
 
 const LogoutButton = () => {
   const [showPopup, setShowPopup] = useState(false);
   const { clearToken } = useAuthStore();
+  const router = useRouter();
 
   const handleLogout = () => {
     clearToken();
     setShowPopup(false);
+    router.push("/");
   };
 
   return (
