@@ -26,7 +26,7 @@ const RecCard = () => {
   useEffect(() => {
     hydrateUser();
 
-    const fetchRecommendCard = async() => {
+    const fetchRecommendCard = async () => {
       try {
         if (user.token) {
           const response = await getRecommendModelData(user.token);
@@ -43,7 +43,7 @@ const RecCard = () => {
 
   useEffect(() => {
     const fetchCardImages = async () => {
-      if (recData.length > 0) { // recData가 비어있지 않으면
+      if (recData.length > 0) {
         try {
           const updatedRecData = await Promise.all(
             recData.map(async (card) => {
@@ -70,10 +70,12 @@ const RecCard = () => {
           key={index}
           className="mt-8 flex flex-col items-center justify-center"
         >
-          <div onClick={() => [
-            router.push(`/recommends/${index + 1}`),
-            setSelectedCard(card)
-          ]}>
+          <div
+            onClick={() => [
+              router.push(`/recommends/${index + 1}`),
+              setSelectedCard(card),
+            ]}
+          >
             <div className="bg-contrast-800 flex flex-col items-center justify-center px-4 py-6 rounded-2xl">
               {card.imageUrl ? (
                 <img
@@ -88,21 +90,7 @@ const RecCard = () => {
               <div className="space-y-1 flex flex-col items-center justify-center">
                 <div className="font-bold text-lg mb-2">{card.cardName}</div>
                 <div className="flex items-center justify-center text-center">
-                  {card.details.split(/(\d+)/).map((segment, index) => {
-                    // 숫자인 부분만 강조 처리
-                    return /\d+/.test(segment) ? (
-                      <span
-                        key={index}
-                        className="text-orange-500 font-semibold whitespace-nowrap"
-                      >
-                        {segment}
-                      </span>
-                    ) : (
-                      <span key={index} className="whitespace-nowrap">
-                        {segment}
-                      </span>
-                    );
-                  })}
+                  {highlightAmountText(card.details)}
                 </div>
                 <div>{card.repBenefits}</div>
               </div>
@@ -113,13 +101,57 @@ const RecCard = () => {
     </div>
   );
 
+  function highlightAmountText(text: string) {
+    const regex = /(약\s*\d{1,3}(,\d{3})*\s*원)/g;
+    const matches = [...text.matchAll(regex)];
+  
+    if (matches.length === 0) return text;
+  
+    const result = [];
+    let lastIndex = 0;
+  
+    matches.forEach((match, index) => {
+      const [fullMatch] = match;
+      const startIndex = match.index || 0;
+  
+      if (startIndex > lastIndex) {
+        result.push(text.substring(lastIndex, startIndex));
+      }
+  
+      result.push(
+        `<span key="highlight-${index}" class="text-orange-500 font-semibold">${fullMatch}</span>`
+      );
+  
+      lastIndex = startIndex + fullMatch.length;
+    });
+  
+    if (lastIndex < text.length) {
+      result.push(text.substring(lastIndex));
+    }
+  
+    return (
+      <span
+        dangerouslySetInnerHTML={{
+          __html: result.join(""),
+        }}
+      />
+    );
+  };
+
   function handleImageLoad(event: React.SyntheticEvent<HTMLImageElement>) {
     const { naturalWidth, naturalHeight } = event.currentTarget;
 
     // 이미지 비율 계산
-    const imageRatio = naturalWidth / naturalHeight > 1 ? "landscape" : "portrait";
-    event.currentTarget.classList.toggle("object-cover", imageRatio === "landscape");
-    event.currentTarget.classList.toggle("object-contain", imageRatio === "portrait");
+    const imageRatio =
+      naturalWidth / naturalHeight > 1 ? "landscape" : "portrait";
+    event.currentTarget.classList.toggle(
+      "object-cover",
+      imageRatio === "landscape"
+    );
+    event.currentTarget.classList.toggle(
+      "object-contain",
+      imageRatio === "portrait"
+    );
   }
 };
 
