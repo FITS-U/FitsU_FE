@@ -8,6 +8,7 @@ import { useBankStore } from "@/store/bankStore";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
 import { updateLinkStatus } from "@/api/account";
+import Image from "next/image";
 
 const ConnectionPage = () => {
   const { selectedBankIds } = useBankStore();
@@ -47,7 +48,7 @@ const ConnectionPage = () => {
     };
 
     updateAccounts();
-  }, [user.token, selectedBankIds]);
+  }, [user.token, selectedBankIds, hydrateUser, updateAccount]);
 
   if (loading) {
     return (
@@ -66,7 +67,7 @@ const ConnectionPage = () => {
           {accounts.map((account) => (
             <div key={account.accountId} className="mb-6 flex items-center">
               <div className="w-12 h-auto">
-                <img
+                <Image
                   src={account.imageUrl}
                   alt={account.bankName}
                   className="rounded-lg"
@@ -101,7 +102,7 @@ const ConnectionPage = () => {
             accounts.map((account) => (
               <div key={account.accountId} className="mb-6 flex items-center">
                 <div className="w-12 h-auto">
-                  <img
+                  <Image
                     src={account.imageUrl}
                     alt={account.bankName}
                     className="rounded-lg"

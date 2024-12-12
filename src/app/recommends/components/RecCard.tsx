@@ -3,6 +3,7 @@ import { getRecommendModelData } from "@/api/model";
 import { Loading } from "@/components/Loading";
 import { useAuthStore } from "@/store/authStore";
 import { useCardStore } from "@/store/cardStore";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -39,7 +40,7 @@ const RecCard = () => {
       }
     };
     fetchRecommendCard();
-  }, [selectedCard]);
+  }, [hydrateUser, selectedCard, user.token]);
 
   useEffect(() => {
     const fetchCardImages = async () => {
@@ -78,7 +79,7 @@ const RecCard = () => {
           >
             <div className="bg-contrast-800 flex flex-col items-center justify-center px-4 py-6 rounded-2xl">
               {card.imageUrl ? (
-                <img
+                <Image
                   src={card.imageUrl}
                   alt={`${card.cardName} 이미지`}
                   className="mb-4 w-full h-auto object-cover rounded-lg max-w-[160px] max-h-[120px] lg:max-w-[200px] lg:max-h-[150px] xl:max-w-[240px] xl:max-h-[180px]"

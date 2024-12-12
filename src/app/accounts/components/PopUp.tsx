@@ -67,7 +67,7 @@ export const PopUp = ({
               <div className="font-bold text-xl mb-3">{ad.card_name}</div>
               <div className="font-semibold mb-1">{ad.adCopy1}</div>
               <div className="font-semibold mb-4">{ad.adCopy2}</div>
-              <img
+              <Image
                 src={ad.image_url}
                 alt="카드이미지"
                 className={`rounded-md ${

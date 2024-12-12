@@ -24,7 +24,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
               <div className="flex items-center justify-start">
                 <div className="w-12 h-auto rounded-2xl bg-contrast-700 flex flex-col items-center p-2">
                   <div className="w-7 h-auto">
-                    <img src={account.imageUrl} alt={account.bankName} className="rounded-lg" />
+                    <Image src={account.imageUrl} alt={account.bankName} className="rounded-lg" />
                   </div>
                 </div>
                 <span className="ml-3">

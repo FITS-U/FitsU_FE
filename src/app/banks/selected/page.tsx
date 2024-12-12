@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
+import Image from "next/image";
 
 const LinkPage: React.FC = () => {
   const { selectedBankIds } = useBankStore();
@@ -28,7 +29,7 @@ const LinkPage: React.FC = () => {
       }
     }
     fetchAccounts();
-  }, [selectedBankIds]);
+  }, [hydrateUser, selectedBankIds, setAccounts, user.token]);
 
   if (loading) {
     return (
@@ -55,7 +56,7 @@ const LinkPage: React.FC = () => {
           accounts.map((account) => (
             <div key={account.accountId} className="mb-6 flex items-center">
               <div className="w-12 h-auto">
-                <img src={account.imageUrl} alt={account.bankName} className="rounded-lg" />
+                <Image src={account.imageUrl} alt={account.bankName} className="rounded-lg" />
               </div>
               <div className="ml-2">
                 <div className="text-base font-semibold tracking-tight">{account.accName}</div>

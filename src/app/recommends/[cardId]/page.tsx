@@ -8,6 +8,7 @@ import { getCardDetails } from "@/api/card";
 import { useCardDetailStore } from "@/store/cardDetailStore";
 import { Loading } from "@/components/Loading";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const CardDetailPage = () => {
   const { selectedCard } = useCardStore();
@@ -49,7 +50,7 @@ const CardDetailPage = () => {
         <FaChevronLeft className="h-5" />
       </div>
       <div className="mt-12 flex flex-col items-center">
-        <img
+        <Image
           src={card.imageUrl}
           alt={card.cardName}
           className={`rounded-md ${

@@ -3,6 +3,7 @@
 import { getAllCards } from "@/api/card";
 import { useBenefitCtgStore } from "@/store/benefitCtgStore";
 import { CardState, useCardStore } from "@/store/cardStore";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -21,7 +22,7 @@ export const CardList = () => {
       }
     };
     fetchCardList();
-  }, []);
+  }, [setCards]);
 
     // 선택된 카테고리에 따라 필터링하며 중복 제거
     const filteredCards = selectedBenefitCtgId
@@ -44,7 +45,7 @@ export const CardList = () => {
             className="flex items-center justify-start cursor-pointer"
             onClick={() => handleCardClick(card, index)}
           >
-            <img src={card.imageUrl} alt={`${card.cardName}`} width={40} height={60} />
+            <Image src={card.imageUrl} alt={`${card.cardName}`} width={40} height={60} />
             <div className="ml-4 flex flex-col gap-y-1">
               <div className="text-lg font-semibold truncate max-w-64">{card.cardName}</div>
               <div className="text-sm">{card.benefitTitle}</div>
