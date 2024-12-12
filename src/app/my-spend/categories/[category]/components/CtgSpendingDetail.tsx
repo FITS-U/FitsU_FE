@@ -1,5 +1,4 @@
 import { getCtgSpendDetails } from "@/api/transaction";
-import CategoryLogo from "@/components/CategoryLogo";
 import { useAuthStore } from "@/store/authStore";
 import { useCategoryStore } from "@/store/categoryStore";
 import { useMonthlyStore } from "@/store/monthlyStore";
@@ -28,7 +27,7 @@ export const CtgSpendingDetail = () => {
       }
     };
     fetchCtgSpendingDetail();
-  }, [selectedCategory, currentYear, currentMonth, user.token]);
+  }, [selectedCategory, currentYear, currentMonth, user.token, hydrateUser, setTransactions]);
 
   return (
     <div>
@@ -37,7 +36,6 @@ export const CtgSpendingDetail = () => {
           <div className="text-md mb-2">{currentMonth}월 {selectedCategory.categoryName} 총 금액</div>
           <div className="text-3xl font-semibold">{formatPrice(selectedCategory.totalSpending)}원</div>
         </span>
-        {/* <CategoryLogo w={60} h={60} name="식비" iconSrc="/icons/food.png" /> */}
       </div>
       <div className="mt-8 bg-contrast-800 rounded-2xl p-2 w-16 text-sm flex items-center justify-center">
         <p>총 {transactions.length}회</p>

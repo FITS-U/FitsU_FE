@@ -26,7 +26,7 @@ const Categories = () => {
       }
     };
     fetchCtgSpending();
-  }, [currentYear, currentMonth]);
+  }, [currentYear, currentMonth, user.token, setCategories]);
 
   const totalSpending = getMonthlySpend(currentYear, currentMonth);
 
@@ -56,7 +56,7 @@ const Categories = () => {
               router.push(`/my-spend/categories/${index + 1}`); 
             }}
           >
-            <EachCategory name={ctg.categoryName} percent={percent} totalAmount={ctg.totalSpending} iconSrc="" />
+            <EachCategory name={ctg.categoryName} percent={percent} totalAmount={ctg.totalSpending} />
           </div>
         );
       })}
