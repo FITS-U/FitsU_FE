@@ -6,7 +6,6 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { EditProfileBtn } from "./components/EditProfileBtn";
 import { useRouter } from "next/navigation";
 import { WithdrawBtn } from "./components/WithdrawBtn";
-import { AirlineMileage, Shopping, SimplePayment } from "../icons/categoryIcons";
 
 const Setting = () => {
   const { user, hydrateUser } = useAuthStore();
@@ -14,7 +13,7 @@ const Setting = () => {
   
   useEffect(() => {
     hydrateUser();
-  }, [user.token])
+  }, [hydrateUser, user.token])
 
   return (
     <div className="p-8 text-white">
@@ -28,7 +27,6 @@ const Setting = () => {
       <div>
         <WithdrawBtn />
       </div>
-      <Shopping />
     </div>
   );
 };

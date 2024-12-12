@@ -2,6 +2,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CardState, useCardStore } from "@/store/cardStore";
+import Image from "next/image";
 
 export const PopUp = ({
   onClose,
@@ -78,10 +79,10 @@ export const PopUp = ({
                 onLoad={(e) => handleImageLoad(e, ad.card_id)}
               />
               <div 
-                onClick={() => {[
-                  router.push(`/recommends/${index + 1}`),
-                  setSelectedCard(convertToCardState(ad))
-                ]}}
+                onClick={() => {
+                  router.push(`/recommends/${index + 1}`);
+                  setSelectedCard(convertToCardState(ad));
+                }}
                 className="text-sm font-bold text-contrast-800 border-b border-black mt-2"
               >
                 자세히 보기
