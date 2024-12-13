@@ -1,68 +1,21 @@
-import { getCardImage } from "@/api/card";
-import { getRecommendModelData } from "@/api/model";
-import { Loading } from "@/components/Loading";
-import { useAuthStore } from "@/store/authStore";
-import { useCardStore } from "@/store/cardStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { BsFillQuestionCircleFill } from "react-icons/bs";
+import { RecCardData } from "../page";
+import { useCardStore } from "@/store/cardStore";
 
-interface RecCardData {
-  cardId: number;
-  cardName: string;
-  details: string;
-  repBenefits: string;
-  imageUrl: string;
-  benefitTitle: string;
-  categoryId: number;
+interface RecCardProps {
+  recData: RecCardData[];
 }
 
-const RecCard = () => {
-  const { user, hydrateUser } = useAuthStore();
-  const { setSelectedCard, selectedCard } = useCardStore();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [recData, setRecData] = useState<RecCardData[]>([]);
+const RecCard = ({ recData } : RecCardProps) => {
+  const { setSelectedCard } = useCardStore();
+  const [tooltipStates, setTooltipStates] = useState<number | null>(null);
+  const toggleTooltip = (index: number) => {
+    setTooltipStates(tooltipStates === index ? null : index);
+  };
   const router = useRouter();
-
-  useEffect(() => {
-    hydrateUser();
-
-    const fetchRecommendCard = async () => {
-      try {
-        if (user.token) {
-          const response = await getRecommendModelData(user.token);
-          setRecData(response);
-        }
-      } catch (error) {
-        console.error("Failed to fetch categories and cards:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRecommendCard();
-  }, [hydrateUser, selectedCard, user.token]);
-
-  useEffect(() => {
-    const fetchCardImages = async () => {
-      if (recData.length > 0) {
-        try {
-          const updatedRecData = await Promise.all(
-            recData.map(async (card) => {
-              const imageResponse = await getCardImage(card.cardId);
-              return { ...card, imageUrl: imageResponse.imageUrl };
-            })
-          );
-          setRecData(updatedRecData);
-        } catch (error) {
-          console.error("Failed to fetch card images:", error);
-        }
-      }
-    };
-
-    fetchCardImages();
-  }, [recData.length]);
-
-  if (loading) return <Loading />;
 
   return (
     <div className="mt-8">
@@ -77,12 +30,29 @@ const RecCard = () => {
               setSelectedCard(card),
             ]}
           >
-            <div className="bg-contrast-800 flex flex-col items-center justify-center px-4 py-6 rounded-2xl">
+            <div className="relative bg-contrast-800 flex flex-col items-center justify-center px-4 py-6 rounded-2xl">
+              <BsFillQuestionCircleFill
+                className="absolute top-3 right-3 text-contrast-400 text-xl cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleTooltip(index);
+                }}
+              />
+              {tooltipStates === index && (
+                <div className="absolute top-10 right-2 bg-white text-black p-3 rounded-lg shadow-md z-10 w-72">
+                  <p className="text-sm">
+                    {card.reason}
+                  </p>
+                </div>
+              )}
               {card.imageUrl ? (
                 <Image
                   src={card.imageUrl}
                   alt={`${card.cardName} 이미지`}
-                  className="mb-4 w-full h-auto object-cover rounded-lg max-w-[160px] max-h-[120px] lg:max-w-[200px] lg:max-h-[150px] xl:max-w-[240px] xl:max-h-[180px]"
+                  width={180}
+                  height={240}
+                  className="mb-4 rounded-lg max-w-[150px] max-h-[200px] lg:max-w-[240px] lg:max-h-[180px] xl:max-w-[300px] xl:max-h-[240px]"
+                  layout="intrinsic"
                   onLoad={(e) => handleImageLoad(e)}
                 />
               ) : (
@@ -93,7 +63,7 @@ const RecCard = () => {
                 <div className="flex items-center justify-center text-center">
                   {highlightAmountText(card.details)}
                 </div>
-                <div>{card.repBenefits}</div>
+                <div>{`[ ${card.repBenefits} ]`}</div>
               </div>
             </div>
           </div>
@@ -122,7 +92,6 @@ const RecCard = () => {
       result.push(
         `<span key="highlight-${index}" class="text-orange-500 font-semibold">${fullMatch}</span>`
       );
-  
       lastIndex = startIndex + fullMatch.length;
     });
   
@@ -142,7 +111,6 @@ const RecCard = () => {
   function handleImageLoad(event: React.SyntheticEvent<HTMLImageElement>) {
     const { naturalWidth, naturalHeight } = event.currentTarget;
 
-    // 이미지 비율 계산
     const imageRatio =
       naturalWidth / naturalHeight > 1 ? "landscape" : "portrait";
     event.currentTarget.classList.toggle(
