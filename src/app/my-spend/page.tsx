@@ -15,6 +15,7 @@ import { Transaction } from "@/types/transaction";
 import { formatDateByDayName } from "@/utils/formatDate";
 import { formatTransactionPrice } from "@/utils/formatPrice";
 import Calendar from "./components/Calender";
+import { CategoryIconsMini } from "@/icons/mapping";
 
 const MySpendPage = () => {
   const { user } = useAuthStore();
@@ -47,7 +48,7 @@ const MySpendPage = () => {
     };
 
     fetchMonthlyTransactions();
-  }, [user.token, currentYear, currentMonth, setTransactions, setCategories]);
+  }, [user.token, currentYear, currentMonth, setTransactions, setCategories, setMonthlySpend]);
 
   useEffect(() => {
     // 일별 소비 데이터 집계
@@ -102,11 +103,18 @@ const MySpendPage = () => {
                   href={`/my-spend/transactions/${index + 1}`}
                   onClick={() => setSelectedTransaction(transaction)}
                 >
-                  <div className="font-bold text-lg">
-                    {formatTransactionPrice(transaction.price, transaction.transactionType)}
-                  </div>
-                  <div className="text-xs text-contrast-200">
-                    {transaction.recipient} | {transaction.userCardId ? transaction.cardName : transaction.accName}
+                  <div className="flex items-center">
+                    <div>
+                      {CategoryIconsMini[transaction.categoryName as keyof typeof CategoryIconsMini] || null}
+                    </div>
+                    <div className="ml-3">
+                      <div className="font-bold text-lg">
+                        {formatTransactionPrice(transaction.price, transaction.transactionType)}
+                      </div>
+                      <div className="text-xs text-contrast-200">
+                        {transaction.recipient} | {transaction.userCardId ? transaction.cardName : transaction.accName}
+                      </div>
+                    </div>
                   </div>
                 </Link>
               </div>

@@ -1,3 +1,4 @@
+// 작은 버전
 import {
   AirlineMileage,
   Shopping,
@@ -33,9 +34,9 @@ import {
   AnnualFeeSupport,
   NationalHappinessCard,
   GreenCard
-} from "@/icons/categoryIcons";
+} from "@/icons/CtgIconsMini";
 
-export const CategoryIcons = {
+export const CategoryIconsMini = {
   "항공마일리지": <AirlineMileage />,
   "쇼핑": <Shopping />,
   "간편결제": <SimplePayment />,
@@ -70,4 +71,80 @@ export const CategoryIcons = {
   "연회비지원": <AnnualFeeSupport />,
   "국민행복카드": <NationalHappinessCard />,
   "그린카드": <GreenCard />
+};
+
+
+// 큰 버전
+import {
+  BigAirlineMileage,
+  BigShopping,
+  BigSimplePayment,
+  BigPointCashback,
+  BigConvenienceStore,
+  BigLargeMart,
+  BigCafeBakery,
+  BigPaymentBenefits,
+  BigDiningOut,
+  BigMedical,
+  BigPets,
+  BigBeauty,
+  BigPublicTransport,
+  BigFuel,
+  BigHiPass,
+  BigEducation,
+  BigChildcare,
+  BigCulture,
+  BigLeisure,
+  BigMovies,
+  BigTelecom,
+  BigManagementFees,
+  BigPriorityPass,
+  BigPremium,
+  BigAuto,
+  BigFinance,
+  BigDebitCardCompatible,
+  BigVoucher,
+  BigAlwaysDiscount,
+  BigRental,
+  BigCompactCarFuelRefund,
+  BigAnnualFeeSupport,
+  BigNationalHappinessCard,
+  BigGreenCard
+} from "@/icons/CtgIconsBig";
+
+export const CategoryIconsBig = {
+  "항공마일리지": <BigAirlineMileage />,
+  "쇼핑": <BigShopping />,
+  "간편결제": <BigSimplePayment />,
+  "포인트/캐시백": <BigPointCashback />,
+  "편의점": <BigConvenienceStore />,
+  "대형마트": <BigLargeMart />,
+  "카페/베이커리": <BigCafeBakery />,
+  "납부 혜택": <BigPaymentBenefits />,
+  "외식": <BigDiningOut />,
+  "의료": <BigMedical />,
+  "반려동물": <BigPets />,
+  "뷰티": <BigBeauty />,
+  "대중교통": <BigPublicTransport />,
+  "주유": <BigFuel />,
+  "하이패스": <BigHiPass />,
+  "교육": <BigEducation />,
+  "육아": <BigChildcare />,
+  "문화": <BigCulture />,
+  "레저": <BigLeisure />,
+  "영화": <BigMovies />,
+  "통신": <BigTelecom />,
+  "관리비": <BigManagementFees />,
+  "Priority Pass": <BigPriorityPass />,
+  "프리미엄": <BigPremium />,
+  "오토": <BigAuto />,
+  "금융": <BigFinance />,
+  "체크카드겸용": <BigDebitCardCompatible />,
+  "바우처": <BigVoucher />,
+  "언제나할인": <BigAlwaysDiscount />,
+  "렌탈": <BigRental />,
+  "경차유류환급": <BigCompactCarFuelRefund />,
+  "연회비지원": <BigAnnualFeeSupport />,
+  "국민행복카드": <BigNationalHappinessCard />,
+  "그린카드": <BigGreenCard />
 };
