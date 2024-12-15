@@ -19,36 +19,36 @@ import { CategoryIconsMini } from "@/icons/mapping";
 
 const MySpendPage = () => {
   const { user } = useAuthStore();
-  const { transactions, setTransactions, setSelectedTransaction } = useTransactionStore();
+  const { setTransactions, setSelectedTransaction } = useTransactionStore();
   const { currentYear, currentMonth, setMonthlySpend } = useMonthlyStore();
   const { setCategories } = useCategoryStore();
   const [loading, setLoading] = useState(true);
   const [expenses, setExpenses] = useState<Record<number, number>>({});
   const [groupedByDate, setGroupedByDate] = useState<Record<string, Transaction[]>>({});
 
-  useEffect(() => {
-    const fetchMonthlyTransactions = async () => {
-      try {
-        setLoading(true);
-        const [monthlySpendData, transacData, ctgData] = await Promise.allSettled([
-          getMonthlySpend(user.token, currentYear, currentMonth),
-          getMonthlyTransactions(user.token, currentYear, currentMonth),
-          getMthlySpendOfCtg(user.token, currentYear, currentMonth),
-        ]);
+  // useEffect(() => {
+  //   const fetchMonthlyTransactions = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const [monthlySpendData, transacData, ctgData] = await Promise.allSettled([
+  //         getMonthlySpend(user.token, currentYear, currentMonth),
+  //         getMonthlyTransactions(user.token, currentYear, currentMonth),
+  //         getMthlySpendOfCtg(user.token, currentYear, currentMonth),
+  //       ]);
 
-        if (monthlySpendData.status === "fulfilled") setMonthlySpend(currentYear, currentMonth, monthlySpendData.value);
-        if (transacData.status === "fulfilled") setTransactions(transacData.value);
-        if (ctgData.status === "fulfilled") setCategories(ctgData.value);
+  //       if (monthlySpendData.status === "fulfilled") setMonthlySpend(currentYear, currentMonth, monthlySpendData.value);
+  //       if (transacData.status === "fulfilled") setTransactions(transacData.value);
+  //       if (ctgData.status === "fulfilled") setCategories(ctgData.value);
 
-      } catch (error) {
-        console.error("데이터 페칭 실패:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //     } catch (error) {
+  //       console.error("데이터 페칭 실패:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchMonthlyTransactions();
-  }, [user.token, currentYear, currentMonth, setTransactions, setCategories, setMonthlySpend]);
+  //   fetchMonthlyTransactions();
+  // }, [user.token, currentYear, currentMonth, setTransactions, setCategories, setMonthlySpend]);
 
   useEffect(() => {
     // 일별 소비 데이터 집계
@@ -74,21 +74,36 @@ const MySpendPage = () => {
 
     setExpenses(expensesData);
     setGroupedByDate(groupedData);
-  }, [transactions]);
+  }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
+
+  const transactions = [
+    {transactionId: 1,
+      price: 10000,
+      recipient: "테무",
+      createdAt: "2024-12-12T09:00:00",
+      accountId: 1,
+      accName: "하나통장",
+      categoryId: 2,
+      categoryName: "쇼핑",
+      userCardId: null,
+      cardName: null,
+      transactionType: "expense"
+    },
+  ]
 
   return (
     <div className="text-white p-8 relative h-screen overflow-hidden">
       <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-100px)]">
         <BottomNav />
-        <MonthlyInfo />
+        {/* <MonthlyInfo /> */}
 
-        <Link href="/my-spend/categories">
+        {/* <Link href="/my-spend/categories">
           <TopSpendingCategory />
-        </Link>
+        </Link> */}
 
         <div className="mt-8 flex flex-col items-center justify-center">
           <Calendar expenses={expenses} />
