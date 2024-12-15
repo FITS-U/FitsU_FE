@@ -6,6 +6,7 @@ import { useTransactionStore } from "@/store/transactionStore";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { CategoryIconsTiny } from "@/icons/mapping";
 
 const TransactionItemDetail = () => {
   const { accountId, transactionId } = useParams();
@@ -21,7 +22,12 @@ const TransactionItemDetail = () => {
         <div></div>
       </div>
       <div className="mt-10">
-        <div>{selectedTransaction.recipient}</div>
+        <div className="flex items-center">
+          <div>
+            {CategoryIconsTiny[selectedTransaction.categoryName as keyof typeof CategoryIconsTiny] || null}
+          </div>
+          <div>{selectedTransaction.recipient}</div>
+        </div>
         <div className="text-3xl font-semibold tracking-wider">
           {formatTransactionPrice(selectedTransaction.price, selectedTransaction.transactionType)}
         </div>
