@@ -15,14 +15,20 @@ export const Transactions = () => {
     <div className="mt-8">
       {Object.entries(groupedTransactions).map(([date, transactions]) => (
         <div key={date}>
-          <div className="text-sm font-bold mb-2">{date}</div>
+          <div className="text-sm mt-10">{date}</div>
           {transactions.map((transaction, index) => (
             <Link
               key={index}
               href={`/accounts/${accountId}/transactions/${index + 1}`}
               onClick={() => setSelectedTransaction(transaction)}
             >
-              <TransactionItem />
+              <TransactionItem
+                categoryName={transaction.categoryName}
+                createdAt={transaction.createdAt}
+                price={transaction.price}
+                recipient={transaction.recipient}
+                transactionType={transaction.transactionType}
+              />
             </Link>
           ))}
         </div>

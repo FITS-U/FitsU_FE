@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { getCardDetails } from "@/api/card";
 import { useCardDetailStore } from "@/store/cardDetailStore";
 import { Loading } from "@/components/Loading";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { CategoryIconsTiny } from "@/icons/mapping";
 
 const CardDetailPage = () => {
   const { selectedCard } = useCardStore();
@@ -50,7 +51,7 @@ const CardDetailPage = () => {
         <FaChevronLeft className="h-5" />
       </div>
       <div className="mt-12 flex flex-col items-center">
-        <Image
+        <img
           src={card.imageUrl}
           alt={card.cardName}
           className={`rounded-md ${
@@ -63,7 +64,10 @@ const CardDetailPage = () => {
       <section className="mt-12">
         {card.benefits.map((benefits, index) => (
           <div key={index} className="mt-8 space-y-1">
-            <div className="text-orange-500 text-xl font-bold">{benefits.categoryName}</div>
+            <div className="flex items-center">
+              <div>{CategoryIconsTiny[benefits.categoryName as keyof typeof CategoryIconsTiny] || null}</div>
+              <div className="ml-1 text-orange-500 text-xl font-bold">{benefits.categoryName}</div>
+            </div>
             <div className="text-lg font-semibold">{benefits.benefitTitle}</div>
             <div className="font-light text-sm leading-normal text-contrast-200">
               {benefits.description}
