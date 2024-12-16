@@ -24,6 +24,7 @@ const MySpendPage = () => {
   const { setCategories } = useCategoryStore();
   const [loading, setLoading] = useState(true);
   const [expenses, setExpenses] = useState<Record<number, number>>({});
+  const [incomes, setIncomes] = useState<Record<number, number>>({});
   const [groupedByDate, setGroupedByDate] = useState<Record<string, Transaction[]>>({});
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const MySpendPage = () => {
   useEffect(() => {
     // 일별 소비 데이터 집계
     const expensesData: Record<number, number> = {};
+    const incomesData: Record<number, number> = {};
     const groupedData: Record<string, Transaction[]> = {};
 
     transactions.forEach(transaction => {
@@ -62,10 +64,10 @@ const MySpendPage = () => {
       let amount = transaction.price;
       if (transaction.transactionType === "expense") {
         amount *= -1;
+        expensesData[day] = (expensesData[day] || 0) + amount;
+      } else {
+        incomesData[day] = (incomesData[day] || 0) + amount;
       }
-
-      // 집계된 소비 데이터
-      expensesData[day] = (expensesData[day] || 0) + amount;
 
       // 그룹화
       if (!groupedData[formattedDate]) groupedData[formattedDate] = [];
@@ -73,6 +75,7 @@ const MySpendPage = () => {
     });
 
     setExpenses(expensesData);
+    setIncomes(incomesData);
     setGroupedByDate(groupedData);
   }, [transactions]);
 
@@ -91,12 +94,12 @@ const MySpendPage = () => {
         </Link>
 
         <div className="mt-8 flex flex-col items-center justify-center">
-          <Calendar expenses={expenses} />
+          <Calendar expenses={expenses} incomes={incomes} />
         </div>
 
         {Object.entries(groupedByDate).map(([date, dailyTransactions]) => (
           <div key={date} className="mt-10">
-            <div className="text-sm mb-6 text-white">{date}</div>
+            <div className="text-xs mb-6 text-white">{date}</div>
             {dailyTransactions.map((transaction, index) => (
               <div key={index} className="mb-8 cursor-pointer">
                 <Link 

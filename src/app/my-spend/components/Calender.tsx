@@ -4,9 +4,10 @@ import React from 'react';
 
 interface CalendarProps {
   expenses: Record<number, number>; // 날짜와 소비 데이터 매핑
+  incomes: Record<number, number>;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ expenses }) => {
+const Calendar: React.FC<CalendarProps> = ({ expenses, incomes }) => {
   const { currentYear, currentMonth } = useMonthlyStore();
 
   const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
@@ -27,27 +28,34 @@ const Calendar: React.FC<CalendarProps> = ({ expenses }) => {
     <div className="text-contrast-300 overflow-auto">
       <div className="grid grid-cols-7 text-center">
         {["일", "월", "화", "수", "목", "금", "토"].map((day) => (
-          <div key={day} className="font-semibold">{day}</div>
+          <div key={day} className="text-sm font-semibold text-contrast-200">{day}</div>
         ))}
         {weeks.map((week, index) => (
           <React.Fragment key={index}>
             {week.map((day, idx) => (
-              <div key={idx} className="p-4">
+              <div key={idx} className="p-4 text-sm">
                 {day && (
                   <div className='flex flex-col items-center justify-center'>
-                    {expenses[day] ? (
-                      <div>
-                        <div className='text-white'>{day}</div>
-                        <span className={`text-xs text-center text-contrast-300 font-semibold 
-                          ${expenses[day] < 0 ? "text-orange-500" : "text-blue"}`}
+                    {expenses[day] !== undefined ? (
+                      <div className="text-contrast-200">
+                        <div>{day}</div>
+                        <div className={`text-xs text-center text-contrast-200 tracking-tighter
+                          ${expenses[day] < 0 ? "text-orange-500" : ""}`}
                         >
                           {formatCalenderPrice(expenses[day])}
-                        </span>
+                        </div>
                       </div>
                     ) : (
                       <div>
                         <div className='text-contrast-400'>{day}</div>
                       </div>
+                    )}
+                    {incomes[day] !== undefined ? (
+                      <div className="text-xs text-center text-contrast-200 tracking-tighter">
+                        +{formatCalenderPrice(incomes[day])}
+                      </div>
+                    ) : (
+                      <></>
                     )}
                   </div>
                 )}
