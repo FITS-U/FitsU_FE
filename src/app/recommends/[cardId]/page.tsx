@@ -39,7 +39,7 @@ const CardDetailPage = () => {
     setImageRatio(naturalWidth / naturalHeight > 1 ? "landscape" : "portrait");
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading message="카드 정보를 가져오는 중이에요" />;
 
   if (!card) {
     return <p>해당 카드를 찾을 수 없습니다.</p>;

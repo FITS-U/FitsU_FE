@@ -60,7 +60,7 @@ const CardRecommends = () => {
     }
   }, [recData.length]); 
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading message={`${user.name}님의 소비에 꼭 맞는 카드를 찾는 중이에요`} size="text-lg" />;
   
   return (
     <div className="text-white relative h-screen overflow-hidden">

@@ -80,7 +80,7 @@ const MySpendPage = () => {
   }, [transactions]);
 
   if (loading) {
-    return <Loading />;
+    return <Loading message={`${user.name}님의 소비 내역을 불러오는 중이에요`} size="text-lg" />;
   }
 
   return (
