@@ -39,3 +39,19 @@ export const saveLogDatas = async(categoryId:number, eventType:string, token:str
     url: `http://${IP}:8088/api/v1/logs`
   });
 }
+
+
+export const editCategory = async(token: string|null, transactionId:number, categoryId:number, categoryName:string) => {
+  const body = {
+    categoryId,
+    categoryName
+  }
+  await axios({
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    data: body,
+    url: `http://${IP}:8084/api/v1/transactions/${transactionId}`
+  });
+}

@@ -1,58 +1,52 @@
 "use client";
 
+import { editCategory, getCategories } from "@/api/category";
 import { CategoryIconsMini } from "@/icons/mapping";
+import { useAuthStore } from "@/store/authStore";
+import { useCategoryStore } from "@/store/categoryStore";
 import { useTransactionStore } from "@/store/transactionStore";
 import { formatTransactionPrice } from "@/utils/formatPrice";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
 
 const EditCategory = () => {
+  const { user, hydrateUser } = useAuthStore();
   const { selectedTransaction } = useTransactionStore();
+  const { categories, setCategories } = useCategoryStore();
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const rounter = useRouter();
+
+  useEffect(() => {
+    hydrateUser();
+
+    const fetchCategories = async() => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (error) {
+        console.log("Failed to fetch categories:", error);
+      }
+    }
+    fetchCategories();
+  }, [hydrateUser, setCategories]);
 
   const handleCategorySelect = (categoryId: number) => {
     setSelectedCategoryId(categoryId);
   };
 
-  const categories = [
-    { categoryId: 1, categoryName: "항공마일리지" },
-    { categoryId: 2, categoryName: "쇼핑" },
-    { categoryId: 3, categoryName: "간편결제" },
-    { categoryId: 4, categoryName: "포인트/캐시백" },
-    { categoryId: 5, categoryName: "편의점" },
-    { categoryId: 6, categoryName: "대형마트" },
-    { categoryId: 7, categoryName: "카페/베이커리" },
-    { categoryId: 8, categoryName: "납부 혜택" },
-    { categoryId: 9, categoryName: "외식" },
-    { categoryId: 10, categoryName: "의료" },
-    { categoryId: 11, categoryName: "반려동물" },
-    { categoryId: 12, categoryName: "뷰티" },
-    { categoryId: 13, categoryName: "대중교통" },
-    { categoryId: 14, categoryName: "주유" },
-    { categoryId: 15, categoryName: "하이패스" },
-    { categoryId: 16, categoryName: "교육" },
-    { categoryId: 17, categoryName: "육아" },
-    { categoryId: 18, categoryName: "문화" },
-    { categoryId: 19, categoryName: "레저" },
-    { categoryId: 20, categoryName: "영화" },
-    { categoryId: 21, categoryName: "통신" },
-    { categoryId: 22, categoryName: "관리비" },
-    { categoryId: 23, categoryName: "Priority Pass" },
-    { categoryId: 24, categoryName: "프리미엄" },
-    { categoryId: 25, categoryName: "오토" },
-    { categoryId: 26, categoryName: "금융" },
-    { categoryId: 27, categoryName: "체크카드겸용" },
-    { categoryId: 28, categoryName: "바우처" },
-    { categoryId: 29, categoryName: "언제나할인" },
-    { categoryId: 30, categoryName: "렌탈" },
-    { categoryId: 31, categoryName: "경차유류환급" },
-    { categoryId: 32, categoryName: "연회비지원" },
-    { categoryId: 33, categoryName: "국민행복카드" },
-    { categoryId: 34, categoryName: "그린카드" },
-  ];
+  const handleClick = async() => {
+    try {
+      await editCategory(
+        user.token,
+        selectedTransaction.transactionId,
+        selectedTransaction.categoryId,
+        selectedTransaction.categoryName);
+    } catch (error) {
+      console.log("Failed to edit category:", error);
+    }
+  };
 
   return (
     <div className="p-8 text-white relative h-screen overflow-hidden">
@@ -98,7 +92,7 @@ const EditCategory = () => {
           <button 
             className={`p-4 w-full x-2 font-bold rounded-2xl text-black ${selectedCategoryId ? "bg-orange-500" : "bg-contrast-600 cursor-not-allowed"}`}
             disabled={!selectedCategoryId}
-            // onClick={} post
+            onClick={() => handleClick}
           >
             변경하기
           </button>
