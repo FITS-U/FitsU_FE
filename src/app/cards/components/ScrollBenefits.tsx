@@ -77,7 +77,7 @@ export const ScrollBenefits = () => {
           {/* 드롭다운 메뉴 */}
           {isDropDownOpen && (
             <div className="absolute mt-3 flex shadow-lg rounded-lg z-10 h-full overflow-y-auto max-h-[550px] text-black scrollbar-hide">
-              <div className="grid grid-cols-3 gap-1 items-center justify-center">
+              <div className="grid grid-cols-3 gap-1 items-center justify-center bg-contrast-800">
                 {categories.map((category) => (
                   <div
                     key={category.categoryId}
