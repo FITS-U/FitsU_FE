@@ -17,7 +17,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
   };
 
   return (
-    <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-90px)]">
+    <div>
       <div className="mb-10 bg-contrast-800 h-auto rounded-2xl p-4">
         {accounts.map((account, index) => (
           <div key={index}>
@@ -53,7 +53,7 @@ const AfterLinkPage: React.FC<AfterLinkPageProps> = ({ accounts }) => {
           <div className="text-center text-sm cursor-pointer">다른 계좌 연결하기</div>
         </Link>
       </div>
-      <div className="bg-contrast-800 rounded-2xl p-4 flex items-center justify-between">
+      <div className="bg-contrast-800 rounded-2xl p-4 flex items-center justify-between mb-8">
         {monthlySpends.map((monthly, index) => (
           <div key={index}>
             <span>

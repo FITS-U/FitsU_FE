@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useAuthStore } from "@/store/authStore";
@@ -40,10 +41,17 @@ export const Advertisement = () => {
   return (
     <div className="mt-8">
       <div 
-        className="w-full h-16 p-6 font-bold bg-contrast-800 rounded-2xl flex items-center cursor-pointer"
+        className="w-full h-auto p-6 rounded-2xl flex flex-col items-center cursor-pointer space-y-5 shadow-lg transition-all transform hover:shadow-xl hover:-translate-y-1 active:shadow-sm active:translate-y-0.5 bg-gradient-to-r from-orange-400 to-blue-400"
         onClick={() => setIsClicked(!isClicked)}
       >
-        {user.name}님이 관심있을 만한 카드
+        <img 
+          src={"/icons/adIcon.png"}
+          alt="광고로고"
+          width={100}
+          height={100}
+          className="transition-transform duration-200 transform animate-bounce"
+        />
+        <div className="text-lg font-bold text-black">카드... 이것 뭐에요~???</div>
       </div>
       {isClicked && (
         <PopUp onClose={() => setIsClicked(false)} adData={adData} />

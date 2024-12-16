@@ -55,13 +55,15 @@ const HomePage: React.FC = () => {
           />
         </div>
       </div>
-      <Advertisement />
-      <div className="mt-5">
-        {accounts.length ? (
-          <AfterLinkPage accounts={accounts} />
-        ) : (
-          <BeforeLinkPage />
-        )}
+      <div className="overflow-y-auto scrollbar-hide max-h-[calc(100vh-130px)]">
+        <Advertisement />
+        <div className="mt-5">
+          {accounts.length ? (
+            <AfterLinkPage accounts={accounts} />
+          ) : (
+            <BeforeLinkPage />
+          )}
+        </div>
       </div>
       <BottomNav />
     </div>
