@@ -20,13 +20,11 @@ export interface RecCardData {
 }
 
 const CardRecommends = () => {
-  const { user, hydrateUser } = useAuthStore();
+  const { user } = useAuthStore();
   const [loading, setLoading] = useState<boolean>(true);
   const [recData, setRecData] = useState<RecCardData[]>([]);
 
-  useEffect(() => {
-    hydrateUser();
-    
+  useEffect(() => {    
     const fetchRecommendCard = async () => {
       try {
         if (user.token) {
@@ -40,11 +38,11 @@ const CardRecommends = () => {
       }
     };
     fetchRecommendCard();
-  }, [hydrateUser, user.token]);
+  }, [user.token]);
 
   useEffect(() => {
-    const fetchCardImages = async () => {
-      if (recData.length > 0) {
+    if (recData.length > 0) {
+      const fetchCardImages = async () => {
         try {
           const updatedRecData = await Promise.all(
             recData.map(async (card) => {
@@ -56,11 +54,11 @@ const CardRecommends = () => {
         } catch (error) {
           console.error("Failed to fetch card images:", error);
         }
-      }
-    };
-
-    fetchCardImages();
-  }, [recData.length]);
+      };
+  
+      fetchCardImages();
+    }
+  }, [recData.length]); 
 
   if (loading) return <Loading />;
   
