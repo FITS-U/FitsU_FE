@@ -1,8 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import { IoIosCloseCircle } from "react-icons/io";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CardState, useCardStore } from "@/store/cardStore";
-import Image from "next/image";
 
 export const PopUp = ({
   onClose,
@@ -22,10 +22,13 @@ export const PopUp = ({
     setCurrentIndex(index);
   };
 
-  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>, cardId: number) => {
-    const { naturalWidth, naturalHeight } = event.currentTarget;
-
-    // 이미지 비율 계산 및 저장
+  const handleImageLoad = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>,
+    cardId: number
+  ) => {
+    const target = event.currentTarget;
+    const { naturalWidth, naturalHeight } = target;
+  
     setImageRatios((prev) => ({
       ...prev,
       [cardId]: naturalWidth / naturalHeight > 1 ? "landscape" : "portrait",
@@ -68,13 +71,11 @@ export const PopUp = ({
               <div className="font-bold text-xl mb-3">{ad.card_name}</div>
               <div className="font-semibold mb-1">{ad.adCopy1}</div>
               <div className="font-semibold mb-4">{ad.adCopy2}</div>
-              <Image
+              <img
                 src={ad.image_url}
                 alt="카드이미지"
                 className={`rounded-md ${
-                  imageRatios[ad.card_id] === "landscape"
-                    ? "w-48 h-auto"
-                    : "w-auto h-48"
+                imageRatios[ad.card_id] === "landscape" ? "w-48 h-auto" : "w-auto h-48"
                 }`}
                 onLoad={(e) => handleImageLoad(e, ad.card_id)}
               />

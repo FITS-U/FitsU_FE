@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AfterLinkPage from "./components/AfterLink";
 import BeforeLinkPage from "./components/BeforeLink";
 import { getLinkedAccounts } from "@/api/account";
