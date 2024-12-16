@@ -47,7 +47,7 @@ export const editCategory = async(token: string|null, transactionId:number, cate
     categoryName
   }
   await axios({
-    method: "POST",
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`
     },
