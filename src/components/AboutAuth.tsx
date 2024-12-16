@@ -2,7 +2,7 @@
 
 import { verifyCode } from "@/api/auth";
 import { TitleType, useAuthStore } from "@/store/authStore";
-import { ChangeEvent, KeyboardEvent } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 
 interface AuthProps {
   text: string;
@@ -31,6 +31,16 @@ export interface AuthInputProps { text:string; title:TitleType; maxLen:number; o
 // input 버튼 컴포넌트
 export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
   const { user, setUser, setVerificationStatus } = useAuthStore();
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (alertMessage) {
+      const timer = setTimeout(() => {
+        setAlertMessage(null);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [alertMessage]);
 
   const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -50,10 +60,10 @@ export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
       const data = await verifyCode(user.phoneNum, user.verifyNum);
       setUser({ ...user, token:data });
       setVerificationStatus(true);
-      alert("번호 인증에 성공했습니다.");
+      setAlertMessage("번호 인증에 성공했습니다.");
     } catch (error) {
       console.error("Failed to validation code:", error);
-      alert("인증번호가 올바르지 않습니다.");
+      setAlertMessage("인증번호가 올바르지 않습니다.");
     } 
   };
 
@@ -80,6 +90,13 @@ export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
             </button>
           )}
         </div>
+        {alertMessage && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+            <div className="bg-white text-black p-6 rounded-lg text-center text-lg">
+              <p>{alertMessage}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

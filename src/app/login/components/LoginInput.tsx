@@ -5,7 +5,7 @@ export interface LoginInputProps extends AuthBtnProps, AuthInputProps {
   descText: string;
 }
 
-export default ({ inputText, descText, onNext, title, maxLen }: LoginInputProps) => {
+const LoginInput = ({ inputText, descText, onNext, title, maxLen }: LoginInputProps) => {
   return (
     <div>
       <AuthDescription text={descText} />
@@ -14,3 +14,5 @@ export default ({ inputText, descText, onNext, title, maxLen }: LoginInputProps)
     </div>
   );
 }
+
+export default LoginInput;
