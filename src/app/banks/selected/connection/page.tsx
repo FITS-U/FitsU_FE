@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -8,7 +9,6 @@ import { useBankStore } from "@/store/bankStore";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
 import { updateLinkStatus } from "@/api/account";
-import Image from "next/image";
 
 const ConnectionPage = () => {
   const { selectedBankIds } = useBankStore();
@@ -67,7 +67,7 @@ const ConnectionPage = () => {
           {accounts.map((account) => (
             <div key={account.accountId} className="mb-6 flex items-center">
               <div className="w-12 h-auto">
-                <Image
+                <img
                   src={account.imageUrl}
                   alt={account.bankName}
                   className="rounded-lg"
@@ -102,7 +102,7 @@ const ConnectionPage = () => {
             accounts.map((account) => (
               <div key={account.accountId} className="mb-6 flex items-center">
                 <div className="w-12 h-auto">
-                  <Image
+                  <img
                     src={account.imageUrl}
                     alt={account.bankName}
                     className="rounded-lg"

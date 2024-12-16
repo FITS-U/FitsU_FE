@@ -14,11 +14,11 @@ const PrivacyConsentPage = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const { getSelectedBankNames } = useBankStore();
   const router = useRouter();
-  // const { user, hydrateUser } = useAuthStore();
+  const { user, hydrateUser } = useAuthStore();
 
-  // useEffect(() => {
-  //   hydrateUser();
-  // })
+  useEffect(() => {
+    hydrateUser();
+  }, [hydrateUser]);
 
   return (
     <div className="text-white relative h-screen overflow-hidden">
@@ -28,7 +28,7 @@ const PrivacyConsentPage = () => {
         </div>
         <div className="p-8">
           <div className="mt-16 text-lg font-semibold">
-            <p>이세연님의 계좌를</p>
+            <p>{user.name}님의 계좌를</p>
             <p>확인하기 위한 동의문이에요</p>
           </div>
           <div className="mt-6 text-lg text-contrast-200 font-semibold">

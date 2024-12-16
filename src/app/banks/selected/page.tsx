@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { getUnlinkedAccounts } from "@/api/account";
@@ -7,7 +8,6 @@ import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
-import Image from "next/image";
 
 const LinkPage: React.FC = () => {
   const { selectedBankIds } = useBankStore();
@@ -56,7 +56,7 @@ const LinkPage: React.FC = () => {
           accounts.map((account) => (
             <div key={account.accountId} className="mb-6 flex items-center">
               <div className="w-12 h-auto">
-                <Image src={account.imageUrl} alt={account.bankName} className="rounded-lg" />
+                <img src={account.imageUrl} alt={account.bankName} className="rounded-lg" />
               </div>
               <div className="ml-2">
                 <div className="text-base font-semibold tracking-tight">{account.accName}</div>

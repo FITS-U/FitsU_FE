@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import { getBankList } from "@/api/account";
@@ -6,7 +7,6 @@ import { useEffect, useState } from "react";
 import { FaCheckCircle, FaRegCheckCircle, FaChevronLeft } from "react-icons/fa";
 import { useBankStore } from "@/store/bankStore";
 import { Loading } from "../../components/Loading";
-import Image from "next/image";
 
 const AccountPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -65,7 +65,7 @@ const AccountPage: React.FC = () => {
             >
               <div className="flex items-start justify-start space-x-6">
                 <div className="w-6 h-auto">
-                  <Image src={bank.imageUrl} alt={bank.bankName} className="w-full h-auto rounded-lg" />
+                  <img src={bank.imageUrl} alt={bank.bankName} className="w-full h-auto rounded-lg" />
                 </div>
                 <span className="text-lg">{bank.bankName}</span>
               </div>
@@ -73,7 +73,7 @@ const AccountPage: React.FC = () => {
                 {selectedBankIds.includes(bank.bankId) ? 
                   <FaCheckCircle className="w-7 h-7 text-orange-500" />
                 : 
-                  <FaRegCheckCircle className="w-7 h-7" />
+                  <FaRegCheckCircle className="w-7 h-7 text-contrast-400" />
                 }
               </span>
             </div>

@@ -96,7 +96,7 @@ const MySpendPage = () => {
 
         {Object.entries(groupedByDate).map(([date, dailyTransactions]) => (
           <div key={date} className="mt-10">
-            <div className="text-sm font-semibold mb-6 text-white">{date}</div>
+            <div className="text-sm mb-6 text-white">{date}</div>
             {dailyTransactions.map((transaction, index) => (
               <div key={index} className="mb-8 cursor-pointer">
                 <Link 
