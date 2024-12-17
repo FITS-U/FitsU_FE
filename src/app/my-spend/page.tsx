@@ -112,7 +112,7 @@ const MySpendPage = () => {
                     </div>
                     <div className="ml-3">
                       <div className="font-bold text-lg">
-                        {formatTransactionPrice(transaction.price, transaction.transactionType)}
+                        {formatTransactionPrice(transaction.price, transaction.transactionType)}원
                       </div>
                       <div className="text-xs text-contrast-200">
                         {transaction.recipient} | {transaction.userCardId ? transaction.cardName : transaction.accName}

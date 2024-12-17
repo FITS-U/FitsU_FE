@@ -52,7 +52,13 @@ const EditCategory = () => {
 
   return (
     <div className="p-8 text-white relative h-screen overflow-hidden">
-      <FaChevronLeft onClick={() => router.back()} />
+      <FaChevronLeft onClick={() => [
+        router.back(), 
+        setSelectedCategory({
+          categoryId: 0,
+          categoryName: "",
+          totalSpending: 0,
+      })]} />
       <div className="font-bold text-xl my-8">변경할 카테고리를 선택해주세요</div>
       <div className="flex items-center">
         <div>

@@ -29,7 +29,7 @@ const TransactionItemDetail = () => {
           <div>{selectedTransaction.recipient}</div>
         </div>
         <div className="text-3xl font-semibold tracking-wider">
-          {formatTransactionPrice(selectedTransaction.price, selectedTransaction.transactionType)}
+          {formatTransactionPrice(selectedTransaction.price, selectedTransaction.transactionType)}원
         </div>
       </div>
       <div className="mt-16 flex items-center justify-between">
