@@ -40,6 +40,11 @@ const EditCategory = () => {
         selectedCategory.categoryName
       );
       router.push("/my-spend");
+      setSelectedCategory({
+        categoryId: 0,
+        categoryName: "",
+        totalSpending: 0,
+      });
     } catch (error) {
       console.log("Failed to edit category:", error);
     }
