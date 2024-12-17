@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const IP = `192.168.1.4`;
+export const IP = `192.168.1.71`;
 
 export const getBankList = async() => {
   const {data} = await axios({

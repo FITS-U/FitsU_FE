@@ -3,10 +3,11 @@
 import { useSignupStore } from "@/store/signupStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import SignupInput, { SignupInputProps } from "./components/SignupInput";
-import { Register } from "@/api/auth";
+import { SignupInputProps } from "./components/SignupInput";
+import { Register, SendSms } from "@/api/auth";
 import { saveInterestCtg } from "@/api/category";
 import { LogoToRoot } from "@/components/Logo";
+import Signup from "./components/SignupInput";
 
 const RegisterPage = () => {
   const { newUser, setNewUser } = useSignupStore();
@@ -26,8 +27,17 @@ const RegisterPage = () => {
       title: "phoneNum",
       descText: "휴대폰 번호를 입력해주세요.",
       inputText: "휴대폰 번호",
-      // onNext: () => setStep(2),
-      onNext: () => setStep(2),
+      onNext: async() => {
+        try {
+          const data = await SendSms(newUser.phoneNum);
+          setNewUser({...newUser, verifyNum:data});
+          setStep(2);
+        } catch (error) {
+          console.error("Failed to receive sms:", error);
+          alert("인증번호 메세지 발송 실패");
+          window.location.reload();
+        }
+      },
       maxLen: 11,
       text: ""
     },
@@ -81,7 +91,7 @@ const RegisterPage = () => {
   return (
     <div className="p-8 text-white h-screen relative overflow-hidden">
       <LogoToRoot />
-      <SignupInput {...SignupInputList[step]} />
+      <Signup {...SignupInputList[step]} />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import LoginInput, { LoginInputProps } from "./components/LoginInput";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
-import { isValidLogin } from "@/api/auth";
+import { isValidLogin, SendSms } from "@/api/auth";
 import { LogoToRoot } from "@/components/Logo";
 
 const LoginPage = () => {
@@ -24,7 +24,17 @@ const LoginPage = () => {
     {
       inputText: "휴대폰번호",
       descText: "휴대폰 번호를 입력해주세요.",
-      onNext: () => setStep(2),
+      onNext: async() => {
+        try {
+          const data = await SendSms(user.phoneNum);
+          setUser({...user, verifyNum:data});
+          setStep(2);
+        } catch (error) {
+          console.error("Failed to receive sms:", error);
+          alert("인증번호 메세지 발송 실패");
+          window.location.reload();
+        }
+      },
       title:"phoneNum",
       maxLen: 11,
       text:""

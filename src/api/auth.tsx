@@ -1,6 +1,21 @@
 import axios from "axios";
 import { IP } from "./account";
 
+// sms 인증
+export const SendSms = async(phoneNum:string) => {
+  const body = {
+    phoneNum
+  };
+  
+  const {data} = await axios({
+    method: "POST",
+    data: body,
+    url: `http://${IP}:8092/api/v1/auth/sms/send`
+  });
+  return data;
+}
+
+
 // 인증번호 확인
 export const verifyCode = async(phoneNum: string, code:string) => {
   const body = {

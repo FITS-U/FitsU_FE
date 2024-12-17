@@ -6,7 +6,7 @@ export interface SignupInputProps extends RegisterBtnProps, RegisterInputProps {
   inputText: string;
 }
 
-export default ({ descText, inputText, title, maxLen, onNext }: SignupInputProps) => {
+const Signup = ({ descText, inputText, title, maxLen, onNext }: SignupInputProps) => {
   return (
     <div>
       <AuthDescription text={descText} />
@@ -23,3 +23,5 @@ export default ({ descText, inputText, title, maxLen, onNext }: SignupInputProps
     </div>
   );
 }
+
+export default Signup;

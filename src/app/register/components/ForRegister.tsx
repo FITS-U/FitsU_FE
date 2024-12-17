@@ -11,6 +11,16 @@ export interface RegisterInputProps { text:string; title:SignupType; maxLen:numb
 // 회원가입 input 버튼 컴포넌트
 export const SignupInput = ({ text, title, maxLen, onNext } : RegisterInputProps) => {
   const { newUser, setNewUser, setVerificationStatus } = useSignupStore();
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (alertMessage) {
+      const timer = setTimeout(() => {
+        setAlertMessage(null);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [alertMessage]);
 
   const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
     const {value} = e.target;
@@ -28,10 +38,10 @@ export const SignupInput = ({ text, title, maxLen, onNext } : RegisterInputProps
       const data = await verifyCode(newUser.phoneNum, newUser.verifyNum);
       setNewUser({ ...newUser, token:data });
       setVerificationStatus(true);
-      alert("번호 인증에 성공했습니다.");
+      setAlertMessage("번호 인증에 성공했습니다.");
     } catch (error) {
       console.error("Failed to validation code:", error);
-      alert("인증번호가 올바르지 않습니다.");
+      setAlertMessage("인증번호가 올바르지 않습니다.");
     }
   };
 
@@ -58,6 +68,13 @@ export const SignupInput = ({ text, title, maxLen, onNext } : RegisterInputProps
             </button>
           )}
         </div>
+        {alertMessage && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+            <div className="bg-white text-black p-6 rounded-lg text-center text-lg">
+              <p>{alertMessage}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
