@@ -24,7 +24,7 @@ export const CtgSpendingDetail = () => {
           setTransactions(data);
         }
       } catch (error) {
-        console.error("Failed to fetch spending detail of category:", error);
+        console.log("Failed to fetch spending detail of category:", error);
       }
     };
     fetchCtgSpendingDetail();

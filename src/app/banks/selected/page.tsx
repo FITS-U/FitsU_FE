@@ -23,7 +23,7 @@ const LinkPage: React.FC = () => {
         const unlinkAccData = await getUnlinkedAccounts(user.token, selectedBankIds);
         setAccounts(unlinkAccData);
       } catch (error) {
-        console.error("Failed to fetch unlinked accounts:", error);
+        console.log("Failed to fetch unlinked accounts:", error);
       } finally {
         setLoading(false);
       }

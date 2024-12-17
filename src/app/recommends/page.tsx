@@ -32,7 +32,7 @@ const CardRecommends = () => {
           setRecData(response);
         }
       } catch (error) {
-        console.error("Failed to fetch categories and cards:", error);
+        console.log("Failed to fetch categories and cards:", error);
       } finally {
         setLoading(false);
       }
@@ -52,7 +52,7 @@ const CardRecommends = () => {
           );
           setRecData(updatedRecData);
         } catch (error) {
-          console.error("Failed to fetch card images:", error);
+          console.log("Failed to fetch card images:", error);
         }
       };
   

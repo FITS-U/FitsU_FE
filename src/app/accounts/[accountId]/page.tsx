@@ -23,7 +23,7 @@ const AccountTransactions = () => {
         const data = await getTransactionByAccountId(user.token, selectedAccount.accountId);
         setTransactions(data.content);
       } catch (error) {
-        console.error("Failed to fetch transaction list of account:", error);
+        console.log("Failed to fetch transaction list of account:", error);
       } finally {
         setLoading(false);
       }

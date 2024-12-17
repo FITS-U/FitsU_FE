@@ -40,7 +40,7 @@ export const SignupInput = ({ text, title, maxLen, onNext } : RegisterInputProps
       setVerificationStatus(true);
       setAlertMessage("번호 인증에 성공했습니다.");
     } catch (error) {
-      console.error("Failed to validation code:", error);
+      console.log("Failed to validation code:", error);
       setAlertMessage("인증번호가 올바르지 않습니다.");
     }
   };
@@ -214,7 +214,7 @@ export const CardBenefitsList = ({ title, onNext }: RegisterBtnProps) => {
         const data = await getCategories();
         setCategories(data);
       } catch (error) {
-        console.error("Failed to fetch category list:", error);
+        console.log("Failed to fetch category list:", error);
       } finally {
         setLoading(false);
       }

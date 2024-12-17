@@ -22,7 +22,7 @@ const Categories = () => {
         const data = await getMthlySpendOfCtg(user.token, currentYear, currentMonth);
         setCategories(data);
       } catch (error) {
-        console.error("Failed to fatch all category:", error);
+        console.log("Failed to fatch all category:", error);
       }
     };
     fetchCtgSpending();

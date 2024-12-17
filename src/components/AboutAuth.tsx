@@ -62,7 +62,7 @@ export const AuthInput = ({ text, title, maxLen, onNext } : AuthInputProps) => {
       setVerificationStatus(true);
       setAlertMessage("번호 인증에 성공했습니다.");
     } catch (error) {
-      console.error("Failed to validation code:", error);
+      console.log("Failed to validation code:", error);
       setAlertMessage("인증번호가 올바르지 않습니다.");
     } 
   };

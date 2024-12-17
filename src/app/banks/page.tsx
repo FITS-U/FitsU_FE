@@ -18,7 +18,7 @@ const AccountPage: React.FC = () => {
         const data = await getBankList();
         setBanks(data);
       } catch (error) {
-        console.error("Failed to fetch bank list:", error);
+        console.log("Failed to fetch bank list:", error);
       } finally {
         setLoading(false);
       }

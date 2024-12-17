@@ -43,7 +43,7 @@ const ConnectionPage = () => {
           setLoading(false); // 로딩 종료
         }, 500);
       } catch (error) {
-        console.error("Failed to fetch update accounts:", error);
+        console.log("Failed to fetch update accounts:", error);
       }
     };
 

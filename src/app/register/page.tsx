@@ -33,7 +33,7 @@ const RegisterPage = () => {
           setNewUser({...newUser, verifyNum:data});
           setStep(2);
         } catch (error) {
-          console.error("Failed to receive sms:", error);
+          console.log("Failed to receive sms:", error);
           alert("인증번호 메세지 발송 실패");
           window.location.reload();
         }
@@ -59,7 +59,7 @@ const RegisterPage = () => {
           setNewUser({...newUser, token: data});
           setStep(4);
         } catch (error) {
-          console.error("Failed to validation code:", error);
+          console.log("Failed to validation code:", error);
           alert("회원가입에 실패했습니다.");
           window.location.reload();
         }
@@ -78,7 +78,7 @@ const RegisterPage = () => {
           alert("관심 카드혜택 등록 성공");
           router.push("/login");
         } catch (error) {
-          console.error("Failed to validation code:", error);
+          console.log("Failed to validation code:", error);
           alert("관심 카드혜택 등록 실패");
           // window.location.reload();
         }

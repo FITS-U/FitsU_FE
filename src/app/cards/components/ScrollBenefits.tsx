@@ -27,7 +27,7 @@ export const ScrollBenefits = () => {
           setSelectedBenefit(data[0].categoryId);
         }
       } catch (error) {
-        console.error("Failed to fetch category list:", error);
+        console.log("Failed to fetch category list:", error);
       } finally {
         setLoading(false);
       }
@@ -45,7 +45,7 @@ export const ScrollBenefits = () => {
       const data = await saveLogDatas(id, "click", user.token);
       console.log(data);
     } catch (error) {
-      console.error("Failed to post log data:", error);
+      console.log("Failed to post log data:", error);
     };
 
     setSelectedBenefit(id);

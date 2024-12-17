@@ -30,7 +30,7 @@ const LoginPage = () => {
           setUser({...user, verifyNum:data});
           setStep(2);
         } catch (error) {
-          console.error("Failed to receive sms:", error);
+          console.log("Failed to receive sms:", error);
           alert("인증번호 메세지 발송 실패");
           window.location.reload();
         }
@@ -48,7 +48,7 @@ const LoginPage = () => {
           setUser({...user, token: data});
           router.push("/accounts");
         } catch (error) {
-          console.error("Failed to validation code:", error);
+          console.log("Failed to validation code:", error);
           alert("로그인에 실패했습니다.");
           window.location.reload();
         }

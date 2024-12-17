@@ -37,7 +37,7 @@ const HomePage: React.FC = () => {
         if (monthlySpendData.status === "fulfilled") setMonthlySpend(currentYear, currentMonth, monthlySpendData.value);
         }
       } catch (error) {
-        console.error("Failed to fetch accout list:", error);
+        console.log(error);
       }
     };
     fetchAccounts();

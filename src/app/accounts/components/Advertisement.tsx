@@ -32,7 +32,7 @@ export const Advertisement = () => {
         const response = await getAdModelData(user.token);
         setAdData(response);
       } catch (error) {
-        console.error("Failed to fetch advertise data:", error);
+        console.log("Failed to fetch advertise data:", error);
       } 
     };
     fetchAdModel();

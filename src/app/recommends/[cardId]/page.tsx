@@ -24,7 +24,7 @@ const CardDetailPage = () => {
         const data = await getCardDetails(selectedCard.cardId);
         setCard(data);
       } catch (error) {
-        console.error("Failed to fetch card details:", error);
+        console.log("Failed to fetch card details:", error);
       } finally {
         setLoading(false);
       }

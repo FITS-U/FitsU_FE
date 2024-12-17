@@ -18,7 +18,7 @@ export const CardList = () => {
         const data = await getAllCards();
         setCards(data);
       } catch (error) {
-        console.error("Failed to fetch card list:", error);
+        console.log("Failed to fetch card list:", error);
       }
     };
     fetchCardList();

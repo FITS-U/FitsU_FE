@@ -42,7 +42,7 @@ const MySpendPage = () => {
         if (ctgData.status === "fulfilled") setCategories(ctgData.value);
 
       } catch (error) {
-        console.error("데이터 페칭 실패:", error);
+        console.log("데이터 페칭 실패:", error);
       } finally {
         setLoading(false);
       }
