@@ -9,13 +9,15 @@ import { useBankStore } from "@/store/bankStore";
 import { useAuthStore } from "@/store/authStore";
 import { useAccountStore } from "@/store/accountStore";
 import { updateLinkStatus } from "@/api/account";
+import { useRouter } from "next/navigation";
 
 const ConnectionPage = () => {
-  const { selectedBankIds } = useBankStore();
+  const { selectedBankIds, setSelectedBankIds } = useBankStore();
   const { user, hydrateUser } = useAuthStore();
   const { accounts, updateAccount } = useAccountStore();
   const [loading, setLoading] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0);
+  const router = useRouter();
 
   useEffect(() => {
     hydrateUser();
@@ -84,11 +86,17 @@ const ConnectionPage = () => {
     );
   }
 
+  const handleClick = () => {
+    setSelectedBankIds([0]);
+    router.push("/accounts");
+  }
+
   return (
     <div className="p-8 text-white">
-      <Link href="/accounts">
-        <IoClose className="text-2xl" />
-      </Link>
+      <IoClose 
+        className="text-2xl"
+        onClick={handleClick}
+      />
       <div className="mt-12 font-bold text-xl space-y-2">
         <p>{user.name}님의</p>
         <p>계좌 연결이 끝났어요!</p>
